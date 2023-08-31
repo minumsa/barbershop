@@ -49,12 +49,12 @@ body {
 .container {
   display: flex;
   flex-direction: column;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .nav-container {
   display: flex;
-  height: 50px;
+  height: 60px;
   border-bottom: 1px solid #000;
 }
 
@@ -78,7 +78,8 @@ body {
 .search {
   position: relative;
   display: flex;
-  width: 500px;
+  width: 70%;
+  max-width: 500px;
   height: 35px;
   border: 1px solid #000;
   /* border-radius: 5px; */
@@ -110,8 +111,30 @@ body {
 
 .category-content {
   padding: 0 20px;
+  cursor: pointer;
 }
 
 .content-container {
   flex-grow: 1;
+}
+
+.filter-content {
+  /* position: fixed; */
+  right: 0;
+  width: 400px;
+  height: 100%;
+  background-color: #fff;
+  border-left: 1px solid #000;
+  /* border-radius: 5px; */
+  z-index: 100;
+  padding: 20px;
+}
+
+.close {
+  z-index: 110;
+  right: 20px;
+  top: 5px;
+  font-size: 2.5rem;
+  font-weight: 300;
+  cursor: pointer;
 }
