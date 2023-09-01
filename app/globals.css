@@ -112,7 +112,6 @@ body {
 
 .category-content {
   width: 100px;
-  /* padding: 0 20px; */
   cursor: pointer;
 }
 
@@ -127,7 +126,6 @@ body {
   height: 100%;
   background-color: #fff;
   border-left: 1px solid #000;
-  /* border-radius: 5px; */
   z-index: 100;
   padding: 15px 40px;
 }

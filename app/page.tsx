@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { priceRange } from "./lib/data";
 
 export default function Page() {
   const [isFilterActive, setIsFilterActive] = useState<boolean>(false);
@@ -20,22 +21,14 @@ export default function Page() {
           <div style={{ paddingLeft: "30px" }}>선택 안 함</div>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ paddingTop: "20px" }}>
-            <input type="checkbox" id="20000" name="20000"></input>
-            <label style={{ paddingLeft: "10px" }}>20,000원 미만</label>
-          </div>
-          <div style={{ paddingTop: "15px" }}>
-            <input type="checkbox" id="20000" name="20000"></input>
-            <label style={{ paddingLeft: "10px" }}>20,000 ~ 29,000원</label>
-          </div>
-          <div style={{ paddingTop: "15px" }}>
-            <input type="checkbox" id="20000" name="20000"></input>
-            <label style={{ paddingLeft: "10px" }}>30,000 ~ 39,000원</label>
-          </div>
-          <div style={{ paddingTop: "15px" }}>
-            <input type="checkbox" id="20000" name="20000"></input>
-            <label style={{ paddingLeft: "10px" }}>40,000원 이상</label>
-          </div>
+          {priceRange.map((text, index) => {
+            return (
+              <div key={index} style={{ paddingTop: "20px" }}>
+                <input type="checkbox"></input>
+                <label style={{ paddingLeft: "10px" }}>{text}</label>
+              </div>
+            );
+          })}
         </div>
       </div>
       <div
