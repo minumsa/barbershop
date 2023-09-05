@@ -1,4 +1,6 @@
+import Script from "next/script";
 import "./globals.css";
+import NoSSR from "./lib/NoSSR";
 
 export const metadata = {
   title: "지도 - 마이바버샵",
@@ -8,6 +10,12 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html>
+      <head>
+        <Script
+          src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NAVER_MAP_CLIENT_ID}`}
+          strategy="beforeInteractive"
+        />
+      </head>
       <body>{children}</body>
     </html>
   );
