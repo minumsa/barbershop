@@ -2,38 +2,13 @@
 
 import { useState } from "react";
 import { barbers, openDate, priceRange } from "./lib/data";
+import { FilterContent } from "./FilterContent";
 
 export default function Page() {
   const [isFilterActive, setIsFilterActive] = useState<boolean>(false);
 
   const handleFilter = () => {
     setIsFilterActive(!isFilterActive);
-  };
-
-  interface FilterProps {
-    title: string;
-    data: any;
-  }
-
-  const FilterContent = ({ title, data }: FilterProps) => {
-    return (
-      <div style={{ marginBottom: "50px" }}>
-        <div style={{ display: "flex" }}>
-          <div>{title}</div>
-          <div style={{ paddingLeft: "30px" }}>선택 안 함</div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {data.map((text: string, index: number) => {
-            return (
-              <div key={index} style={{ paddingTop: "20px" }}>
-                <input type="checkbox"></input>
-                <label style={{ paddingLeft: "10px" }}>{text}</label>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
   };
 
   return (
