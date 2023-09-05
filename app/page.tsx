@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { priceRange } from "./lib/data";
+import { barbers, openDate, priceRange } from "./lib/data";
+import { FilterContent } from "./FilterContent";
 
 export default function Page() {
   const [isFilterActive, setIsFilterActive] = useState<boolean>(false);
@@ -16,20 +17,9 @@ export default function Page() {
         className="filter-content"
         style={isFilterActive ? { position: "fixed" } : { display: "none" }}
       >
-        <div style={{ display: "flex" }}>
-          <div>시술비</div>
-          <div style={{ paddingLeft: "30px" }}>선택 안 함</div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {priceRange.map((text, index) => {
-            return (
-              <div key={index} style={{ paddingTop: "20px" }}>
-                <input type="checkbox"></input>
-                <label style={{ paddingLeft: "10px" }}>{text}</label>
-              </div>
-            );
-          })}
-        </div>
+        <FilterContent title={"시술비"} data={priceRange} />
+        <FilterContent title={"바버 인원"} data={barbers} />
+        <FilterContent title={"개점일"} data={openDate} />
       </div>
       <div
         className="close"
