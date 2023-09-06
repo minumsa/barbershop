@@ -238,8 +238,8 @@ body {
 }
 
 .is_inner {
-  width: 400px;
-  height: 200px;
+  width: 380px;
+  height: 180px;
   padding: 20px;
 }
 
@@ -247,8 +247,21 @@ body {
   font-size: 1rem;
   display: flex;
   padding: 10px 0 0px 0;
+  width: 100%;
+}
+
+.overlay_detail_more {
+  justify-content: flex-end;
 }
 
 .overlay_detail_title {
   width: 100px;
+}
+
+.more-button {
+  display: flex;
+  justify-content: center;
+  width: 50px;
+  border: 1px solid #000;
+  cursor: pointer;
 }

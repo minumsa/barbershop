@@ -43,6 +43,9 @@ export const Map = () => {
       "   <div class='overlay_detail_title'>연락처</div>",
       "   <div>0507-1329-2972</div>",
       "</div>",
+      "<div class='overlay_detail overlay_detail_more'>",
+      "<div class='more-button'><div>더보기</div></div>",
+      "</div>",
       "</div>",
     ].join("");
 
