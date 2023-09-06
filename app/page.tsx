@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { barbers, openDate, priceRange } from "./lib/data";
 import { FilterContent } from "./FilterContent";
+import { Content } from "./Content";
+import NoSSR from "./lib/NoSSR";
 
 export default function Page() {
   const [isFilterActive, setIsFilterActive] = useState<boolean>(false);
@@ -20,15 +22,15 @@ export default function Page() {
         <FilterContent title={"시술비"} data={priceRange} />
         <FilterContent title={"바버 인원"} data={barbers} />
         <FilterContent title={"개점일"} data={openDate} />
-      </div>
-      <div
-        className="close"
-        style={isFilterActive ? { position: "absolute" } : { display: "none" }}
-        onClick={() => {
-          handleFilter();
-        }}
-      >
-        ×
+        <div
+          className="close"
+          style={isFilterActive ? { position: "absolute" } : { display: "none" }}
+          onClick={() => {
+            handleFilter();
+          }}
+        >
+          ×
+        </div>
       </div>
       <div className="nav-container">
         <div className="title">
@@ -57,7 +59,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <div className="content-container"></div>
+      <Content />
     </div>
   );
 }
