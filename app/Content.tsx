@@ -9,8 +9,8 @@ export const Content = () => {
   return (
     <div className="content-container">
       <div className="side-bar-container">
-        <DetailBar showDetailBar={showDetailBar} setShowDetailBar={setShowDetailBar} />
         <SideBar showDetailBar={showDetailBar} />
+        <DetailBar showDetailBar={showDetailBar} setShowDetailBar={setShowDetailBar} />
       </div>
       <div className="map-container">
         <Map setShowDetailBar={setShowDetailBar} />
