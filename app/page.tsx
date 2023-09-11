@@ -23,7 +23,7 @@ export default function Page() {
         <FilterContent title={"바버 인원"} data={barbers} />
         <FilterContent title={"개점일"} data={openDate} />
         <div
-          className="close"
+          className="close filter-close"
           style={isFilterActive ? { position: "absolute" } : { display: "none" }}
           onClick={() => {
             handleFilter();

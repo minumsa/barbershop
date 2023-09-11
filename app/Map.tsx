@@ -1,7 +1,11 @@
 import { useEffect, useRef } from "react";
 import NoSSR from "./lib/NoSSR";
 
-export const Map = () => {
+interface MapProps {
+  setShowDetailBar: any;
+}
+
+export const Map = ({ setShowDetailBar }: MapProps) => {
   const mapElement = useRef(null);
 
   useEffect(() => {
@@ -23,6 +27,10 @@ export const Map = () => {
       },
     };
     const map = new naver.maps.Map(mapElement.current, mapOptions);
+
+    function test() {
+      console.log("dkdk");
+    }
 
     var harfbarbershopString = [
       '<div class="is_inner">',
@@ -50,7 +58,7 @@ export const Map = () => {
     ].join("");
 
     // 지도상에 핀 표시 할 부분
-    var harfbarbershopMarker = new naver.maps.Marker({
+    const harfbarbershopMarker = new naver.maps.Marker({
       position: harfbarbershop,
       map: map,
     });
@@ -59,8 +67,13 @@ export const Map = () => {
     //   map: map,
     // });
 
-    var infowindow = new naver.maps.InfoWindow({
+    const infowindow = new naver.maps.InfoWindow({
       content: harfbarbershopString,
+    });
+
+    const tmp = infowindow.contentElement as HTMLElement;
+    tmp.getElementsByClassName("more-button")[0].addEventListener("click", function (e) {
+      setShowDetailBar(true);
     });
 
     naver.maps.Event.addListener(harfbarbershopMarker, "click", function (e) {

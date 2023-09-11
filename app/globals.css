@@ -137,18 +137,21 @@ body {
 }
 
 .close {
-  z-index: 110;
-  right: 20px;
-  top: 0px;
   font-size: 2.5rem;
   font-weight: 300;
   cursor: pointer;
 }
 
+.filter-close {
+  z-index: 110;
+  right: 20px;
+  top: 0px;
+}
+
 .side-bar-container {
   min-width: 500px;
   width: 500px;
-  height: calc(100% - 110px);
+  /* height: calc(100% - 110px); */
   border-right: 1px solid #000;
   padding: 30px 20px;
   overflow: scroll;
@@ -264,4 +267,8 @@ body {
   width: 50px;
   border: 1px solid #000;
   cursor: pointer;
+}
+
+.detail-first-line {
+  display: flex;
 }
