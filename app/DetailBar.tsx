@@ -1,3 +1,4 @@
+import ImageSlider from "./ImageSlider";
 import { barbershopArray } from "./lib/data";
 
 interface ContentProps {
@@ -11,7 +12,7 @@ export const DetailBar = ({ showDetailBar, setShowDetailBar }: ContentProps) => 
       <div className="side-bar">
         <div className="detail-first-line">
           <div className="side-title" style={showDetailBar ? { marginBottom: "15px" } : undefined}>
-            <div>바버샵 상세 정보</div>
+            <div style={{ fontWeight: "500" }}>{barbershopArray[0].name}</div>
             <div
               className="close"
               onClick={() => {
@@ -22,12 +23,10 @@ export const DetailBar = ({ showDetailBar, setShowDetailBar }: ContentProps) => 
             </div>
           </div>
         </div>
-        <div className="detail-image-container"></div>
+        <div className="detail-image-container">
+          <ImageSlider />
+        </div>
         <div className="detail-info-container">
-          <div className="detail-flexbox">
-            <div className="detail-title">이름</div>
-            <div className="detail-info">{barbershopArray[0].name}</div>
-          </div>
           <div className="detail-flexbox">
             <div className="detail-title">소개</div>
             <div className="detail-info">{barbershopArray[0].notice}</div>

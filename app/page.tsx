@@ -7,8 +7,8 @@ import { Content } from "./Content";
 import NoSSR from "./lib/NoSSR";
 
 export default function Page() {
+  const [showDetailBar, setShowDetailBar] = useState<boolean>(false);
   const [isFilterActive, setIsFilterActive] = useState<boolean>(false);
-
   const handleFilter = () => {
     setIsFilterActive(!isFilterActive);
   };
@@ -34,7 +34,13 @@ export default function Page() {
       </div>
       <div className="nav-container">
         <div className="title">
-          <div>마이바버샵</div>
+          <div
+            onClick={() => {
+              setShowDetailBar(false);
+            }}
+          >
+            바버샵찾기
+          </div>
         </div>
         <div className="search-container">
           <div className="search">
@@ -59,7 +65,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <Content />
+      <Content showDetailBar={showDetailBar} setShowDetailBar={setShowDetailBar} />
     </div>
   );
 }

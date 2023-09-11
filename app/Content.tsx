@@ -3,9 +3,12 @@ import { Map } from "./Map";
 import { SideBar } from "./SideBar";
 import { DetailBar } from "./DetailBar";
 
-export const Content = () => {
-  const [showDetailBar, setShowDetailBar] = useState<boolean>(false);
+interface PageProps {
+  showDetailBar: boolean;
+  setShowDetailBar: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
+export const Content = ({ showDetailBar, setShowDetailBar }: PageProps) => {
   return (
     <div className="content-container">
       <div className="side-bar-container">
