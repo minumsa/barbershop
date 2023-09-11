@@ -1,3 +1,4 @@
+import ImageSlider from "./ImageSlider";
 import { barbershopArray } from "./lib/data";
 
 interface ContentProps {
@@ -22,7 +23,9 @@ export const SideBar = ({ showDetailBar }: ContentProps) => {
         {barbershopArray.map((data, index) => {
           return (
             <div className="barbershop-list" key={index}>
-              <div className="barbershop-image"></div>
+              <div className="barbershop-image">
+                <ImageSlider />
+              </div>
               <div className="barbershop-info">
                 <div className="barbershop-info-header">
                   <div className="barbershop-name">{data.name}</div>

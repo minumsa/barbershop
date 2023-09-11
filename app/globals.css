@@ -299,7 +299,7 @@ body {
 
 .slick-list {
   width: 500px;
-  height: 350px;
+  height: 100%;
 }
 
 .detail-info-container {

@@ -1,4 +1,5 @@
-import ImageSlider from "./ImageSlider";
+import DetailImageSlider from "./DetailImageSlider";
+import ImageSlider from "./DetailImageSlider";
 import { barbershopArray } from "./lib/data";
 
 interface ContentProps {
@@ -24,7 +25,7 @@ export const DetailBar = ({ showDetailBar, setShowDetailBar }: ContentProps) => 
           </div>
         </div>
         <div className="detail-image-container">
-          <ImageSlider />
+          <DetailImageSlider />
         </div>
         <div className="detail-info-container">
           <div className="detail-flexbox">
