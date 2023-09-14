@@ -64,7 +64,7 @@ body {
 
 .nav-container {
   display: flex;
-  min-height: 50px;
+  min-height: 70px;
   border-bottom: 1px solid #000;
 }
 
@@ -182,7 +182,7 @@ body {
   border-right: 1px solid #000;
   padding: 15px 20px;
   overflow: scroll;
-  height: 900px;
+  height: 100%;
 }
 
 .detail-bar-container {
@@ -363,4 +363,23 @@ body {
 
 .detail-info {
   width: 100%;
+}
+
+.barber-name-map {
+  margin-right: 5px;
+}
+
+.pin-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% + 12px);
+  height: 30px;
+  background-color: #fff;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid #000;
+  border: 1px solid rgb(4, 117, 244);
+  /* border-radius: 50%; */
 }

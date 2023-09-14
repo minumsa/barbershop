@@ -23,7 +23,7 @@ export const Map = ({ setShowDetailBar }: MapProps) => {
     // 네이버 지도 옵션 선택
     const mapOptions = {
       center: harfbarbershop,
-      zoom: 16,
+      zoom: 15,
       zoomControl: true,
       zoomControlOptions: {
         position: naver.maps.Position.TOP_RIGHT,
@@ -38,9 +38,9 @@ export const Map = ({ setShowDetailBar }: MapProps) => {
     const harfbarbershopString = [
       `<div class="is_inner">`,
       `<div>${shop.name}</div>`,
-      `<div class='barbershop-image'>`,
-      `${renderToString(ImageSlider())}`,
-      `</div>`,
+      // `<div class='barbershop-image'>`,
+      // `${renderToString(ImageSlider())}`,
+      // `</div>`,
       `<div class='overlay_detail'>`,
       `   <div class='overlay_detail_title'>주소</div>`,
       `   <div>${shop.location}</div>`,
@@ -58,11 +58,19 @@ export const Map = ({ setShowDetailBar }: MapProps) => {
       `   <div>${shop.contact}</div>`,
       `</div>`,
       `<div class='overlay_detail'>`,
+      `   <div class='overlay_detail_title'>바버</div>`,
+      `   <div>${shop.barber?.length}인 - ${shop.barber
+        ?.map(name => {
+          return name;
+        })
+        .join(", ")}</div>`,
+      `</div>`,
+      `<div class='overlay_detail'>`,
       `   <div class='overlay_detail_title'>시술비</div>`,
       `   <div>${shop.price?.toLocaleString()}원</div>`,
       `</div>`,
       `<div class='overlay_detail overlay_detail_more'>`,
-      `<div class='more-button'><div>예약</div></div>`,
+      `<div class='more-button'><div>더보기</div></div>`,
       `</div>`,
       `</div>`,
     ].join("");
@@ -71,6 +79,12 @@ export const Map = ({ setShowDetailBar }: MapProps) => {
     const harfbarbershopMarker = new naver.maps.Marker({
       position: harfbarbershop,
       map: map,
+      icon: {
+        content: [`<div class='pin-container'><div>💇‍♂️${shop.name}</div></div>`].join(""),
+        size: new naver.maps.Size(50, 50),
+        // origin: new naver.maps.Point(0, 0),
+        anchor: new naver.maps.Point(45, 10),
+      },
     });
     // new naver.maps.Marker({
     //   position: harfbarbershop,

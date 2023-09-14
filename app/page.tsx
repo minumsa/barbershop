@@ -10,9 +10,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 export default function Page() {
   const [showDetailBar, setShowDetailBar] = useState<boolean>(false);
   const [isFilterActive, setIsFilterActive] = useState<boolean>(false);
-  const handleFilter = () => {
-    setIsFilterActive(!isFilterActive);
-  };
+  const handleFilter = () => setIsFilterActive(!isFilterActive);
 
   return (
     <div className="container">
