@@ -1,6 +1,8 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import NoSSR from "./lib/NoSSR";
 import { barbershopArray } from "./lib/data";
+import ImageSlider from "./ImageSlider";
+import { renderToString } from "react-dom/server";
 
 interface MapProps {
   setShowDetailBar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,9 +31,16 @@ export const Map = ({ setShowDetailBar }: MapProps) => {
     };
     const map = new naver.maps.Map(mapElement.current, mapOptions);
     const shop = barbershopArray[0]; // TODO: server 에서 가져오기
+
+    //   <div className="barbershop-image">
+    //   <ImageSlider />
+    // </div>
     const harfbarbershopString = [
       `<div class="is_inner">`,
       `<div>${shop.name}</div>`,
+      `<div class='barbershop-image'>`,
+      `${renderToString(ImageSlider())}`,
+      `</div>`,
       `<div class='overlay_detail'>`,
       `   <div class='overlay_detail_title'>주소</div>`,
       `   <div>${shop.location}</div>`,
@@ -48,8 +57,12 @@ export const Map = ({ setShowDetailBar }: MapProps) => {
       `   <div class='overlay_detail_title'>연락처</div>`,
       `   <div>${shop.contact}</div>`,
       `</div>`,
+      `<div class='overlay_detail'>`,
+      `   <div class='overlay_detail_title'>시술비</div>`,
+      `   <div>${shop.price?.toLocaleString()}원</div>`,
+      `</div>`,
       `<div class='overlay_detail overlay_detail_more'>`,
-      `<div class='more-button'><div>더보기</div></div>`,
+      `<div class='more-button'><div>예약</div></div>`,
       `</div>`,
       `</div>`,
     ].join("");

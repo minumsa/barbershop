@@ -40,7 +40,12 @@ export default function Page() {
               setShowDetailBar(false);
             }}
           >
-            바버샵찾기
+            <span style={{ color: "#4285F4" }}>B</span>
+            <span style={{ color: "#DB4437" }}>a</span>
+            <span style={{ color: "#F4B400" }}>r</span>
+            <span style={{ color: "#4285F4" }}>g</span>
+            <span style={{ color: "#0F9D58" }}>l</span>
+            <span style={{ color: "#DB4437" }}>e</span>
           </div>
         </div>
         <div className="search-container">
@@ -59,7 +64,7 @@ export default function Page() {
           </div>
         </div>
         <div className="category">
-          <div className="category-content">지도 ▾</div>
+          {/* <div className="category-content">지도 ▾</div> */}
           <div
             className="category-content"
             onClick={() => {

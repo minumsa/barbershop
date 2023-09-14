@@ -15,11 +15,11 @@ export default function ImageSlider() {
   return (
     // TODO: CSS 수정 - 이미지 flexbox에 넣기, 넘치는 부분은 안 보이게 처리, 화살표 보이게
     <Slider {...settings}>
-      <div style={{ display: "flex", position: "absolute", objectFit: "cover" }}>
-        <Image src={"/harf1.jpeg"} alt="some" width={500} height={200}></Image>
+      <div className="testimagecontainer">
+        <Image src={"/harf3.jpeg"} alt="some" fill={true}></Image>
       </div>
-      <Image src={"/harf2.jpeg"} width={500} height={200} alt="some"></Image>
-      <Image src={"/harf3.jpeg"} width={500} height={200} alt="some"></Image>
+      {/* <Image src={"/harf2.jpeg"} width={400} height={300} alt="some"></Image>
+      <Image src={"/harf3.jpeg"} width={400} height={300} alt="some"></Image> */}
       {/* <Image src={"/harf4.jpeg"} width={500} height={200} alt="some"></Image> */}
     </Slider>
   );

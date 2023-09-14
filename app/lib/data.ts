@@ -21,7 +21,11 @@ export const barbershopArray = [
     instagram: "https://www.instagram.com/hakdo__/",
     notice:
       "을지로 3가와 4가 사이 인쇄 골목에 위치한 1인 바버샵입니다. 한 분 한 분 최선을 다하겠습니다.",
+    reservation:
+      "https://map.naver.com/p/search/%ED%95%98%ED%94%84%EB%B0%94%EB%B2%84%EC%83%B5/place/1082548337?c=15.00,0,0,0,dh&placePath=%2Fbooking%3FbookingRedirectUrl%3Dhttps%25253A%25252F%25252Fpcmap.place.naver.com%25252Fhairshop%25252F1082548337%25252Fstylist%25253Ftheme%25253Dplace%252526service-target%25253Dmap-pc%252526entry%25253Dbmp",
+    price: 36000,
   },
+
   {
     name: "마스터바버샵",
     location: "서울 종로구 인사동5길 29 태화빌딩 지하1층 7호",
