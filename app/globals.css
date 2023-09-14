@@ -114,7 +114,7 @@ body {
     "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
-.search-glass {
+.magnifying-glass {
   position: absolute;
   /* display: flex; */
   padding-left: 10px;
@@ -132,9 +132,7 @@ body {
   justify-content: center;
   width: fit-content;
   cursor: pointer;
-}
-
-.testtest {
+  padding-right: 10px;
 }
 
 .category {
@@ -144,7 +142,7 @@ body {
   padding: 0 10px;
 }
 
-.category-content {
+.gear {
   width: 50px;
   cursor: pointer;
 }
@@ -168,7 +166,7 @@ body {
   padding: 15px 40px;
 }
 
-.filter-content-content {
+.filter-container {
   margin-bottom: 50px;
 }
 
@@ -184,7 +182,7 @@ body {
   top: 0px;
 }
 
-.side-bar-container {
+.tab-container {
   min-width: 390px;
   width: 390px;
   /* height: calc(100% - 110px); */
@@ -192,6 +190,11 @@ body {
   padding: 15px 20px;
   overflow: scroll;
   height: 100%;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
 }
 
 .detail-bar-container {
@@ -204,13 +207,10 @@ body {
   /* height: calc(100% - 110px); */
 }
 
-.side-bar {
+.tab-filter {
   display: flex;
-  flex-direction: column;
-}
-
-.side-filter {
-  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-size: 1rem;
   padding: 10px 5px;
   border-bottom: 1px solid #000;
@@ -220,7 +220,7 @@ body {
   flex-grow: 1;
 }
 
-.filter-select {
+.tab-select {
   /* font-family: "Montserrat", "GothicA1"; */
   font-family: "Montserrat", "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
     system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
@@ -231,7 +231,7 @@ body {
   padding-right: 10px;
 }
 
-.side-title {
+.tab-title {
   margin-bottom: 50px;
   padding-left: 10px;
   display: flex;
@@ -241,10 +241,7 @@ body {
   align-items: center;
 }
 
-.search-result {
-}
-
-.barbershop-list {
+.list-container {
   display: flex;
   flex-direction: column;
   padding: 10px 0;
@@ -252,64 +249,41 @@ body {
   height: fit-content;
 }
 
-.barbershop-list:last-child {
+.list-container:last-child {
   padding-bottom: 50px;
 }
 
-.testimagecontainer {
-  display: flex;
-  position: relative;
-  width: 100%;
-  height: auto;
-}
-
-.barbershop-image {
-  /* position: relative;
-  width: 100%;
-  height: auto; */
-  /* border: 1px solid #000; */
-
+.carousel-container {
   border-radius: 3px;
   margin: 10px 0;
-  /* margin: 5px 0 1px 0; */
 }
 
-.detail-image-container {
+.sub-carousel-container {
   display: flex;
   margin-bottom: 30px;
 }
 
-.barbershop-info {
+.list-information {
   display: flex;
   flex-direction: column;
   font-size: 0.95rem;
   padding: 15px 0 10px 0;
 }
 
-.barbershop-info-header {
-  display: flex;
-  padding-bottom: 5px;
-}
-
-.barbershop-name {
+.list-name {
   font-size: 1rem;
   font-weight: 500;
   padding-right: 10px;
-  padding-bottom: 2px;
+  padding-bottom: 8px;
   cursor: pointer;
 }
-/* 
-.barbershop-hashtag {
-  font-size: 0.9rem;
-  margin-top: 1.1px;
-} */
 
-.barbershop-location {
+.list-location {
   padding-bottom: 5px;
   color: #666;
 }
 
-.barbershop-introduce {
+.list-description {
   line-height: 180%;
 }
 
@@ -342,7 +316,7 @@ body {
   cursor: pointer;
 }
 
-.detail-first-line {
+.sub-title-container {
   display: flex;
 }
 
@@ -351,27 +325,27 @@ body {
   height: 100%;
 }
 
-.detail-info-container {
+.sub-information-container {
   display: flex;
   flex-direction: column;
 }
 
-.detail-flexbox {
+.sub-flexbox {
   display: flex;
   line-height: 200%;
   font-size: 1rem;
   margin-bottom: 2px;
 }
 
-.detail-title {
+.sub-title {
   width: 100px;
 }
 
-.detail-info-title {
+.sub-information-title {
   font-weight: 500;
 }
 
-.detail-info {
+.sub-information {
   width: 100%;
 }
 
@@ -391,15 +365,8 @@ body {
   font-weight: 500;
   border: 1px solid #000;
   border: 1px solid rgb(4, 117, 244);
-  /* border-radius: 50%; */
+  border-radius: 5px;
 }
-
-/* style={{ width: "100%", height: "300px", position: "relative" }} */
-
-/* .test-detail-container {
-  position: relative !important;
-  width: unset !important;
-} */
 
 .test-detail {
   width: 380px;

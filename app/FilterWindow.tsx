@@ -1,11 +1,11 @@
 interface FilterProps {
   title: string;
-  data: any;
+  data: string[];
 }
 
-export const FilterContent = ({ title, data }: FilterProps) => {
+export const FilterWindow = ({ title, data }: FilterProps) => {
   return (
-    <div className="filter-content-content">
+    <div className="filter-container">
       <div style={{ display: "flex" }}>
         <div>{title}</div>
         <div style={{ paddingLeft: "30px" }}>선택 안 함</div>

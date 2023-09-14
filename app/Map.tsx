@@ -1,14 +1,12 @@
 import React, { useEffect, useRef } from "react";
-import NoSSR from "./lib/NoSSR";
-import { barbershopArray } from "./lib/data";
-import ImageSlider from "./ImageSlider";
+import { barbershops } from "./lib/data";
 import { renderToString } from "react-dom/server";
 
 interface MapProps {
-  setShowDetailBar: React.Dispatch<React.SetStateAction<boolean>>;
+  setSubTab: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const Map = ({ setShowDetailBar }: MapProps) => {
+export const Map = ({ setSubTab }: MapProps) => {
   const mapElement = useRef(null);
 
   useEffect(() => {
@@ -16,13 +14,11 @@ export const Map = ({ setShowDetailBar }: MapProps) => {
 
     if (!mapElement.current || !naver) return;
 
-    // 로케이션표시 Google Maps에서 원하는 장소 찾은 후 주변검색을 누르면 좌표를 찾을 수 있음
-    // FIXME: 나중에 기본 장소 변경하기 - 현재 위치? 고민해보기!
-    const harfbarbershop = new naver.maps.LatLng(37.56571603771177, 126.99485276474563);
+    // FIXME: 나중에 기본 장소 변경하기 - 현재 위치 or 종로구
+    const barbershop = new naver.maps.LatLng(37.56571603771177, 126.99485276474563);
 
-    // 네이버 지도 옵션 선택
     const mapOptions = {
-      center: harfbarbershop,
+      center: barbershop,
       zoom: 15,
       zoomControl: true,
       zoomControlOptions: {
@@ -30,15 +26,13 @@ export const Map = ({ setShowDetailBar }: MapProps) => {
       },
     };
     const map = new naver.maps.Map(mapElement.current, mapOptions);
-    const shop = barbershopArray[0]; // TODO: server 에서 가져오기
+    // TODO: server에서 가져오기
+    const shop = barbershops[0];
 
-    //   <div className="barbershop-image">
-    //   <ImageSlider />
-    // </div>
-    const harfbarbershopString = [
+    const barbershopString = [
       `<div class="is_inner">`,
       `<div>${shop.name}</div>`,
-      // `<div class='barbershop-image'>`,
+      // `<div class='carousel-container'>`,
       // `${renderToString(ImageSlider())}`,
       // `</div>`,
       `<div class='overlay_detail'>`,
@@ -75,36 +69,37 @@ export const Map = ({ setShowDetailBar }: MapProps) => {
       `</div>`,
     ].join("");
 
-    // 지도상에 핀 표시 할 부분
-    const harfbarbershopMarker = new naver.maps.Marker({
-      position: harfbarbershop,
+    const barbershopMarker = new naver.maps.Marker({
+      position: barbershop,
       map: map,
       icon: {
-        content: [`<div class='pin-container'><div>💇‍♂️${shop.name}</div></div>`].join(""),
+        content: [
+          `
+        <div class='pin-container'>
+          <div>💇‍♂️${shop.name}</div>
+        </div>
+      `,
+        ].join(""),
         size: new naver.maps.Size(50, 50),
-        // origin: new naver.maps.Point(0, 0),
+        origin: new naver.maps.Point(0, 0),
         anchor: new naver.maps.Point(45, 10),
       },
     });
-    // new naver.maps.Marker({
-    //   position: harfbarbershop,
-    //   map: map,
-    // });
 
-    const infowindow = new naver.maps.InfoWindow({
-      content: harfbarbershopString,
+    const infoWindow = new naver.maps.InfoWindow({
+      content: barbershopString,
     });
 
-    const tmp = infowindow.contentElement as HTMLElement;
+    const tmp = infoWindow.contentElement as HTMLElement;
     tmp.getElementsByClassName("more-button")[0].addEventListener("click", function (e) {
-      setShowDetailBar(true);
+      setSubTab(true);
     });
 
-    naver.maps.Event.addListener(harfbarbershopMarker, "click", function (e) {
-      if (infowindow.getMap()) {
-        infowindow.close();
+    naver.maps.Event.addListener(barbershopMarker, "click", function (e) {
+      if (infoWindow.getMap()) {
+        infoWindow.close();
       } else {
-        infowindow.open(map, harfbarbershopMarker);
+        infoWindow.open(map, barbershopMarker);
       }
     });
   }, []);

@@ -1,22 +1,21 @@
-import React, { useState } from "react";
 import { Map } from "./Map";
-import { SideBar } from "./SideBar";
-import { DetailBar } from "./DetailBar";
+import { MainTab } from "./MainTab";
+import { SubTab } from "./SubTab";
 
-interface PageProps {
-  showDetailBar: boolean;
-  setShowDetailBar: React.Dispatch<React.SetStateAction<boolean>>;
+interface ContentProps {
+  showSubTab: boolean;
+  setSubTab: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const Content = ({ showDetailBar, setShowDetailBar }: PageProps) => {
+export const Content = ({ showSubTab, setSubTab }: ContentProps) => {
   return (
     <div className="content-container">
-      <div className="side-bar-container">
-        <SideBar showDetailBar={showDetailBar} />
-        <DetailBar showDetailBar={showDetailBar} setShowDetailBar={setShowDetailBar} />
+      <div className="tab-container">
+        <MainTab showSubTab={showSubTab} />
+        <SubTab showSubTab={showSubTab} setSubTab={setSubTab} />
       </div>
       <div className="map-container">
-        <Map setShowDetailBar={setShowDetailBar} />
+        <Map setSubTab={setSubTab} />
       </div>
     </div>
   );
