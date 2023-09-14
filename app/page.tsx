@@ -4,7 +4,8 @@ import { useState } from "react";
 import { barbers, openDate, priceRange } from "./lib/data";
 import { FilterContent } from "./FilterContent";
 import { Content } from "./Content";
-import NoSSR from "./lib/NoSSR";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 export default function Page() {
   const [showDetailBar, setShowDetailBar] = useState<boolean>(false);
@@ -44,12 +45,16 @@ export default function Page() {
         </div>
         <div className="search-container">
           <div className="search">
-            <div className="search-button">
-              <div style={{ paddingRight: "10px" }}>🔍</div>
+            <div className="search-glass" style={{ zIndex: "100" }}>
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
             </div>
-            <input className="search-input" placeholder="지역을 입력해주세요" />
-            <div className="search-button">
-              <div style={{ paddingLeft: "10px" }}>검색</div>
+            <input
+              className="search-input"
+              placeholder="지역을 입력해주세요"
+              style={{ paddingLeft: "35px" }}
+            />
+            <div className="search-button" style={{ paddingRight: "10px" }}>
+              <div>검색</div>
             </div>
           </div>
         </div>

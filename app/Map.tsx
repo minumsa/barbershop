@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 import NoSSR from "./lib/NoSSR";
+import { barbershopArray } from "./lib/data";
 
 interface MapProps {
-  setShowDetailBar: any;
+  setShowDetailBar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const Map = ({ setShowDetailBar }: MapProps) => {
@@ -27,34 +28,30 @@ export const Map = ({ setShowDetailBar }: MapProps) => {
       },
     };
     const map = new naver.maps.Map(mapElement.current, mapOptions);
-
-    function test() {
-      console.log("dkdk");
-    }
-
-    var harfbarbershopString = [
-      '<div class="is_inner">',
-      "   <div>하프바버샵</div>",
-      "<div class='overlay_detail'>",
-      "   <div class='overlay_detail_title'>주소</div>",
-      "   <div>서울 중구 을지로18길 15 2층 205호</div>",
-      "</div>",
-      "<div class='overlay_detail'>",
-      "   <div class='overlay_detail_title'>운영시간</div>",
-      "   <div>월~토 11:00~20:00</div>",
-      "</div>",
-      "<div class='overlay_detail'>",
-      "   <div class='overlay_detail_title'>휴무일</div>",
-      "   <div>매주 일요일</div>",
-      "</div>",
-      "<div class='overlay_detail'>",
-      "   <div class='overlay_detail_title'>연락처</div>",
-      "   <div>0507-1329-2972</div>",
-      "</div>",
-      "<div class='overlay_detail overlay_detail_more'>",
-      "<div class='more-button'><div>더보기</div></div>",
-      "</div>",
-      "</div>",
+    const shop = barbershopArray[0]; // TODO: server 에서 가져오기
+    const harfbarbershopString = [
+      `<div class="is_inner">`,
+      `<div>${shop.name}</div>`,
+      `<div class='overlay_detail'>`,
+      `   <div class='overlay_detail_title'>주소</div>`,
+      `   <div>${shop.location}</div>`,
+      `</div>`,
+      `<div class='overlay_detail'>`,
+      `   <div class='overlay_detail_title'>운영시간</div>`,
+      `   <div>${shop.operatingTime}</div>`,
+      `</div>`,
+      `<div class='overlay_detail'>`,
+      `   <div class='overlay_detail_title'>휴무일</div>`,
+      `   <div>${shop.closedDays}</div>`,
+      `</div>`,
+      `<div class='overlay_detail'>`,
+      `   <div class='overlay_detail_title'>연락처</div>`,
+      `   <div>${shop.contact}</div>`,
+      `</div>`,
+      `<div class='overlay_detail overlay_detail_more'>`,
+      `<div class='more-button'><div>더보기</div></div>`,
+      `</div>`,
+      `</div>`,
     ].join("");
 
     // 지도상에 핀 표시 할 부분
