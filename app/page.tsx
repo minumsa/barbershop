@@ -5,7 +5,7 @@ import { barbers, openDate, priceRange } from "./lib/data";
 import { FilterContent } from "./FilterContent";
 import { Content } from "./Content";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faGear, faMagnifyingGlass, faSliders } from "@fortawesome/free-solid-svg-icons";
 
 export default function Page() {
   const [showDetailBar, setShowDetailBar] = useState<boolean>(false);
@@ -69,7 +69,7 @@ export default function Page() {
               handleFilter();
             }}
           >
-            필터 ▾
+            <FontAwesomeIcon icon={faGear} />
           </div>
         </div>
       </div>

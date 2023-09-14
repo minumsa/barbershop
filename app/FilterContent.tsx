@@ -5,7 +5,7 @@ interface FilterProps {
 
 export const FilterContent = ({ title, data }: FilterProps) => {
   return (
-    <div style={{ marginBottom: "50px" }}>
+    <div className="filter-content-content">
       <div style={{ display: "flex" }}>
         <div>{title}</div>
         <div style={{ paddingLeft: "30px" }}>선택 안 함</div>
