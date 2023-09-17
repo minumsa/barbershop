@@ -1,3 +1,5 @@
+import styles from "./page.module.css";
+
 interface FilterProps {
   title: string;
   data: string[];
@@ -5,7 +7,7 @@ interface FilterProps {
 
 export const FilterWindow = ({ title, data }: FilterProps) => {
   return (
-    <div className="filter-container">
+    <div className={styles["filter-container"]}>
       <div style={{ display: "flex" }}>
         <div>{title}</div>
         <div style={{ paddingLeft: "30px" }}>선택 안 함</div>

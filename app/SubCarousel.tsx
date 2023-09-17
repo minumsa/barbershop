@@ -2,6 +2,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
+import styles from "./page.module.css";
 
 export default function SubCarousel() {
   const settings = {
@@ -18,7 +19,7 @@ export default function SubCarousel() {
     <Slider {...settings}>
       {/* <Image src={"/harf1.jpeg"} width={390} height={280} alt="some"></Image> */}
       <div>
-        <div className="test-detail">
+        <div className={styles["test-detail"]}>
           <Image src={"/harf1.jpeg"} alt="some" fill={true}></Image>
         </div>
       </div>

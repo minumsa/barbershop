@@ -6,6 +6,7 @@ import { FilterWindow } from "./FilterWindow";
 import { Content } from "./Content";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear, faMagnifyingGlass, faSliders } from "@fortawesome/free-solid-svg-icons";
+import styles from "./page.module.css";
 
 export default function Page() {
   const [showSubTab, setShowSubTab] = useState<boolean>(false);
@@ -13,16 +14,16 @@ export default function Page() {
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
 
   return (
-    <div className="container">
+    <div className={styles["container"]}>
       <div
-        className="filter-content"
+        className={styles["filter-content"]}
         style={showFilterWindow ? { position: "fixed" } : { display: "none" }}
       >
         <FilterWindow title={"시술비"} data={priceRange} />
         <FilterWindow title={"바버 인원"} data={barbers} />
         <FilterWindow title={"개점일"} data={openDate} />
         <div
-          className="close filter-close"
+          className={`${styles["close"]} ${styles["close-filter"]}`}
           style={showFilterWindow ? { position: "absolute" } : { display: "none" }}
           onClick={() => {
             handleFilter();
@@ -31,8 +32,8 @@ export default function Page() {
           ×
         </div>
       </div>
-      <div className="nav-container">
-        <div className="title">
+      <div className={styles["nav-container"]}>
+        <div className={styles["title"]}>
           <div
             onClick={() => {
               setShowSubTab(false);
@@ -47,25 +48,25 @@ export default function Page() {
             <span style={{ color: "#DB4437" }}>e</span>
           </div>
         </div>
-        <div className="search-container">
-          <div className="search">
-            <div className="magnifying-glass">
+        <div className={styles["search-container"]}>
+          <div className={styles["search"]}>
+            <div className={styles["magnifying-glass"]}>
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </div>
             <input
-              className="search-input"
+              className={styles["search-input"]}
               placeholder="지역을 입력해주세요"
               style={{ paddingLeft: "35px" }}
             />
-            <div className="search-button">
+            <div className={styles["search-button"]}>
               <div>검색</div>
             </div>
           </div>
         </div>
-        <div className="category">
-          {/* <div className="gear">지도 ▾</div> */}
+        <div className={styles["category"]}>
+          {/* <div className={styles["gear"]}>지도 ▾</div> */}
           <div
-            className="gear"
+            className={styles["gear"]}
             onClick={() => {
               handleFilter();
             }}

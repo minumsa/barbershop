@@ -1,6 +1,7 @@
 import { Map } from "./Map";
 import { MainTab } from "./MainTab";
 import { SubTab } from "./SubTab";
+import styles from "./page.module.css";
 
 interface ContentProps {
   showSubTab: boolean;
@@ -9,12 +10,12 @@ interface ContentProps {
 
 export const Content = ({ showSubTab, setSubTab }: ContentProps) => {
   return (
-    <div className="content-container">
-      <div className="tab-container">
+    <div className={styles["content-container"]}>
+      <div className={styles["tab-container"]}>
         <MainTab showSubTab={showSubTab} />
         <SubTab showSubTab={showSubTab} setSubTab={setSubTab} />
       </div>
-      <div className="map-container">
+      <div className={styles["map-container"]}>
         <Map setSubTab={setSubTab} />
       </div>
     </div>

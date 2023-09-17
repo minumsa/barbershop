@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { barbershops } from "./lib/data";
 import { renderToString } from "react-dom/server";
+import styles from "./page.module.css";
 
 interface MapProps {
   setSubTab: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,41 +31,43 @@ export const Map = ({ setSubTab }: MapProps) => {
     const shop = barbershops[0];
 
     const barbershopString = [
-      `<div class="is_inner">`,
+      `<div class=${styles["is-inner"]}>`,
       `<div>${shop.name}</div>`,
       // `<div class='carousel-container'>`,
       // `${renderToString(ImageSlider())}`,
       // `</div>`,
-      `<div class='overlay_detail'>`,
-      `   <div class='overlay_detail_title'>주소</div>`,
+      `<div class=${styles["overlay-detail"]}>`,
+      `   <div class=${styles["overlay-detail-title"]}>주소</div>`,
       `   <div>${shop.location}</div>`,
       `</div>`,
-      `<div class='overlay_detail'>`,
-      `   <div class='overlay_detail_title'>운영시간</div>`,
+      `<div class=${styles["overlay-detail"]}>`,
+      `   <div class=${styles["overlay-detail-title"]}>운영시간</div>`,
       `   <div>${shop.operatingTime}</div>`,
       `</div>`,
-      `<div class='overlay_detail'>`,
-      `   <div class='overlay_detail_title'>휴무일</div>`,
+      `<div class=${styles["overlay-detail"]}>`,
+      `   <div class=${styles["overlay-detail-title"]}>휴무일</div>`,
       `   <div>${shop.closedDays}</div>`,
       `</div>`,
-      `<div class='overlay_detail'>`,
-      `   <div class='overlay_detail_title'>연락처</div>`,
+      `<div class=${styles["overlay-detail"]}>`,
+      `   <div class=${styles["overlay-detail-title"]}>연락처</div>`,
       `   <div>${shop.contact}</div>`,
       `</div>`,
-      `<div class='overlay_detail'>`,
-      `   <div class='overlay_detail_title'>바버</div>`,
+      `<div class=${styles["overlay-detail"]}>`,
+      `   <div class=${styles["overlay-detail-title"]}>바버</div>`,
       `   <div>${shop.barber?.length}인 - ${shop.barber
         ?.map(name => {
           return name;
         })
         .join(", ")}</div>`,
       `</div>`,
-      `<div class='overlay_detail'>`,
-      `   <div class='overlay_detail_title'>시술비</div>`,
+      `<div class=${styles["overlay-detail"]}>`,
+      `   <div class=${styles["overlay-detail-title"]}>시술비</div>`,
       `   <div>${shop.price?.toLocaleString()}원</div>`,
       `</div>`,
-      `<div class='overlay_detail overlay_detail_more'>`,
-      `<div class='more-button'><div>더보기</div></div>`,
+      `<div class=${styles["overlay-detail"]}>`,
+      `<div class=${styles["more-button-container"]}>`,
+      `<div class=${styles["more-button"]}><div>더보기</div></div>`,
+      `</div>`,
       `</div>`,
       `</div>`,
     ].join("");
@@ -75,7 +78,7 @@ export const Map = ({ setSubTab }: MapProps) => {
       icon: {
         content: [
           `
-        <div class='pin-container'>
+        <div class=${styles["pin-container"]}>
           <div>💇‍♂️${shop.name}</div>
         </div>
       `,
@@ -91,7 +94,7 @@ export const Map = ({ setSubTab }: MapProps) => {
     });
 
     const tmp = infoWindow.contentElement as HTMLElement;
-    tmp.getElementsByClassName("more-button")[0].addEventListener("click", function (e) {
+    tmp.getElementsByClassName(styles["more-button"])[0].addEventListener("click", function (e) {
       setSubTab(true);
     });
 
