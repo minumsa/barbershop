@@ -2,64 +2,89 @@
 
 import { useState } from "react";
 import { barbers, openDate, priceRange } from "./lib/data";
-import { FilterContent } from "./FilterContent";
+import { FilterWindow } from "./FilterWindow";
 import { Content } from "./Content";
-import NoSSR from "./lib/NoSSR";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGear, faMagnifyingGlass, faSliders } from "@fortawesome/free-solid-svg-icons";
+import styles from "./page.module.css";
 
 export default function Page() {
-  const [isFilterActive, setIsFilterActive] = useState<boolean>(false);
-
-  const handleFilter = () => {
-    setIsFilterActive(!isFilterActive);
-  };
+  const [price, setPrice] = useState<number>(50000); // price원 이상
+  const [barber, setBarber] = useState<number>(4); // barber명 이상
+  const [year, setYear] = useState<number>(5); // year년 이상
+  const [showSubTab, setShowSubTab] = useState<boolean>(false);
+  const [showFilterWindow, setIsFilterActive] = useState<boolean>(false);
+  const handleFilter = () => setIsFilterActive(!showFilterWindow);
 
   return (
-    <div className="container">
+    <div className={styles["container"]}>
       <div
-        className="filter-content"
-        style={isFilterActive ? { position: "fixed" } : { display: "none" }}
+        className={styles["filter-content"]}
+        style={showFilterWindow ? { position: "fixed" } : { display: "none" }}
       >
-        <FilterContent title={"시술비"} data={priceRange} />
-        <FilterContent title={"바버 인원"} data={barbers} />
-        <FilterContent title={"개점일"} data={openDate} />
-        <div
-          className="close"
-          style={isFilterActive ? { position: "absolute" } : { display: "none" }}
-          onClick={() => {
-            handleFilter();
-          }}
-        >
-          ×
-        </div>
+        <FilterWindow
+          setIsFilterActive={setIsFilterActive}
+          price={price}
+          setPrice={setPrice}
+          barber={barber}
+          setBarber={setBarber}
+          year={year}
+          setYear={setYear}
+        />
       </div>
-      <div className="nav-container">
-        <div className="title">
-          <div>마이바버샵</div>
+      <div className={styles["nav-container"]}>
+        <div className={styles["title"]}>
+          <div
+            onClick={() => {
+              setShowSubTab(false);
+            }}
+          >
+            {/* Barber */}
+            <span style={{ color: "#4285F4" }}>B</span>
+            <span style={{ color: "#DB4437" }}>a</span>
+            <span style={{ color: "#F4B400" }}>r</span>
+            <span style={{ color: "#4285F4" }}>g</span>
+            <span style={{ color: "#0F9D58" }}>l</span>
+            <span style={{ color: "#DB4437" }}>e</span>
+          </div>
         </div>
-        <div className="search-container">
-          <div className="search">
-            <div className="search-button">
-              <div style={{ paddingRight: "10px" }}>🔍</div>
+        <div className={styles["search-container"]}>
+          <div className={styles["search"]}>
+            <div className={styles["magnifying-glass"]}>
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
             </div>
-            <input className="search-input" placeholder="지역을 입력해주세요" />
-            <div className="search-button">
-              <div style={{ paddingLeft: "10px" }}>검색</div>
+            <input
+              className={styles["search-input"]}
+              placeholder="지역을 입력해주세요"
+              style={{ paddingLeft: "35px" }}
+            />
+            <div className={styles["search-button"]}>
+              <div>검색</div>
             </div>
           </div>
         </div>
-        <div className="category">
-          <div className="category-content">지도 ▾</div>
+        <div className={styles["category"]}>
+          {/* <div className={styles["gear"]}>지도 ▾</div> */}
           <div
-            className="category-content"
+            className={styles["filter-icon"]}
             onClick={() => {
               handleFilter();
             }}
           >
-            필터 ▾
+            {/* 톱니바퀴 모양 */}
+            {/* <FontAwesomeIcon icon={faGear} /> */}
+            {/* 슬라이더 모양 */}
+            <FontAwesomeIcon icon={faSliders} />
           </div>
         </div>
       </div>
-      <Content />
+      <Content
+        showSubTab={showSubTab}
+        setSubTab={setShowSubTab}
+        price={price}
+        barber={barber}
+        year={year}
+      />
     </div>
   );
 }
