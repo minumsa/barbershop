@@ -3,23 +3,38 @@ import styles from "./page.module.css";
 
 interface FilterWindowProps {
   setIsFilterActive: React.Dispatch<React.SetStateAction<boolean>>;
+  price: number;
+  setPrice: React.Dispatch<React.SetStateAction<number>>;
+  barber: number;
+  setBarber: React.Dispatch<React.SetStateAction<number>>;
+  year: number;
+  setYear: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const FilterWindow = ({ setIsFilterActive }: FilterWindowProps) => {
-  const [price, setPrice] = useState<number>(50000); // price원 이상
-  const [barber, setBarber] = useState<number>(4); // barber명 이상
-  const [year, setYear] = useState<number>(5); // year년 이상
-
+export const FilterWindow = ({
+  setIsFilterActive,
+  price,
+  setPrice,
+  barber,
+  setBarber,
+  year,
+  setYear,
+}: FilterWindowProps) => {
   return (
     <div className={styles["filter-container"]}>
-      <div className={styles["filter-close"]}>
+      <div
+        className={styles["filter-close"]}
+        onClick={() => {
+          setIsFilterActive(false);
+        }}
+      >
         <div>지도 옵션</div>
         <div className={styles["close"]}>×</div>
       </div>
       <div style={{ display: "flex", marginTop: "15px" }}>
         <div>시술비</div>
         <div style={{ paddingLeft: "30px" }}>
-          {price === 50000 ? "제한 없음" : `${price}원 이하`}
+          {price === 50000 ? "제한 없음" : `${price.toLocaleString()}원 이하`}
         </div>
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>

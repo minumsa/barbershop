@@ -173,6 +173,31 @@
   width: 200px;
 }
 
+.filter-box {
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  position: absolute;
+  top: 70px;
+  right: 0;
+  width: fit-content;
+  height: fit-content;
+  padding: 10px 15px;
+  background-color: #fff;
+  border-top: 1px solid #000;
+  border-left: 1px solid #000;
+  border-bottom: 1px solid #000;
+  z-index: 1000;
+}
+
+.filter-box-content {
+  margin-right: 10px;
+}
+
+.filter-box-content:last-of-type {
+  margin-right: 0;
+}
+
 .tab-container {
   min-width: 390px;
   width: 390px;

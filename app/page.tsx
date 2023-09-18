@@ -9,6 +9,9 @@ import { faGear, faMagnifyingGlass, faSliders } from "@fortawesome/free-solid-sv
 import styles from "./page.module.css";
 
 export default function Page() {
+  const [price, setPrice] = useState<number>(50000); // price원 이상
+  const [barber, setBarber] = useState<number>(4); // barber명 이상
+  const [year, setYear] = useState<number>(5); // year년 이상
   const [showSubTab, setShowSubTab] = useState<boolean>(false);
   const [showFilterWindow, setIsFilterActive] = useState<boolean>(false);
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
@@ -19,7 +22,15 @@ export default function Page() {
         className={styles["filter-content"]}
         style={showFilterWindow ? { position: "fixed" } : { display: "none" }}
       >
-        <FilterWindow setIsFilterActive={setIsFilterActive} />
+        <FilterWindow
+          setIsFilterActive={setIsFilterActive}
+          price={price}
+          setPrice={setPrice}
+          barber={barber}
+          setBarber={setBarber}
+          year={year}
+          setYear={setYear}
+        />
       </div>
       <div className={styles["nav-container"]}>
         <div className={styles["title"]}>
@@ -67,7 +78,13 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <Content showSubTab={showSubTab} setSubTab={setShowSubTab} />
+      <Content
+        showSubTab={showSubTab}
+        setSubTab={setShowSubTab}
+        price={price}
+        barber={barber}
+        year={year}
+      />
     </div>
   );
 }
