@@ -259,7 +259,6 @@
 
 .list-container {
   display: flex;
-  flex-direction: column;
   padding: 10px 0;
   width: 100%;
   height: fit-content;
@@ -270,8 +269,19 @@
 }
 
 .carousel-container {
-  border-radius: 3px;
-  margin: 10px 0;
+  /* style={{ display: "flex", position: "relative", width: "100px", height: "100px" }} */
+  display: flex;
+  position: relative;
+  min-width: 100px;
+  height: 100px;
+  margin-right: 12px;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+  border: 1px solid #666;
+  border-radius: 50%;
 }
 
 .sub-carousel-container {

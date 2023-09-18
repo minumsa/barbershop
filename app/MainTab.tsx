@@ -1,3 +1,4 @@
+import { url } from "inspector";
 import MainCarousel from "./MainCarousel";
 import { barbershops } from "./lib/data";
 import styles from "./page.module.css";
@@ -23,13 +24,16 @@ export const MainTab = ({ showSubTab }: MainTabProps) => {
         {barbershops.map((data, index) => {
           return (
             <div className={styles["list-container"]} key={index}>
-              <div className={styles["carousel-container"]}>
-                <MainCarousel />
+              <div
+                className={styles["carousel-container"]}
+                // style={{ backgroundImage: url("/harf1.jpeg") }}
+              >
+                {/* <MainCarousel /> */}
               </div>
               <div className={styles["list-information"]}>
                 <div className={styles["list-name"]}>{data.name}</div>
                 <div className={styles["list-location"]}>{data.location}</div>
-                <div className={styles["list-description"]}>{data.description}</div>
+                {/* <div className={styles["list-description"]}>{data.description}</div> */}
               </div>
             </div>
           );
