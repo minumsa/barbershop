@@ -23,66 +23,72 @@ export const Map = ({ setSubTab }: MapProps) => {
       zoom: 15,
       zoomControl: true,
       zoomControlOptions: {
-        position: naver.maps.Position.TOP_RIGHT,
+        position: naver.maps.Position.RIGHT_BOTTOM,
       },
     };
     const map = new naver.maps.Map(mapElement.current, mapOptions);
     // TODO: server에서 가져오기
     const shop = barbershops[0];
 
-    const barbershopString = [
-      `<div class=${styles["is-inner"]}>`,
-      `<div>${shop.name}</div>`,
-      // `<div class='carousel-container'>`,
-      // `${renderToString(ImageSlider())}`,
-      // `</div>`,
-      `<div class=${styles["overlay-detail"]}>`,
-      `   <div class=${styles["overlay-detail-title"]}>주소</div>`,
-      `   <div>${shop.location}</div>`,
-      `</div>`,
-      `<div class=${styles["overlay-detail"]}>`,
-      `   <div class=${styles["overlay-detail-title"]}>운영시간</div>`,
-      `   <div>${shop.operatingTime}</div>`,
-      `</div>`,
-      `<div class=${styles["overlay-detail"]}>`,
-      `   <div class=${styles["overlay-detail-title"]}>휴무일</div>`,
-      `   <div>${shop.closedDays}</div>`,
-      `</div>`,
-      `<div class=${styles["overlay-detail"]}>`,
-      `   <div class=${styles["overlay-detail-title"]}>연락처</div>`,
-      `   <div>${shop.contact}</div>`,
-      `</div>`,
-      `<div class=${styles["overlay-detail"]}>`,
-      `   <div class=${styles["overlay-detail-title"]}>바버</div>`,
-      `   <div>${shop.barber?.length}인 - ${shop.barber
-        ?.map(name => {
-          return name;
-        })
-        .join(", ")}</div>`,
-      `</div>`,
-      `<div class=${styles["overlay-detail"]}>`,
-      `   <div class=${styles["overlay-detail-title"]}>시술비</div>`,
-      `   <div>${shop.price?.toLocaleString()}원</div>`,
-      `</div>`,
-      `<div class=${styles["overlay-detail"]}>`,
-      `<div class=${styles["more-button-container"]}>`,
-      `<div class=${styles["more-button"]}><div>더보기</div></div>`,
-      `</div>`,
-      `</div>`,
-      `</div>`,
-    ].join("");
+    const Barbershop = () => {
+      return (
+        <div className={styles["is-inner"]}>
+          <div>{shop.name}</div>
+          <div className={styles["overlay-detail"]}>
+            <div className={styles["overlay-detail-title"]}>주소</div>
+            <div>{shop.location}</div>
+          </div>
+          <div className={styles["overlay-detail"]}>
+            <div className={styles["overlay-detail-title"]}>운영시간</div>
+            <div>{shop.operatingTime}</div>
+          </div>
+          <div className={styles["overlay-detail"]}>
+            <div className={styles["overlay-detail-title"]}>휴무일</div>
+            <div>{shop.closedDays}</div>
+          </div>
+          <div className={styles["overlay-detail"]}>
+            <div className={styles["overlay-detail-title"]}>연락처</div>
+            <div>{shop.contact}</div>
+          </div>
+          <div className={styles["overlay-detail"]}>
+            <div className={styles["overlay-detail-title"]}>바버</div>
+            <div>
+              {shop.barber?.length}인 -{" "}
+              {shop.barber
+                ?.map(name => {
+                  return name;
+                })
+                .join(", ")}
+            </div>
+          </div>
+          <div className={styles["overlay-detail"]}>
+            <div className={styles["overlay-detail-title"]}>시술비</div>
+            <div>{shop.price?.toLocaleString()}원</div>
+          </div>
+          <div className={styles["overlay-detail"]}>
+            <div className={styles["more-button-container"]}>
+              <div className={styles["more-button"]}>
+                <div>더보기</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const BarbershopIcon = () => {
+      return (
+        <div className={styles["pin-container"]}>
+          <div>{`💇‍♂️${shop.name}`}</div>
+        </div>
+      );
+    };
 
     const barbershopMarker = new naver.maps.Marker({
       position: barbershop,
       map: map,
       icon: {
-        content: [
-          `
-        <div class=${styles["pin-container"]}>
-          <div>💇‍♂️${shop.name}</div>
-        </div>
-      `,
-        ].join(""),
+        content: renderToString(BarbershopIcon()),
         size: new naver.maps.Size(50, 50),
         origin: new naver.maps.Point(0, 0),
         anchor: new naver.maps.Point(45, 10),
@@ -90,7 +96,7 @@ export const Map = ({ setSubTab }: MapProps) => {
     });
 
     const infoWindow = new naver.maps.InfoWindow({
-      content: barbershopString,
+      content: renderToString(Barbershop()),
     });
 
     const tmp = infoWindow.contentElement as HTMLElement;

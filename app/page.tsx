@@ -66,12 +66,15 @@ export default function Page() {
         <div className={styles["category"]}>
           {/* <div className={styles["gear"]}>지도 ▾</div> */}
           <div
-            className={styles["gear"]}
+            className={styles["filter-icon"]}
             onClick={() => {
               handleFilter();
             }}
           >
-            <FontAwesomeIcon icon={faGear} />
+            {/* 톱니바퀴 모양 */}
+            {/* <FontAwesomeIcon icon={faGear} /> */}
+            {/* 슬라이더 모양 */}
+            <FontAwesomeIcon icon={faSliders} />
           </div>
         </div>
       </div>
