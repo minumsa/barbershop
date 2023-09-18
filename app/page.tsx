@@ -19,18 +19,7 @@ export default function Page() {
         className={styles["filter-content"]}
         style={showFilterWindow ? { position: "fixed" } : { display: "none" }}
       >
-        <FilterWindow title={"시술비"} data={priceRange} />
-        <FilterWindow title={"바버 인원"} data={barbers} />
-        <FilterWindow title={"개점일"} data={openDate} />
-        <div
-          className={`${styles["close"]} ${styles["close-filter"]}`}
-          style={showFilterWindow ? { position: "absolute" } : { display: "none" }}
-          onClick={() => {
-            handleFilter();
-          }}
-        >
-          ×
-        </div>
+        <FilterWindow setIsFilterActive={setIsFilterActive} />
       </div>
       <div className={styles["nav-container"]}>
         <div className={styles["title"]}>

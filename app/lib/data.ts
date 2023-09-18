@@ -9,6 +9,10 @@ export const barbers = ["1인", "2인 이상"];
 
 export const openDate = ["1년 미만", "1~2년", "2~3년", "3~4년", "4년 이상"];
 
+export const filterData = {
+  priceRange: {},
+};
+
 export const barbershops = [
   {
     name: "하프바버샵",

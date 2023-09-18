@@ -131,6 +131,8 @@
 }
 
 .filter-container {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 50px;
 }
 
@@ -160,9 +162,15 @@
 }
 
 .filter-close {
-  z-index: 110;
-  right: 20px;
-  top: 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.filter-input {
+  width: 200px;
 }
 
 .tab-container {
