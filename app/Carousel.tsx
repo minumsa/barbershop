@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
 import styles from "./page.module.css";
 
-export default function SubCarousel() {
+export default function Carousel() {
   const settings = {
     dots: true,
     infinite: true,
@@ -17,7 +17,6 @@ export default function SubCarousel() {
   };
   return (
     <Slider {...settings}>
-      {/* <Image src={"/harf1.jpeg"} width={390} height={280} alt="some"></Image> */}
       <div>
         <div className={styles["test-detail"]}>
           <Image src={"/harf1.jpeg"} alt="some" fill={true}></Image>

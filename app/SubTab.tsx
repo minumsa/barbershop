@@ -1,5 +1,5 @@
-import SubCarousel from "./SubCarousel";
-import ImageSlider from "./SubCarousel";
+import Carousel from "./Carousel";
+import ImageSlider from "./Carousel";
 import { barbershops } from "./lib/data";
 import styles from "./page.module.css";
 
@@ -29,7 +29,7 @@ export const SubTab = ({ showSubTab, setSubTab }: ContentProps) => {
           </div>
         </div>
         <div className={styles["sub-carousel-container"]}>
-          <SubCarousel />
+          <Carousel />
         </div>
         <div className={styles["sub-information-container"]}>
           <div className={styles["sub-flexbox"]}>

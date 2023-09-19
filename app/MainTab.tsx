@@ -1,5 +1,5 @@
 import { url } from "inspector";
-import MainCarousel from "./MainCarousel";
+import MainImage from "./MainImage";
 import { barbershops } from "./lib/data";
 import styles from "./page.module.css";
 
@@ -26,7 +26,7 @@ export const MainTab = ({ showSubTab }: MainTabProps) => {
             <div className={styles["list-container"]} key={index}>
               <div
                 className={styles["carousel-container"]}
-                // style={{ backgroundImage: url("/harf1.jpeg") }}
+                style={{ backgroundImage: `url("/harf1.jpeg")` }}
               >
                 {/* <MainCarousel /> */}
               </div>
