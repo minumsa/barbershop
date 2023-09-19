@@ -26,14 +26,11 @@ export const MainTab = ({ showSubTab }: MainTabProps) => {
             <div className={styles["list-container"]} key={index}>
               <div
                 className={styles["carousel-container"]}
-                style={{ backgroundImage: `url("/harf1.jpeg")` }}
-              >
-                {/* <MainCarousel /> */}
-              </div>
+                style={{ backgroundImage: `url("${data.imgURL}")` }}
+              ></div>
               <div className={styles["list-information"]}>
                 <div className={styles["list-name"]}>{data.name}</div>
                 <div className={styles["list-location"]}>{data.location}</div>
-                {/* <div className={styles["list-description"]}>{data.description}</div> */}
               </div>
             </div>
           );

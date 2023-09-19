@@ -28,6 +28,7 @@ export const barbershops = [
     price: 36000,
     reservation:
       "https://map.naver.com/p/search/%ED%95%98%ED%94%84%EB%B0%94%EB%B2%84%EC%83%B5/place/1082548337?c=15.00,0,0,0,dh&placePath=%2Fbooking%3FbookingRedirectUrl%3Dhttps%25253A%25252F%25252Fpcmap.place.naver.com%25252Fhairshop%25252F1082548337%25252Fstylist%25253Ftheme%25253Dplace%252526service-target%25253Dmap-pc%252526entry%25253Dbmp",
+    imgURL: "/harf1.jpeg",
   },
   {
     name: "마스터바버샵",
