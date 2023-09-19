@@ -16,16 +16,22 @@ export default function Carousel() {
     // cssEase: "liner",
   };
   return (
-    <Slider {...settings}>
-      <div>
+    <div>
+      <Slider {...settings}>
+        {/* 
+          <Image src={"/harf1.jpeg"} alt="some" fill={true}></Image>
+        </div>
+      </div> */}
+
+        {/* <div className={styles["test-detail"]}> */}
         <div className={styles["test-detail"]}>
           <Image src={"/harf1.jpeg"} alt="some" fill={true}></Image>
         </div>
-      </div>
-      {/* <div style={{ display: "flex", position: "absolute", objectFit: "cover" }}></div> */}
-      {/* <Image src={"/harf2.jpeg"} width={500} height={400} alt="some"></Image>
-      <Image src={"/harf3.jpeg"} width={500} height={400} alt="some"></Image>
-      <Image src={"/harf4.jpeg"} width={500} height={400} alt="some"></Image> */}
-    </Slider>
+        <div>
+          <Image src={"/harf1.jpeg"} alt="some" fill={true}></Image>
+        </div>
+        {/* </div> */}
+      </Slider>
+    </div>
   );
 }

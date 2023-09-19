@@ -5,9 +5,10 @@ import styles from "./page.module.css";
 
 interface MapProps {
   setSubTab: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedBarbershop: any;
 }
 
-export const Map = ({ setSubTab }: MapProps) => {
+export const Map = ({ setSubTab, setSelectedBarbershop }: MapProps) => {
   const mapElement = useRef(null);
 
   useEffect(() => {
@@ -28,42 +29,52 @@ export const Map = ({ setSubTab }: MapProps) => {
     };
     const map = new naver.maps.Map(mapElement.current, mapOptions);
     // TODO: server에서 가져오기
-    const shop = barbershops[0];
 
-    const Barbershop = () => {
+    interface BarbershopProps {
+      name: string;
+      location: string;
+      operatingTime: string;
+      closedDays: string;
+      contact: string;
+      barberList: string[];
+      price: number;
+    }
+
+    const Barbershop = ({
+      name,
+      location,
+      operatingTime,
+      closedDays,
+      contact,
+      barberList,
+      price,
+    }: BarbershopProps) => {
       return (
         <div className={styles["is-inner"]}>
-          <div>{shop.name}</div>
+          <div>{name}</div>
           <div className={styles["overlay-detail"]}>
             <div className={styles["overlay-detail-title"]}>주소</div>
-            <div>{shop.location}</div>
+            <div>{location}</div>
           </div>
           <div className={styles["overlay-detail"]}>
             <div className={styles["overlay-detail-title"]}>운영시간</div>
-            <div>{shop.operatingTime}</div>
+            <div>{operatingTime}</div>
           </div>
           <div className={styles["overlay-detail"]}>
             <div className={styles["overlay-detail-title"]}>휴무일</div>
-            <div>{shop.closedDays}</div>
+            <div>{closedDays}</div>
           </div>
           <div className={styles["overlay-detail"]}>
             <div className={styles["overlay-detail-title"]}>연락처</div>
-            <div>{shop.contact}</div>
+            <div>{contact}</div>
           </div>
           <div className={styles["overlay-detail"]}>
             <div className={styles["overlay-detail-title"]}>바버</div>
-            <div>
-              {shop.barber?.length}인 -{" "}
-              {shop.barber
-                ?.map(name => {
-                  return name;
-                })
-                .join(", ")}
-            </div>
+            <div>{barberList.map(x => x)}</div>
           </div>
           <div className={styles["overlay-detail"]}>
             <div className={styles["overlay-detail-title"]}>시술비</div>
-            <div>{shop.price?.toLocaleString()}원</div>
+            <div>{price?.toLocaleString()}원</div>
           </div>
           <div className={styles["overlay-detail"]}>
             <div className={styles["more-button-container"]}>
@@ -76,40 +87,57 @@ export const Map = ({ setSubTab }: MapProps) => {
       );
     };
 
-    const BarbershopIcon = () => {
+    interface BarbershopIconProps {
+      name: string;
+    }
+
+    const BarbershopIcon = ({ name }: BarbershopIconProps) => {
       return (
         <div className={styles["pin-container"]}>
-          <div>{`💇‍♂️${shop.name}`}</div>
+          <div>{`💇‍♂️${name}`}</div>
         </div>
       );
     };
 
-    const barbershopMarker = new naver.maps.Marker({
-      position: barbershop,
-      map: map,
-      icon: {
-        content: renderToString(BarbershopIcon()),
-        size: new naver.maps.Size(50, 50),
-        origin: new naver.maps.Point(0, 0),
-        anchor: new naver.maps.Point(45, 10),
-      },
-    });
+    barbershops.map((data, index) => {
+      const barbershopMarker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(data.location.lat, data.location.lng),
+        map: map,
+        icon: {
+          content: renderToString(<BarbershopIcon name={data.name} />),
+          size: new naver.maps.Size(50, 50),
+          origin: new naver.maps.Point(0, 0),
+          anchor: new naver.maps.Point(45, 10),
+        },
+      });
 
-    const infoWindow = new naver.maps.InfoWindow({
-      content: renderToString(Barbershop()),
-    });
+      const infoWindow = new naver.maps.InfoWindow({
+        content: renderToString(
+          <Barbershop
+            name={data.name}
+            location={data.location.description}
+            operatingTime={data.operatingTime}
+            closedDays={data.closedDays}
+            contact={data.contact}
+            barberList={data.barberList}
+            price={data.price}
+          />
+        ),
+      });
 
-    const tmp = infoWindow.contentElement as HTMLElement;
-    tmp.getElementsByClassName(styles["more-button"])[0].addEventListener("click", function (e) {
-      setSubTab(true);
-    });
+      naver.maps.Event.addListener(barbershopMarker, "click", function (e) {
+        if (infoWindow.getMap()) {
+          infoWindow.close();
+        } else {
+          infoWindow.open(map, barbershopMarker);
+        }
+      });
 
-    naver.maps.Event.addListener(barbershopMarker, "click", function (e) {
-      if (infoWindow.getMap()) {
-        infoWindow.close();
-      } else {
-        infoWindow.open(map, barbershopMarker);
-      }
+      const tmp = infoWindow.contentElement as HTMLElement;
+      tmp.getElementsByClassName(styles["more-button"])[0].addEventListener("click", function (e) {
+        setSelectedBarbershop(data);
+        setSubTab(true);
+      });
     });
   }, []);
 

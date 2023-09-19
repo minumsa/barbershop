@@ -99,37 +99,6 @@ export const FilterWindow = ({
           </datalist>
         </div>
       </div>
-      <div style={{ display: "flex", marginTop: "50px" }}>
-        <div>개업일</div>
-        <div style={{ paddingLeft: "30px" }}>{year === 5 ? "제한 없음" : `${year}년 이상`}</div>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ paddingTop: "20px" }}>
-          <input
-            className="filter-input"
-            type="range"
-            id="year"
-            name="year"
-            min={0}
-            max={5}
-            step={1}
-            value={year}
-            list="year-markers"
-            onChange={e => {
-              const newYear = Number(e.target.value);
-              setYear(newYear);
-            }}
-          />
-          <datalist id="year-markers">
-            <option value="0"></option>
-            <option value="1"></option>
-            <option value="2"></option>
-            <option value="3"></option>
-            <option value="4"></option>
-            <option value="5"></option>
-          </datalist>
-        </div>
-      </div>
     </div>
   );
 };
