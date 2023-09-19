@@ -1,17 +1,7 @@
 import { NextResponse } from "next/server";
 import BarberShopModel from "../db/BarberShopModel";
 import connectMongoDB from "../db/mongodb";
-
-interface GetRequest {
-	priceRange?: {
-		min?: number,
-		max?: number,
-	},
-	barberCntRange?: {
-		min?: number,
-		max?: number,
-	},
-}
+import { GetRequest } from "@/app/model/api/barbershop/GET";
 
 export async function GET(request: Request) {
 	const searchParams = (new URL(request.url)).searchParams as GetRequest
