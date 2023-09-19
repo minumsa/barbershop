@@ -1,0 +1,6 @@
+{
+  "extension": ["ts"],
+  "spec": "./testData/tmp.spec.ts",
+  "loader": "tsx",
+  "file": ["./mocha.setup.ts"]
+}

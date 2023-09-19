@@ -1,10 +1,6 @@
 export interface GetRequest {
-	priceRange?: {
-		min?: number,
-		max?: number,
-	},
-	barberCntRange?: {
-		min?: number,
-		max?: number,
-	},
+	priceRangeMin?: number,
+	priceRangeMax?: number,
+	barberCntRangeMin?: number,
+	barberCntRangeMax?: number,
 }
