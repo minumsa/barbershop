@@ -25,7 +25,7 @@ export const Content = ({
             setSelectedBarbershop={setSelectedBarbershop}
           />
         ) : (
-          <MainTab />
+          <MainTab setSelectedBarbershop={setSelectedBarbershop} />
         )}
       </div>
       <div className={styles["map-container"]}>
