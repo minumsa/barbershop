@@ -43,7 +43,7 @@ export const barbershops = [
   },
   {
     name: "산타바버샵",
-    barberList: ["지한바버", "석두바버", "은바버", "산타바버", "휘제바버"],
+    barberList: ["지한", "석두", "은", "산타", "휘제"],
     location: {
       description: "서울 성북구 고려대로 21 1층",
       lat: 37.58630047792536,

@@ -34,7 +34,7 @@ export const FilterWindow = ({
       <div style={{ display: "flex", marginTop: "15px" }}>
         <div>시술비</div>
         <div style={{ paddingLeft: "30px" }}>
-          {price === 50000 ? "제한 없음" : `${price.toLocaleString()}원 이하`}
+          {price === 50000 ? "전체 선택" : `${price.toLocaleString()}원 이하`}
         </div>
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -69,7 +69,7 @@ export const FilterWindow = ({
       <div style={{ display: "flex", marginTop: "50px" }}>
         <div>바버 인원</div>
         <div style={{ paddingLeft: "30px" }}>
-          {barber === 1 ? "1인" : barber === 4 ? "제한 없음" : `${barber}인 이상`}
+          {barber === 1 ? "1인" : barber === 2 ? "2인 이상" : "전체 선택"}
         </div>
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -80,7 +80,7 @@ export const FilterWindow = ({
             id="barber"
             name="barber"
             min={1}
-            max={4}
+            max={3}
             step={1}
             value={barber}
             list="barber-markers"
@@ -94,8 +94,6 @@ export const FilterWindow = ({
             <option value="1"></option>
             <option value="2"></option>
             <option value="3"></option>
-            <option value="4"></option>
-            <option value="5"></option>
           </datalist>
         </div>
       </div>

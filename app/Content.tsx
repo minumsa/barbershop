@@ -31,9 +31,11 @@ export const Content = ({
       <div className={styles["map-container"]}>
         <div className={styles["filter-box"]}>
           <div className={styles["filter-box-content"]}>
-            시술비 : {price.toLocaleString()}원 이하,
+            시술비 : {price === 50000 ? "전체 선택" : `${price.toLocaleString()}원 이하,`}
           </div>
-          <div className={styles["filter-box-content"]}>바버 인원 : {barber}인 이상</div>
+          <div className={styles["filter-box-content"]}>
+            바버 인원 : {barber === 3 ? "전체 선택" : barber === 2 ? "2인 이상" : `${barber}인`}
+          </div>
         </div>
         <Map setSelectedBarbershop={setSelectedBarbershop} />
       </div>

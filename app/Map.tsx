@@ -61,7 +61,7 @@ export const Map = ({ setSelectedBarbershop }: MapProps) => {
           </div>
           <div className={styles["overlay-detail"]}>
             <div className={styles["overlay-detail-title"]}>휴무일</div>
-            <div>{closedDays}</div>
+            <div>{closedDays === "" && "없음"}</div>
           </div>
           <div className={styles["overlay-detail"]}>
             <div className={styles["overlay-detail-title"]}>연락처</div>
@@ -69,7 +69,13 @@ export const Map = ({ setSelectedBarbershop }: MapProps) => {
           </div>
           <div className={styles["overlay-detail"]}>
             <div className={styles["overlay-detail-title"]}>바버</div>
-            <div>{barberList.map(x => x)}</div>
+            <div>
+              {barberList.map((barber, index) => {
+                return (
+                  <span key={index}>{index < barberList.length - 1 ? `${barber}, ` : barber}</span>
+                );
+              })}
+            </div>
           </div>
           <div className={styles["overlay-detail"]}>
             <div className={styles["overlay-detail-title"]}>시술비</div>
@@ -77,7 +83,7 @@ export const Map = ({ setSelectedBarbershop }: MapProps) => {
           </div>
           <div className={styles["overlay-detail"]} style={{ padding: 0 }}>
             <div className={styles["more-button-container"]}>
-              <div className={styles["more-button"]}>
+              <div className={styles["button"]}>
                 <div>더보기</div>
               </div>
             </div>
@@ -133,7 +139,7 @@ export const Map = ({ setSelectedBarbershop }: MapProps) => {
       });
 
       const tmp = infoWindow.contentElement as HTMLElement;
-      tmp.getElementsByClassName(styles["more-button"])[0].addEventListener("click", function (e) {
+      tmp.getElementsByClassName(styles["button"])[0].addEventListener("click", function (e) {
         setSelectedBarbershop(data);
       });
     });

@@ -4,12 +4,13 @@ import { useState } from "react";
 import { FilterWindow } from "./FilterWindow";
 import { Content } from "./Content";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faSliders } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faScissors, faSliders } from "@fortawesome/free-solid-svg-icons";
 import styles from "./page.module.css";
+import { Upload } from "./Upload";
 
 export default function Page() {
   const [price, setPrice] = useState<number>(50000); // price원 이상
-  const [barber, setBarber] = useState<number>(4); // barber명 이상
+  const [barber, setBarber] = useState<number>(3); // barber명 이상
   const [year, setYear] = useState<number>(5); // year년 이상
   const [showFilterWindow, setIsFilterActive] = useState<boolean>(false);
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
@@ -34,13 +35,15 @@ export default function Page() {
       <div className={styles["nav-container"]}>
         <div className={styles["title"]}>
           <div>
-            <span style={{ color: "#4285F4" }}>B</span>
+            <FontAwesomeIcon icon={faScissors} />
+          </div>
+          <div>Barber</div>
+          {/* <span style={{ color: "#4285F4" }}>B</span>
             <span style={{ color: "#DB4437" }}>a</span>
             <span style={{ color: "#F4B400" }}>r</span>
             <span style={{ color: "#4285F4" }}>g</span>
             <span style={{ color: "#0F9D58" }}>l</span>
-            <span style={{ color: "#DB4437" }}>e</span>
-          </div>
+            <span style={{ color: "#DB4437" }}>e</span> */}
         </div>
         <div className={styles["search-container"]}>
           <div className={styles["search"]}>
@@ -68,6 +71,7 @@ export default function Page() {
           </div>
         </div>
       </div>
+      {/* <Upload /> */}
       <Content
         selectedBarbershop={selectedBarbershop}
         setSelectedBarbershop={setSelectedBarbershop}
