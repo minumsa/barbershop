@@ -13,8 +13,7 @@ export default function Page() {
   const [year, setYear] = useState<number>(5); // year년 이상
   const [showFilterWindow, setIsFilterActive] = useState<boolean>(false);
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
-  const [showSubTab, setShowSubTab] = useState<boolean>(false);
-  const [selectedBarbershop, setSelectedBarbershop] = useState<any>({});
+  const [selectedBarbershop, setSelectedBarbershop] = useState<any | null>();
 
   return (
     <div className={styles["container"]}>
@@ -34,11 +33,7 @@ export default function Page() {
       </div>
       <div className={styles["nav-container"]}>
         <div className={styles["title"]}>
-          <div
-            onClick={() => {
-              setShowSubTab(false);
-            }}
-          >
+          <div>
             <span style={{ color: "#4285F4" }}>B</span>
             <span style={{ color: "#DB4437" }}>a</span>
             <span style={{ color: "#F4B400" }}>r</span>
@@ -74,8 +69,6 @@ export default function Page() {
         </div>
       </div>
       <Content
-        showSubTab={showSubTab}
-        setSubTab={setShowSubTab}
         selectedBarbershop={selectedBarbershop}
         setSelectedBarbershop={setSelectedBarbershop}
         price={price}

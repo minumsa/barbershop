@@ -4,11 +4,10 @@ import { renderToString } from "react-dom/server";
 import styles from "./page.module.css";
 
 interface MapProps {
-  setSubTab: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedBarbershop: any;
 }
 
-export const Map = ({ setSubTab, setSelectedBarbershop }: MapProps) => {
+export const Map = ({ setSelectedBarbershop }: MapProps) => {
   const mapElement = useRef(null);
 
   useEffect(() => {
@@ -136,7 +135,6 @@ export const Map = ({ setSubTab, setSelectedBarbershop }: MapProps) => {
       const tmp = infoWindow.contentElement as HTMLElement;
       tmp.getElementsByClassName(styles["more-button"])[0].addEventListener("click", function (e) {
         setSelectedBarbershop(data);
-        setSubTab(true);
       });
     });
   }, []);

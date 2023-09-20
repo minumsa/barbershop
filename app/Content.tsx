@@ -4,8 +4,6 @@ import { SubTab } from "./SubTab";
 import styles from "./page.module.css";
 
 interface ContentProps {
-  showSubTab: boolean;
-  setSubTab: React.Dispatch<React.SetStateAction<boolean>>;
   price: number;
   barber: number;
   selectedBarbershop: string;
@@ -13,8 +11,6 @@ interface ContentProps {
 }
 
 export const Content = ({
-  showSubTab,
-  setSubTab,
   price,
   barber,
   selectedBarbershop,
@@ -23,12 +19,14 @@ export const Content = ({
   return (
     <div className={styles["content-container"]}>
       <div className={styles["tab-container"]}>
-        <MainTab showSubTab={showSubTab} />
-        <SubTab
-          showSubTab={showSubTab}
-          setSubTab={setSubTab}
-          selectedBarbershop={selectedBarbershop}
-        />
+        {selectedBarbershop ? (
+          <SubTab
+            selectedBarbershop={selectedBarbershop}
+            setSelectedBarbershop={setSelectedBarbershop}
+          />
+        ) : (
+          <MainTab />
+        )}
       </div>
       <div className={styles["map-container"]}>
         <div className={styles["filter-box"]}>
@@ -37,7 +35,7 @@ export const Content = ({
           </div>
           <div className={styles["filter-box-content"]}>바버 인원 : {barber}인 이상</div>
         </div>
-        <Map setSubTab={setSubTab} setSelectedBarbershop={setSelectedBarbershop} />
+        <Map setSelectedBarbershop={setSelectedBarbershop} />
       </div>
     </div>
   );

@@ -1,27 +1,25 @@
 import Carousel from "./Carousel";
-import { barbershops } from "./lib/data";
 import styles from "./page.module.css";
 
-interface ContentProps {
-  showSubTab: boolean;
-  setSubTab: any;
-  selectedBarbershop: any;
+interface SubTabProps {
+  selectedBarbershop: any | null;
+  setSelectedBarbershop: React.Dispatch<React.SetStateAction<any | null>>;
 }
 
-export const SubTab = ({ showSubTab, setSubTab, selectedBarbershop }: ContentProps) => {
+export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProps) => {
   return (
-    showSubTab && (
+    selectedBarbershop && (
       <div className={styles["tab"]}>
         <div className={styles["sub-title-container"]}>
           <div
             className={styles["tab-title"]}
-            style={showSubTab ? { marginBottom: "15px" } : undefined}
+            style={selectedBarbershop ? { marginBottom: "15px" } : undefined}
           >
             <div style={{ fontWeight: "500" }}>{selectedBarbershop.name}</div>
             <div
               className={styles["close"]}
               onClick={() => {
-                setSubTab(false);
+                setSelectedBarbershop(null);
               }}
             >
               ×
