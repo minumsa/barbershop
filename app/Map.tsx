@@ -76,7 +76,7 @@ export const Map = ({ setSubTab, setSelectedBarbershop }: MapProps) => {
             <div className={styles["overlay-detail-title"]}>시술비</div>
             <div>{price?.toLocaleString()}원</div>
           </div>
-          <div className={styles["overlay-detail"]}>
+          <div className={styles["overlay-detail"]} style={{ padding: 0 }}>
             <div className={styles["more-button-container"]}>
               <div className={styles["more-button"]}>
                 <div>더보기</div>
