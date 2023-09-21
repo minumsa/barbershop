@@ -26,7 +26,7 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
         <div className={styles["sub-carousel-container"]}>
           {/* 중요 : fill을 "true"로, objectFit을 "contain"으로 설정해야 width에 따라 height가 원본 크기에 맞게 변경됨 */}
           <div className={styles["image-container"]}>
-            <Image src={"/harf1.jpeg"} alt="test" fill={true} objectFit="contain" />
+            <Image src={selectedBarbershop.imgUrl} alt="test" fill={true} objectFit="contain" />
             {/* <Carousel /> */}
           </div>
         </div>
