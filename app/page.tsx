@@ -11,7 +11,6 @@ import { Upload } from "./Upload";
 export default function Page() {
   const [price, setPrice] = useState<number>(50000); // price원 이상
   const [barber, setBarber] = useState<number>(3); // barber명 이상
-  const [year, setYear] = useState<number>(5); // year년 이상
   const [showFilterWindow, setIsFilterActive] = useState<boolean>(false);
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
   const [selectedBarbershop, setSelectedBarbershop] = useState<any | null>();
@@ -28,8 +27,6 @@ export default function Page() {
           setPrice={setPrice}
           barber={barber}
           setBarber={setBarber}
-          year={year}
-          setYear={setYear}
         />
       </div>
       <div className={styles["nav-container"]}>
@@ -38,12 +35,6 @@ export default function Page() {
             <FontAwesomeIcon icon={faScissors} />
           </div>
           <div>Barber</div>
-          {/* <span style={{ color: "#4285F4" }}>B</span>
-            <span style={{ color: "#DB4437" }}>a</span>
-            <span style={{ color: "#F4B400" }}>r</span>
-            <span style={{ color: "#4285F4" }}>g</span>
-            <span style={{ color: "#0F9D58" }}>l</span>
-            <span style={{ color: "#DB4437" }}>e</span> */}
         </div>
         <div className={styles["search-container"]}>
           <div className={styles["search"]}>

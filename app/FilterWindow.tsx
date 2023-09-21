@@ -7,8 +7,6 @@ interface FilterWindowProps {
   setPrice: React.Dispatch<React.SetStateAction<number>>;
   barber: number;
   setBarber: React.Dispatch<React.SetStateAction<number>>;
-  year: number;
-  setYear: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const FilterWindow = ({
@@ -17,8 +15,6 @@ export const FilterWindow = ({
   setPrice,
   barber,
   setBarber,
-  year,
-  setYear,
 }: FilterWindowProps) => {
   return (
     <div className={styles["filter-container"]}>
@@ -100,15 +96,3 @@ export const FilterWindow = ({
     </div>
   );
 };
-
-{
-  /* <div
-className={`${styles["close"]} ${styles["close-filter"]}`}
-style={showFilterWindow ? { position: "absolute" } : { display: "none" }}
-onClick={() => {
-  handleFilter();
-}}
->
-×
-</div> */
-}
