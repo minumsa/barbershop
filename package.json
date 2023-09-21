@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "NODE_ENV=test mocha"
+    "test": "NODE_ENV=test mocha",
+    "updateTmpData": "mocha --config ./testData/.tmpData.mocharc.json"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.2",
