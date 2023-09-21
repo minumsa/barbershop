@@ -35,6 +35,7 @@ const barberShopSchema = new mongoose.Schema<IBarberShop>({
 	operatingTime: String,
 	closedDays: String,
 	reservationUrl: String,
+	imgUrl: String,
 });
 
 barberShopSchema.set('toJSON', {

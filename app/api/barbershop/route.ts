@@ -2,6 +2,7 @@ import { GetRequest } from "@/app/model/api/barbershop/GET";
 import { NextResponse } from "next/server";
 import BarberShopModel from "../db/BarberShopModel";
 import connectMongoDB from "../db/mongodb";
+import { ensureId, ensurePassword, handleError } from "../errors";
 
 export async function GET(request: Request) {
 
@@ -33,7 +34,27 @@ export async function GET(request: Request) {
 		}
 		return NextResponse.json(dataArr.map(data => data.toJSON()));
 	} catch (error) {
-		console.error(error);
-		return NextResponse.json({ message: "Server Error" }, { status: 500 });
+		return handleError(error)
+	}
+}
+
+export async function POST(
+	request: Request
+) {
+	try {
+		await connectMongoDB();
+
+		const {
+			password,
+			...reqJson
+		} = await request.json();
+
+		ensurePassword(password)
+
+		const newBarbershop = await BarberShopModel.create(reqJson)
+
+		return NextResponse.json(newBarbershop.toJSON());
+	} catch (error) {
+		return handleError(error)
 	}
 }
