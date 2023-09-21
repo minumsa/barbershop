@@ -23,11 +23,10 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
             </div>
           </div>
         </div>
-        <div className={styles["sub-carousel-container"]}>
+        <div className={styles["sub-barbershop-image-container"]}>
           {/* 중요 : fill을 "true"로, objectFit을 "contain"으로 설정해야 width에 따라 height가 원본 크기에 맞게 변경됨 */}
           <div className={styles["image-container"]}>
             <Image src={selectedBarbershop.imgUrl} alt="test" fill={true} objectFit="contain" />
-            {/* <Carousel /> */}
           </div>
         </div>
         <div className={styles["sub-information-container"]}>
@@ -80,8 +79,15 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
               </a>
             </div>
           </div>
-          <div style={{ display: "flex", fontSize: "1rem", marginTop: "8px" }}>
-            <div className={styles["button"]}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              fontSize: "1rem",
+              marginTop: "15px",
+            }}
+          >
+            <div className={styles["button"]} style={{ padding: "2px 30px" }}>
               <div>예약</div>
             </div>
           </div>

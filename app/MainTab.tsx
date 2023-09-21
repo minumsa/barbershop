@@ -67,7 +67,7 @@ export const MainTab = ({ setSelectedBarbershop, price, barber }: MainTabProps) 
             }}
           >
             <div
-              className={styles["carousel-container"]}
+              className={styles["barbershop-image-container"]}
               style={{ backgroundImage: `url("${data.imgUrl}")` }}
             ></div>
             <div className={styles["list-information"]}>

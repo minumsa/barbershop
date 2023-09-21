@@ -17,7 +17,7 @@ export const barbershops = [
     description:
       "을지로 3가와 4가 사이 인쇄 골목에 위치한 1인 바버샵입니다. 한 분 한 분 최선을 다하겠습니다.",
     price: 36000,
-    imgUrl: "/harf1.jpeg",
+    imgUrl: "/harf.jpeg",
     barbershopUrl: "https://www.instagram.com/hakdo__/",
     locationUrl: "https://naver.me/xRQD7LVD",
     reservationUrl:
@@ -37,7 +37,7 @@ export const barbershops = [
     description:
       "마스터바버샵을 찾아주셔서 감사드립니다. 문의는 전화 및 네이버 톡톡으로 주시기 바랍니다. 시술 중에는 전화 연결이 어려울 수 있으니 양해 부탁드립니다.",
     price: 40000,
-    imgUrl: "/master1.jpeg",
+    imgUrl: "/master.jpeg",
     locationUrl: "https://naver.me/xaPgVjSU",
     barbershopUrl: "https://blog.naver.com/charlesbarbershop_th",
     reservationUrl:
@@ -57,7 +57,7 @@ export const barbershops = [
     description:
       "주차 가능합니다! 1시간 단위로 예약을 받고 있습니다! 15분 이상 늦을 시 예약이 취소 될 수 있습니다! (다음 예약자분께서 기다려야 하기 때문)",
     price: 36000,
-    imgUrl: "/santa1.jpeg",
+    imgUrl: "/santa.jpeg",
     locationUrl: "https://naver.me/5h3JMTk2",
     barbershopUrl: "https://www.youtube.com/channel/UCwArgWGLZC_Rbr3n7qK1R7Q?view_as=subscriber",
     reservationUrl:
