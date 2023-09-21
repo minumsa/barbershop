@@ -23,14 +23,14 @@ export default function Carousel() {
         </div>
       </div> */}
 
-        {/* <div className={styles["test-detail"]}> */}
         <div className={styles["test-detail"]}>
-          <Image src={"/harf1.jpeg"} alt="some" fill={true}></Image>
+          <div>
+            <Image src={"/harf1.jpeg"} alt="some" fill={true}></Image>
+          </div>
+          <div>
+            <Image src={"/harf1.jpeg"} alt="some" fill={true}></Image>
+          </div>
         </div>
-        <div>
-          <Image src={"/harf1.jpeg"} alt="some" fill={true}></Image>
-        </div>
-        {/* </div> */}
       </Slider>
     </div>
   );

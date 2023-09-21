@@ -61,7 +61,7 @@ export const Map = ({ setSelectedBarbershop }: MapProps) => {
           </div>
           <div className={styles["overlay-detail"]}>
             <div className={styles["overlay-detail-title"]}>휴무일</div>
-            <div>{closedDays === "" && "없음"}</div>
+            <div>{closedDays === "" ? "없음" : closedDays}</div>
           </div>
           <div className={styles["overlay-detail"]}>
             <div className={styles["overlay-detail-title"]}>연락처</div>
