@@ -24,9 +24,16 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
           </div>
         </div>
         <div className={styles["sub-barbershop-image-container"]}>
-          {/* 중요 : fill을 "true"로, objectFit을 "contain"으로 설정해야 width에 따라 height가 원본 크기에 맞게 변경됨 */}
+          {/* 중요 : width를 100%로 하고 height를 auto로*/}
           <div className={styles["image-container"]}>
-            <Image src={selectedBarbershop.imgUrl} alt="test" fill={true} objectFit="contain" />
+            <Image
+              src={selectedBarbershop.imgUrl}
+              alt="test"
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: "100%", height: "auto" }}
+            />
           </div>
         </div>
         <div className={styles["sub-information-container"]}>
