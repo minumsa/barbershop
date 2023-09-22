@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 
 interface IBarberShop {
 	name: string,
@@ -17,6 +17,7 @@ interface IBarberShop {
 	closedDays?: string,
 	reservationUrl?: string,
 	imgUrl?: string,
+	locationUrl?: string,
 }
 
 const barberShopSchema = new mongoose.Schema<IBarberShop>({
@@ -35,6 +36,8 @@ const barberShopSchema = new mongoose.Schema<IBarberShop>({
 	operatingTime: String,
 	closedDays: String,
 	reservationUrl: String,
+	imgUrl: String,
+	locationUrl: String,
 });
 
 barberShopSchema.set('toJSON', {

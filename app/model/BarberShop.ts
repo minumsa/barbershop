@@ -16,4 +16,5 @@ export interface BarberShop {
 	closedDays?: string,
 	reservationUrl?: string,
 	imgUrl?: string,
+	locationUrl?: string,
 }
