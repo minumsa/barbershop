@@ -104,7 +104,7 @@ describe('/api/barbershop GET', () => {
 });
 
 
-describe('/api/barbershop/[id] POST', () => {
+describe('/api/barbershop POST', () => {
 	function mockRequest(body: object): Request {
 		const url = new URL("https://test/mock")
 		const req = new Request(url, { method: "POST", body: JSON.stringify(body) })
