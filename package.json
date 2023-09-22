@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "NODE_ENV=test mocha",
+    "updateTmpData": "mocha --config ./testData/.tmpData.mocharc.json"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.2",
@@ -20,6 +22,7 @@
     "@types/react-dom": "18.2.7",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
+    "mongoose": "^7.5.0",
     "next": "13.4.19",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -27,6 +30,12 @@
     "typescript": "5.2.2"
   },
   "devDependencies": {
-    "@types/react-slick": "^0.23.10"
+    "@types/chai": "^4.3.6",
+    "@types/mocha": "^10.0.1",
+    "@types/react-slick": "^0.23.10",
+    "chai": "^4.3.8",
+    "mocha": "^10.2.0",
+    "node-mocks-http": "^1.13.0",
+    "tsx": "^3.12.10"
   }
 }
