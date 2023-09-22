@@ -255,6 +255,14 @@
 
    `id=[string]`
 
+* **Data Params**
+  password
+  ```
+  {
+    password: string,
+  }
+  ```
+
 * **Success Response:**
   
   * **Code:** 200 <br />
