@@ -1,20 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { barbers, openDate, priceRange } from "./lib/data";
 import { FilterWindow } from "./FilterWindow";
 import { Content } from "./Content";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear, faMagnifyingGlass, faSliders } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faScissors, faSliders } from "@fortawesome/free-solid-svg-icons";
 import styles from "./page.module.css";
+import { Upload } from "./Upload";
 
 export default function Page() {
   const [price, setPrice] = useState<number>(50000); // price원 이상
-  const [barber, setBarber] = useState<number>(4); // barber명 이상
-  const [year, setYear] = useState<number>(5); // year년 이상
-  const [showSubTab, setShowSubTab] = useState<boolean>(false);
+  const [barber, setBarber] = useState<number>(3); // barber명 이상
   const [showFilterWindow, setIsFilterActive] = useState<boolean>(false);
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
+  const [selectedBarbershop, setSelectedBarbershop] = useState<any | null>();
 
   return (
     <div className={styles["container"]}>
@@ -28,25 +27,14 @@ export default function Page() {
           setPrice={setPrice}
           barber={barber}
           setBarber={setBarber}
-          year={year}
-          setYear={setYear}
         />
       </div>
       <div className={styles["nav-container"]}>
         <div className={styles["title"]}>
-          <div
-            onClick={() => {
-              setShowSubTab(false);
-            }}
-          >
-            {/* Barber */}
-            <span style={{ color: "#4285F4" }}>B</span>
-            <span style={{ color: "#DB4437" }}>a</span>
-            <span style={{ color: "#F4B400" }}>r</span>
-            <span style={{ color: "#4285F4" }}>g</span>
-            <span style={{ color: "#0F9D58" }}>l</span>
-            <span style={{ color: "#DB4437" }}>e</span>
+          <div>
+            <FontAwesomeIcon icon={faScissors} />
           </div>
+          <div>Barber</div>
         </div>
         <div className={styles["search-container"]}>
           <div className={styles["search"]}>
@@ -64,26 +52,22 @@ export default function Page() {
           </div>
         </div>
         <div className={styles["category"]}>
-          {/* <div className={styles["gear"]}>지도 ▾</div> */}
           <div
             className={styles["filter-icon"]}
             onClick={() => {
               handleFilter();
             }}
           >
-            {/* 톱니바퀴 모양 */}
-            {/* <FontAwesomeIcon icon={faGear} /> */}
-            {/* 슬라이더 모양 */}
             <FontAwesomeIcon icon={faSliders} />
           </div>
         </div>
       </div>
+      {/* <Upload /> */}
       <Content
-        showSubTab={showSubTab}
-        setSubTab={setShowSubTab}
+        selectedBarbershop={selectedBarbershop}
+        setSelectedBarbershop={setSelectedBarbershop}
         price={price}
         barber={barber}
-        year={year}
       />
     </div>
   );

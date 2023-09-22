@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "./page.module.css";
 
 interface FilterWindowProps {
@@ -7,8 +6,6 @@ interface FilterWindowProps {
   setPrice: React.Dispatch<React.SetStateAction<number>>;
   barber: number;
   setBarber: React.Dispatch<React.SetStateAction<number>>;
-  year: number;
-  setYear: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const FilterWindow = ({
@@ -17,8 +14,6 @@ export const FilterWindow = ({
   setPrice,
   barber,
   setBarber,
-  year,
-  setYear,
 }: FilterWindowProps) => {
   return (
     <div className={styles["filter-container"]}>
@@ -34,7 +29,7 @@ export const FilterWindow = ({
       <div style={{ display: "flex", marginTop: "15px" }}>
         <div>시술비</div>
         <div style={{ paddingLeft: "30px" }}>
-          {price === 50000 ? "제한 없음" : `${price.toLocaleString()}원 이하`}
+          {price === 50000 ? "전체 선택" : `${price.toLocaleString()}원 이하`}
         </div>
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -69,7 +64,7 @@ export const FilterWindow = ({
       <div style={{ display: "flex", marginTop: "50px" }}>
         <div>바버 인원</div>
         <div style={{ paddingLeft: "30px" }}>
-          {barber === 1 ? "1인" : barber === 4 ? "제한 없음" : `${barber}인 이상`}
+          {barber === 1 ? "1인" : barber === 2 ? "2인 이상" : "전체 선택"}
         </div>
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -80,7 +75,7 @@ export const FilterWindow = ({
             id="barber"
             name="barber"
             min={1}
-            max={4}
+            max={3}
             step={1}
             value={barber}
             list="barber-markers"
@@ -94,54 +89,9 @@ export const FilterWindow = ({
             <option value="1"></option>
             <option value="2"></option>
             <option value="3"></option>
-            <option value="4"></option>
-            <option value="5"></option>
-          </datalist>
-        </div>
-      </div>
-      <div style={{ display: "flex", marginTop: "50px" }}>
-        <div>개업일</div>
-        <div style={{ paddingLeft: "30px" }}>{year === 5 ? "제한 없음" : `${year}년 이상`}</div>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ paddingTop: "20px" }}>
-          <input
-            className="filter-input"
-            type="range"
-            id="year"
-            name="year"
-            min={0}
-            max={5}
-            step={1}
-            value={year}
-            list="year-markers"
-            onChange={e => {
-              const newYear = Number(e.target.value);
-              setYear(newYear);
-            }}
-          />
-          <datalist id="year-markers">
-            <option value="0"></option>
-            <option value="1"></option>
-            <option value="2"></option>
-            <option value="3"></option>
-            <option value="4"></option>
-            <option value="5"></option>
           </datalist>
         </div>
       </div>
     </div>
   );
 };
-
-{
-  /* <div
-className={`${styles["close"]} ${styles["close-filter"]}`}
-style={showFilterWindow ? { position: "absolute" } : { display: "none" }}
-onClick={() => {
-  handleFilter();
-}}
->
-×
-</div> */
-}
