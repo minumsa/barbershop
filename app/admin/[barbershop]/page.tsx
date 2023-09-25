@@ -21,20 +21,10 @@ export default function Page({ params }: any) {
   const [barber, setBarber] = useState<number>(3); // barber명 이상
   const [showFilterWindow, setIsFilterActive] = useState<boolean>(false);
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
-  const [selectedBarbershop, setSelectedBarbershop] = useState<any | null>();
   const [password, setPassword] = useState<string>("");
-  const pathName = decodeURIComponent(params.slug);
+  const pathName = decodeURIComponent(params.barbershop);
   const router = useRouter();
   const [barbershops, setBarbershops] = useState<BarberShop[]>();
-
-  useEffect(() => {
-    async function loadData() {
-      setBarbershops(await fetchData());
-    }
-
-    loadData();
-    setBarbershops(barbershops && barbershops.filter(data => data.name === pathName));
-  }, []);
 
   return (
     <div className={styles["container"]}>
@@ -94,7 +84,7 @@ export default function Page({ params }: any) {
           </div>
         </div>
       </div>
-      <Upload pathName={pathName} barbershops={barbershops && barbershops[0]} />
+      <Upload />
       {/* <Content
         selectedBarbershop={selectedBarbershop}
         setSelectedBarbershop={setSelectedBarbershop}

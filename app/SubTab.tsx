@@ -2,17 +2,19 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import React, { useState } from "react";
 import { deleteData } from "./lib/api";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 interface SubTabProps {
   selectedBarbershop: any | null;
   setSelectedBarbershop: React.Dispatch<React.SetStateAction<any | null>>;
-  pathName: string;
 }
 
-export const SubTab = ({ selectedBarbershop, setSelectedBarbershop, pathName }: SubTabProps) => {
+export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProps) => {
   const router = useRouter();
+  const pathName = usePathname();
   const [password, setPassword] = useState<string>("");
+
+  console.log(pathName);
 
   return (
     selectedBarbershop && (

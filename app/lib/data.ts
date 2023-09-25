@@ -66,7 +66,7 @@ export const filterData = {
 // ];
 
 export interface IBarberShop {
-  name: string;
+  name?: string;
   barberList?: string[];
   location: {
     description: string;

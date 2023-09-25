@@ -91,6 +91,7 @@ export async function PUT(request: Request) {
     await connectMongoDB();
 
     const { data, password } = await request.json();
+    const { name } = data.name;
 
     if (password !== process.env.UPLOAD_PASSWORD)
       return NextResponse.json({ message: "password is not correct" }, { status: 401 });

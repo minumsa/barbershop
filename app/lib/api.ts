@@ -21,6 +21,35 @@ export async function fetchData() {
   }
 }
 
+export async function fetchModifyData(pathName: string) {
+  try {
+    const response = await fetch("/api/barbershop", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to upload barbershop data");
+    }
+
+    let data = await response.json();
+
+    console.log("pathName", pathName);
+
+    if (!pathName.includes("upload")) {
+      const selectedData = data.filter((barbershop: IBarberShop) =>
+        pathName.includes(decodeURIComponent(barbershop.name))
+      )[0];
+
+      return selectedData;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function uploadData(barbershopData: IBarberShop, password: string) {
   if (barbershopData !== null) {
     try {
