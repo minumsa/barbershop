@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from "react";
-import { barbershops } from "./lib/data";
+import React, { useEffect, useRef, useState } from "react";
 import { renderToString } from "react-dom/server";
 import styles from "./page.module.css";
+import { fetchData } from "./lib/api";
+import { BarberShop } from "./model/BarberShop";
 
 interface MapProps {
   setSelectedBarbershop: any;
@@ -9,6 +10,15 @@ interface MapProps {
 
 export const Map = ({ setSelectedBarbershop }: MapProps) => {
   const mapElement = useRef(null);
+  const [barbershops, setBarbershops] = useState<BarberShop[]>();
+
+  useEffect(() => {
+    async function loadData() {
+      setBarbershops(await fetchData());
+    }
+
+    loadData();
+  }, []);
 
   useEffect(() => {
     const { naver } = window as any;
@@ -104,45 +114,46 @@ export const Map = ({ setSelectedBarbershop }: MapProps) => {
       );
     };
 
-    barbershops.map((data, index) => {
-      const barbershopMarker = new naver.maps.Marker({
-        position: new naver.maps.LatLng(data.location.lat, data.location.lng),
-        map: map,
-        icon: {
-          content: renderToString(<BarbershopIcon name={data.name} />),
-          size: new naver.maps.Size(50, 50),
-          origin: new naver.maps.Point(0, 0),
-          anchor: new naver.maps.Point(45, 10),
-        },
-      });
+    barbershops &&
+      barbershops.map((data, index) => {
+        const barbershopMarker = new naver.maps.Marker({
+          position: new naver.maps.LatLng(data.location.lat, data.location.lng),
+          map: map,
+          icon: {
+            content: renderToString(<BarbershopIcon name={data.name} />),
+            size: new naver.maps.Size(50, 50),
+            origin: new naver.maps.Point(0, 0),
+            anchor: new naver.maps.Point(45, 10),
+          },
+        });
 
-      const infoWindow = new naver.maps.InfoWindow({
-        content: renderToString(
-          <Barbershop
-            name={data.name}
-            location={data.location.description}
-            operatingTime={data.operatingTime}
-            closedDays={data.closedDays}
-            contact={data.contact}
-            barberList={data.barberList}
-            price={data.price}
-          />
-        ),
-      });
+        const infoWindow = new naver.maps.InfoWindow({
+          content: renderToString(
+            <Barbershop
+              name={data.name}
+              location={data.location.description}
+              operatingTime={data.operatingTime}
+              closedDays={data.closedDays}
+              contact={data.contact}
+              barberList={data.barberList}
+              price={data.price}
+            />
+          ),
+        });
 
-      naver.maps.Event.addListener(barbershopMarker, "click", function (e) {
-        if (infoWindow.getMap()) {
-          infoWindow.close();
-        } else {
-          infoWindow.open(map, barbershopMarker);
-        }
-      });
+        naver.maps.Event.addListener(barbershopMarker, "click", function (e) {
+          if (infoWindow.getMap()) {
+            infoWindow.close();
+          } else {
+            infoWindow.open(map, barbershopMarker);
+          }
+        });
 
-      const tmp = infoWindow.contentElement as HTMLElement;
-      tmp.getElementsByClassName(styles["button"])[0].addEventListener("click", function (e) {
-        setSelectedBarbershop(data);
+        const tmp = infoWindow.contentElement as HTMLElement;
+        tmp.getElementsByClassName(styles["button"])[0].addEventListener("click", function (e) {
+          setSelectedBarbershop(data);
+        });
       });
-    });
   }, []);
 
   return <div ref={mapElement} style={{ width: "100%", height: "100%" }} />;

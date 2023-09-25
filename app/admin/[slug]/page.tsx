@@ -1,20 +1,40 @@
 "use client";
 
-import { useState } from "react";
-import { FilterWindow } from "./FilterWindow";
-import { Content } from "./Content";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faScissors, faSliders } from "@fortawesome/free-solid-svg-icons";
-import styles from "./page.module.css";
-import { Upload } from "./Upload";
+import {
+  faMagnifyingGlass,
+  faPen,
+  faPlus,
+  faScissors,
+  faSliders,
+} from "@fortawesome/free-solid-svg-icons";
+import { FilterWindow } from "@/app/FilterWindow";
+import { Upload } from "@/app/Upload";
+import styles from "@/app/page.module.css";
+import { useRouter } from "next/navigation";
+import { fetchData } from "@/app/lib/api";
+import { BarberShop } from "@/app/model/BarberShop";
 
-export default function Page() {
+export default function Page({ params }: any) {
   const [price, setPrice] = useState<number>(50000); // price원 이상
   const [barber, setBarber] = useState<number>(3); // barber명 이상
   const [showFilterWindow, setIsFilterActive] = useState<boolean>(false);
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
   const [selectedBarbershop, setSelectedBarbershop] = useState<any | null>();
   const [password, setPassword] = useState<string>("");
+  const pathName = decodeURIComponent(params.slug);
+  const router = useRouter();
+  const [barbershops, setBarbershops] = useState<BarberShop[]>();
+
+  useEffect(() => {
+    async function loadData() {
+      setBarbershops(await fetchData());
+    }
+
+    loadData();
+    setBarbershops(barbershops && barbershops.filter(data => data.name === pathName));
+  }, []);
 
   return (
     <div className={styles["container"]}>
@@ -55,6 +75,17 @@ export default function Page() {
         <div className={styles["category"]}>
           <div
             className={styles["filter-icon"]}
+            style={{ marginRight: "15px" }}
+            onClick={() => {
+              router.push("/admin/upload");
+            }}
+          >
+            <div>
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          </div>
+          <div
+            className={styles["filter-icon"]}
             onClick={() => {
               handleFilter();
             }}
@@ -63,13 +94,13 @@ export default function Page() {
           </div>
         </div>
       </div>
-      {/* <Upload /> */}
-      <Content
+      <Upload pathName={pathName} barbershops={barbershops && barbershops[0]} />
+      {/* <Content
         selectedBarbershop={selectedBarbershop}
         setSelectedBarbershop={setSelectedBarbershop}
         price={price}
         barber={barber}
-      />
+      /> */}
     </div>
   );
 }

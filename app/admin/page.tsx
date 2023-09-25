@@ -1,12 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { FilterWindow } from "./FilterWindow";
-import { Content } from "./Content";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faScissors, faSliders } from "@fortawesome/free-solid-svg-icons";
-import styles from "./page.module.css";
-import { Upload } from "./Upload";
+import {
+  faMagnifyingGlass,
+  faPen,
+  faPlus,
+  faScissors,
+  faSliders,
+} from "@fortawesome/free-solid-svg-icons";
+import styles from "../page.module.css";
+import { FilterWindow } from "../FilterWindow";
+import { Upload } from "../Upload";
+import { Content } from "../Content";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Page() {
   const [price, setPrice] = useState<number>(50000); // price원 이상
@@ -15,6 +22,10 @@ export default function Page() {
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
   const [selectedBarbershop, setSelectedBarbershop] = useState<any | null>();
   const [password, setPassword] = useState<string>("");
+  const pathName = usePathname();
+  const router = useRouter();
+
+  console.log(pathName);
 
   return (
     <div className={styles["container"]}>
@@ -55,6 +66,17 @@ export default function Page() {
         <div className={styles["category"]}>
           <div
             className={styles["filter-icon"]}
+            style={{ marginRight: "15px" }}
+            onClick={() => {
+              router.push("/admin/upload");
+            }}
+          >
+            <div>
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          </div>
+          <div
+            className={styles["filter-icon"]}
             onClick={() => {
               handleFilter();
             }}
@@ -69,6 +91,7 @@ export default function Page() {
         setSelectedBarbershop={setSelectedBarbershop}
         price={price}
         barber={barber}
+        pathName={pathName}
       />
     </div>
   );

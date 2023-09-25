@@ -8,6 +8,7 @@ interface ContentProps {
   barber: number;
   selectedBarbershop: string;
   setSelectedBarbershop: React.Dispatch<React.SetStateAction<string>>;
+  pathName: string;
 }
 
 export const Content = ({
@@ -15,6 +16,7 @@ export const Content = ({
   barber,
   selectedBarbershop,
   setSelectedBarbershop,
+  pathName,
 }: ContentProps) => {
   return (
     <div className={styles["content-container"]}>
@@ -23,6 +25,7 @@ export const Content = ({
           <SubTab
             selectedBarbershop={selectedBarbershop}
             setSelectedBarbershop={setSelectedBarbershop}
+            pathName={pathName}
           />
         ) : (
           <MainTab setSelectedBarbershop={setSelectedBarbershop} price={price} barber={barber} />

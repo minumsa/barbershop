@@ -1,12 +1,19 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import React, { useState } from "react";
+import { deleteData } from "./lib/api";
+import { useRouter } from "next/navigation";
 
 interface SubTabProps {
   selectedBarbershop: any | null;
   setSelectedBarbershop: React.Dispatch<React.SetStateAction<any | null>>;
+  pathName: string;
 }
 
-export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProps) => {
+export const SubTab = ({ selectedBarbershop, setSelectedBarbershop, pathName }: SubTabProps) => {
+  const router = useRouter();
+  const [password, setPassword] = useState<string>("");
+
   return (
     selectedBarbershop && (
       <div className={styles["tab"]}>
@@ -44,9 +51,11 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
           <div className={styles["sub-flexbox"]}>
             <div className={styles["sub-title"]}>바버</div>
             {/* TODO: 2인 이상일 때 쉼표 넣기 */}
-            <div className={styles["sub-information"]}>{`${selectedBarbershop.barberList.map(
-              (barber: string) => barber
-            )}`}</div>
+            <div className={styles["sub-information"]}>{`${selectedBarbershop.barberList
+              .map((barber: string, index: number) => {
+                return index < selectedBarbershop.barberList.length - 1 ? `${barber}, ` : barber;
+              })
+              .join("")}`}</div>
           </div>
           <div className={styles["sub-flexbox"]}>
             <div className={styles["sub-title"]}>주소</div>
@@ -94,9 +103,54 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
               marginTop: "15px",
             }}
           >
-            <div className={styles["button"]} style={{ padding: "2px 30px" }}>
-              <div>예약</div>
-            </div>
+            {!pathName.includes("admin") && (
+              <div
+                className={`${styles["button"]} ${styles["sub-tab-button"]}`}
+                onClick={() => {
+                  window.open(selectedBarbershop.reservationUrl);
+                }}
+              >
+                <div>예약</div>
+              </div>
+            )}
+            {pathName.includes("admin") && (
+              <React.Fragment>
+                <div
+                  className={`${styles["button"]} ${styles["sub-tab-button"]}`}
+                  onClick={() => {
+                    router.push(`/admin/${selectedBarbershop.name}`);
+                  }}
+                >
+                  <div>수정</div>
+                </div>
+                <div className={`${styles["button"]} ${styles["sub-tab-button"]}`}>
+                  <div
+                    onClick={async () => {
+                      console.log(selectedBarbershop.name);
+                      deleteData(selectedBarbershop.name, password);
+                    }}
+                  >
+                    삭제
+                  </div>
+                </div>
+              </React.Fragment>
+            )}
+          </div>
+          <div
+            style={{
+              height: "32px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: "1rem",
+              marginTop: "10px",
+            }}
+          >
+            <div style={{ margin: "10px" }}>관리자 비밀번호</div>
+            <input
+              className={styles["sub-tab-input"]}
+              onChange={e => setPassword(e.target.value)}
+            />
           </div>
         </div>
       </div>
