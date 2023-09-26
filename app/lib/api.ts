@@ -21,7 +21,7 @@ export async function fetchData() {
   }
 }
 
-export async function fetchModifyData(pathName: string) {
+export async function fetchModifyData(barbershopId: string) {
   try {
     const response = await fetch("/api/barbershop", {
       method: "GET",
@@ -35,8 +35,6 @@ export async function fetchModifyData(pathName: string) {
     }
 
     let data = await response.json();
-
-    console.log("pathName", pathName);
 
     if (!pathName.includes("upload")) {
       const selectedData = data.filter((barbershop: IBarberShop) =>

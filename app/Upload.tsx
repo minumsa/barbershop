@@ -12,7 +12,8 @@ type Location = {
 
 export const Upload = () => {
   const [name, setName] = useState<string | undefined>("");
-  const [barberList, setBarberList] = useState<any>([]);
+  // TODO: 배열을 string으로 바꿔서 input에 넣어주기
+  const [barberList, setBarberList] = useState<string[]>([]);
   const [location, setLocation] = useState<Location>({ description: "", lat: 0, lng: 0 });
   const [operatingTime, setOperatingTime] = useState<string | undefined>("");
   const [closedDays, setClosedDays] = useState<string | undefined>("");
@@ -42,8 +43,11 @@ export const Upload = () => {
     locationUrl: locationUrl,
     notice: notice,
   };
+  // 주소가 없는 거랑 empty string("")을 구분짓고 싶을 때 ===> undefined
+  // barbershopId는 undefined 추천 이유 ===> barbershopId가 empty string("")일 때는 의미가 없어서
+  const [barbershopId, setBarbershopId] = useState<string>();
 
-  console.log("newBarbershopData", newBarbershopData);
+  // console.log("newBarbershopData", newBarbershopData);
 
   const handleUpload = () => {
     uploadData(newBarbershopData, password);
@@ -63,20 +67,17 @@ export const Upload = () => {
 
   useEffect(() => {
     setName(barbershops?.name);
-    setBarberList(prevBarberList => [
-      ...prevBarberList?.join(""),
-      barbershops?.barberList?.join(", "),
-    ]);
-    setLocation(prevLocation => ({
-      ...prevLocation,
-      description: barbershops?.location.description,
-      lat: barbershops?.location.lat,
-      lng: barbershops?.location.lng,
-    }));
+    // ?? ===> undefined일 때만 뒤에 있는 값 반환
+    setBarberList([barbershops?.barberList?.join(", ") ?? ""]);
+    setLocation({
+      description: barbershops?.location.description ?? "",
+      lat: barbershops?.location.lat ?? 0,
+      lng: barbershops?.location.lng ?? 0,
+    });
     setOperatingTime(barbershops?.operatingTime);
     setClosedDays(barbershops?.closedDays);
     setDescription(barbershops?.description);
-    setPrice(barbershops?.price);
+    setPrice(barbershops?.price ?? 0);
     setImgUrl(barbershops?.imgUrl);
     setLocationUrl(barbershops?.locationUrl);
     setBarbershopUrl(barbershops?.barbershopUrl);
@@ -91,6 +92,8 @@ export const Upload = () => {
   //   }));
   // }}
 
+  console.log("barbershops : ", barbershops);
+
   return (
     <div className={styles["content-container"]} style={{ overflow: "auto", marginBottom: "50px" }}>
       <div className={styles["upload-container"]}>
@@ -104,7 +107,7 @@ export const Upload = () => {
           <div className={styles["upload-title"]}>바버샵 이름</div>
           <input
             className={styles["upload-input"]}
-            value={name || ""}
+            value={name ?? ""}
             onChange={e => {
               setName(e.target.value);
             }}
@@ -124,7 +127,7 @@ export const Upload = () => {
           <div className={styles["upload-title"]}>주소</div>
           <input
             className={styles["upload-input"]}
-            value={location?.description || ""}
+            value={location?.description ?? ""}
             onChange={e => {
               setLocation(prevLocation => ({
                 ...prevLocation,
@@ -137,7 +140,7 @@ export const Upload = () => {
           <div className={styles["upload-title"]}>위도(lat)</div>
           <input
             className={styles["upload-input"]}
-            value={location?.lat || ""}
+            value={location?.lat ?? ""}
             type="number"
             onChange={e => {
               setLocation(prevLocation => ({
@@ -151,7 +154,7 @@ export const Upload = () => {
           <div className={styles["upload-title"]}>경도(lng)</div>
           <input
             className={styles["upload-input"]}
-            value={location?.lng || ""}
+            value={location?.lng ?? ""}
             onChange={e => {
               setLocation(prevLocation => ({
                 ...prevLocation,
@@ -164,7 +167,7 @@ export const Upload = () => {
           <div className={styles["upload-title"]}>영업 시간</div>
           <input
             className={styles["upload-input"]}
-            value={operatingTime || ""}
+            value={operatingTime ?? ""}
             onChange={e => {
               setOperatingTime(e.target.value);
             }}
@@ -174,7 +177,7 @@ export const Upload = () => {
           <div className={styles["upload-title"]}>휴무일</div>
           <input
             className={styles["upload-input"]}
-            value={closedDays || ""}
+            value={closedDays ?? ""}
             onChange={e => {
               setClosedDays(e.target.value);
             }}
@@ -184,7 +187,7 @@ export const Upload = () => {
           <div className={styles["upload-title"]}>연락처</div>
           <input
             className={styles["upload-input"]}
-            value={contact || ""}
+            value={contact ?? ""}
             onChange={e => {
               setContact(e.target.value);
             }}
@@ -194,7 +197,7 @@ export const Upload = () => {
           <div className={styles["upload-title"]}>소개</div>
           <input
             className={styles["upload-input"]}
-            value={description || ""}
+            value={description ?? ""}
             onChange={e => {
               setDescription(e.target.value);
             }}
@@ -204,7 +207,7 @@ export const Upload = () => {
           <div className={styles["upload-title"]}>시술비</div>
           <input
             className={styles["upload-input"]}
-            value={price || ""}
+            value={price ?? ""}
             onChange={e => {
               setPrice(Number(e.target.value));
             }}
@@ -214,7 +217,7 @@ export const Upload = () => {
           <div className={styles["upload-title"]}>이미지 링크</div>
           <input
             className={styles["upload-input"]}
-            value={imgUrl || ""}
+            value={imgUrl ?? ""}
             onChange={e => {
               setImgUrl(e.target.value);
             }}
@@ -224,7 +227,7 @@ export const Upload = () => {
           <div className={styles["upload-title"]}>위치 링크</div>
           <input
             className={styles["upload-input"]}
-            value={locationUrl || ""}
+            value={locationUrl ?? ""}
             onChange={e => {
               setLocationUrl(e.target.value);
             }}
@@ -234,7 +237,7 @@ export const Upload = () => {
           <div className={styles["upload-title"]}>홈페이지 링크</div>
           <input
             className={styles["upload-input"]}
-            value={barbershopUrl || ""}
+            value={barbershopUrl ?? ""}
             onChange={e => {
               setBarbershopUrl(e.target.value);
             }}
@@ -244,7 +247,7 @@ export const Upload = () => {
           <div className={styles["upload-title"]}>예약 페이지 링크</div>
           <input
             className={styles["upload-input"]}
-            value={reservationUrl || ""}
+            value={reservationUrl ?? ""}
             onChange={e => {
               setReservationUrl(e.target.value);
             }}

@@ -115,6 +115,7 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
                 <div>예약</div>
               </div>
             )}
+            {/* TODO: id로 뒤에 path를 만들고, 그 id로 바버샵 정보 fetch해오기 */}
             {pathName.includes("admin") && (
               <React.Fragment>
                 <div
