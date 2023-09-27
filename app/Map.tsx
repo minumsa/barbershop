@@ -130,7 +130,7 @@ export const Map = ({ setSelectedBarbershop }: MapProps) => {
         ),
       });
 
-      naver.maps.Event.addListener(barbershopMarker, "click", function (e) {
+      naver.maps.Event.addListener(barbershopMarker, "click", function () {
         if (infoWindow.getMap()) {
           infoWindow.close();
         } else {
@@ -139,7 +139,7 @@ export const Map = ({ setSelectedBarbershop }: MapProps) => {
       });
 
       const tmp = infoWindow.contentElement as HTMLElement;
-      tmp.getElementsByClassName(styles["button"])[0].addEventListener("click", function (e) {
+      tmp.getElementsByClassName(styles["button"])[0].addEventListener("click", function () {
         setSelectedBarbershop(data);
       });
     });
