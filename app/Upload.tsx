@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
-import { fetchData, fetchModifyData, modifyData, uploadData } from "./lib/api";
+import { fetchData, fetchBarbershopDataToEdit, EditData, uploadData } from "./lib/api";
 import { IBarberShop } from "./lib/data";
 import { usePathname } from "next/navigation";
 
@@ -45,21 +45,20 @@ export const Upload = () => {
   };
   // 주소가 없는 거랑 empty string("")을 구분짓고 싶을 때 ===> undefined
   // barbershopId는 undefined 추천 이유 ===> barbershopId가 empty string("")일 때는 의미가 없어서
-  const [barbershopId, setBarbershopId] = useState<string>();
-
-  // console.log("newBarbershopData", newBarbershopData);
 
   const handleUpload = () => {
     uploadData(newBarbershopData, password);
   };
 
-  const handleModify = () => {
-    modifyData(newBarbershopData, password);
+  const handleEdit = () => {
+    EditData(newBarbershopData, password);
   };
 
   useEffect(() => {
+    const id = pathName.split("/admin/")[1];
+
     async function loadData() {
-      setBarbershops(await fetchModifyData(pathName));
+      setBarbershops(await fetchBarbershopDataToEdit(id));
     }
 
     loadData();
@@ -91,8 +90,6 @@ export const Upload = () => {
   //     description: e.target.value,
   //   }));
   // }}
-
-  console.log("barbershops : ", barbershops);
 
   return (
     <div className={styles["content-container"]} style={{ overflow: "auto", marginBottom: "50px" }}>
@@ -267,7 +264,7 @@ export const Upload = () => {
           className={styles["button"]}
           style={{ padding: "5px 20px", marginTop: "30px" }}
           onClick={() => {
-            pathName.includes("upload") ? handleUpload() : handleModify();
+            pathName.includes("upload") ? handleUpload() : handleEdit();
           }}
         >
           {pathName.includes("upload") ? "제출하기" : "수정하기"}

@@ -14,8 +14,6 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
   const pathName = usePathname();
   const [password, setPassword] = useState<string>("");
 
-  console.log(pathName);
-
   return (
     selectedBarbershop && (
       <div className={styles["tab"]}>
@@ -121,7 +119,7 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
                 <div
                   className={`${styles["button"]} ${styles["sub-tab-button"]}`}
                   onClick={() => {
-                    router.push(`/admin/${selectedBarbershop.name}`);
+                    router.push(`/admin/${selectedBarbershop.id}`);
                   }}
                 >
                   <div>수정</div>
@@ -129,8 +127,7 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
                 <div className={`${styles["button"]} ${styles["sub-tab-button"]}`}>
                   <div
                     onClick={async () => {
-                      console.log(selectedBarbershop.name);
-                      deleteData(selectedBarbershop.name, password);
+                      deleteData(selectedBarbershop.id, password);
                     }}
                   >
                     삭제

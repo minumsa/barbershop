@@ -23,8 +23,6 @@ export const MainTab = ({ setSelectedBarbershop, price, barber }: MainTabProps) 
     loadData();
   }, []);
 
-  // console.log("filteredBarbershops : ", filteredBarbershops);
-
   // TODO: 처음에는 백엔드에 저장되어 있는 모든 바버샵 정보를 목록으로 보여주기
   // TODO: 검색창에 지역을 검색하면 해당 지역의 바버샵 정보만 필터링해서 목록으로 보여주기
   useEffect(() => {

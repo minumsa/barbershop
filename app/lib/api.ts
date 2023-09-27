@@ -21,9 +21,9 @@ export async function fetchData() {
   }
 }
 
-export async function fetchModifyData(barbershopId: string) {
+export async function fetchBarbershopDataToEdit(id: string) {
   try {
-    const response = await fetch("/api/barbershop", {
+    const response = await fetch(`/api/barbershop/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -36,13 +36,7 @@ export async function fetchModifyData(barbershopId: string) {
 
     let data = await response.json();
 
-    if (!pathName.includes("upload")) {
-      const selectedData = data.filter((barbershop: IBarberShop) =>
-        pathName.includes(decodeURIComponent(barbershop.name))
-      )[0];
-
-      return selectedData;
-    }
+    return data;
   } catch (error) {
     console.error(error);
   }
@@ -80,14 +74,14 @@ export async function uploadData(barbershopData: IBarberShop, password: string) 
   }
 }
 
-export const deleteData = async (name: string, password: string) => {
+export const deleteData = async (id: string, password: string) => {
   try {
     const response = await fetch("/api/barbershop", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name: name, password: password }),
+      body: JSON.stringify({ id: id, password: password }),
     });
 
     if (response.status === 401) {
@@ -104,7 +98,7 @@ export const deleteData = async (name: string, password: string) => {
   }
 };
 
-export const modifyData = async (data: Partial<IBarberShop>, password: string) => {
+export const EditData = async (data: Partial<IBarberShop>, password: string) => {
   if (data !== null) {
     try {
       const response = await fetch("/api/barbershop", {

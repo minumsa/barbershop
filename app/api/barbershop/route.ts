@@ -26,7 +26,6 @@ export async function GET(request: Request) {
   }
 
   try {
-    await connectMongoDB();
     let dataArr = await BarberShopModel.find(query);
     if (searchParams.barberCntRangeMin != null || searchParams.barberCntRangeMax != null) {
       dataArr = dataArr.filter(v => {
@@ -66,12 +65,12 @@ export async function DELETE(request: Request) {
   try {
     await connectMongoDB();
 
-    const { password, name } = await request.json();
+    const { password, id } = await request.json();
 
     if (password !== process.env.UPLOAD_PASSWORD)
       return NextResponse.json({ message: "password is not correct" }, { status: 401 });
 
-    const existingData = await BarberShopModel.findOne({ name });
+    const existingData = await BarberShopModel.findOne({ id });
 
     if (!existingData) {
       return NextResponse.json({ message: "Data not found" }, { status: 404 });
