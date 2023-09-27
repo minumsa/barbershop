@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
-  faPen,
   faPlus,
   faScissors,
   faSliders,
@@ -13,18 +12,14 @@ import { FilterWindow } from "@/app/FilterWindow";
 import { Upload } from "@/app/Upload";
 import styles from "@/app/page.module.css";
 import { useRouter } from "next/navigation";
-import { fetchData } from "@/app/lib/api";
-import { BarberShop } from "@/app/model/BarberShop";
 
 export default function Page({ params }: any) {
+  const id = params.barbershop;
   const [price, setPrice] = useState<number>(50000); // price원 이상
   const [barber, setBarber] = useState<number>(3); // barber명 이상
   const [showFilterWindow, setIsFilterActive] = useState<boolean>(false);
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
-  const [password, setPassword] = useState<string>("");
-  const pathName = decodeURIComponent(params.barbershop);
   const router = useRouter();
-  const [barbershops, setBarbershops] = useState<BarberShop[]>();
 
   return (
     <div className={styles["container"]}>
@@ -41,7 +36,12 @@ export default function Page({ params }: any) {
         />
       </div>
       <div className={styles["nav-container"]}>
-        <div className={styles["title"]}>
+        <div
+          className={styles["title"]}
+          onClick={() => {
+            router.push("/admin");
+          }}
+        >
           <div>
             <FontAwesomeIcon icon={faScissors} />
           </div>
@@ -84,13 +84,7 @@ export default function Page({ params }: any) {
           </div>
         </div>
       </div>
-      <Upload />
-      {/* <Content
-        selectedBarbershop={selectedBarbershop}
-        setSelectedBarbershop={setSelectedBarbershop}
-        price={price}
-        barber={barber}
-      /> */}
+      <Upload id={id} />
     </div>
   );
 }

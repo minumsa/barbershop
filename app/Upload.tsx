@@ -11,9 +11,12 @@ type Location = {
   lng: number;
 };
 
-export const Upload = () => {
+interface UploadProps {
+  id: string;
+}
+
+export const Upload = ({ id }: UploadProps) => {
   const [name, setName] = useState<string | undefined>("");
-  // TODO: 배열을 string으로 바꿔서 input에 넣어주기
   const [barberListToStr, setBarberListToStr] = useState<string>();
   const [location, setLocation] = useState<Location>({ description: "", lat: 0, lng: 0 });
   const [operatingTime, setOperatingTime] = useState<string | undefined>("");
@@ -30,7 +33,7 @@ export const Upload = () => {
   const [barbershops, setBarbershops] = useState<IBarberShop>();
   const router = useRouter();
   const pathName = decodeURIComponent(usePathname());
-  const id = pathName.split("/admin/")[1];
+  const isUpload = pathName.includes("upload");
   const newBarbershopData: IBarberShop = {
     name: name,
     barberList: barberListToStr?.split(", "),
@@ -46,8 +49,6 @@ export const Upload = () => {
     locationUrl: locationUrl,
     notice: notice,
   };
-  // 주소가 없는 거랑 empty string("")을 구분짓고 싶을 때 ===> undefined
-  // barbershopId는 undefined 추천 이유 ===> barbershopId가 empty string("")일 때는 의미가 없어서
 
   const handleUpload = () => {
     uploadData(newBarbershopData, password);
@@ -65,11 +66,8 @@ export const Upload = () => {
     loadData();
   }, []);
 
-  console.log(barbershops);
-
   useEffect(() => {
     setName(barbershops?.name);
-    // ?? ===> undefined일 때만 뒤에 있는 값 반환
     setBarberListToStr(barbershops?.barberList?.join(", "));
     setLocation({
       description: barbershops?.location.description ?? "",
@@ -87,13 +85,6 @@ export const Upload = () => {
     setContact(barbershops?.contact);
   }, [barbershops]);
 
-  // onChange={e => {
-  //   setLocation(prevLocation => ({
-  //     ...prevLocation,
-  //     description: e.target.value,
-  //   }));
-  // }}
-
   return (
     <div className={styles["content-container"]} style={{ overflow: "auto", marginBottom: "50px" }}>
       <div className={styles["upload-container"]}>
@@ -101,7 +92,7 @@ export const Upload = () => {
           className={styles["upload-item"]}
           style={{ justifyContent: "center", padding: "30px 0 50px 0" }}
         >
-          <div>{pathName.includes("upload") ? "업로드" : "수정"} 페이지</div>
+          <div>{isUpload ? "업로드" : "수정"} 페이지</div>
         </div>
         <div className={styles["upload-item"]}>
           <div className={styles["upload-title"]}>바버샵 이름</div>
@@ -117,7 +108,7 @@ export const Upload = () => {
           <div className={styles["upload-title"]}>바버 이름</div>
           <input
             className={styles["upload-input"]}
-            value={barberListToStr}
+            value={barberListToStr ?? ""}
             onChange={e => {
               setBarberListToStr(e.target.value);
             }}
@@ -267,11 +258,11 @@ export const Upload = () => {
           className={styles["button"]}
           style={{ padding: "5px 20px", marginTop: "30px" }}
           onClick={() => {
-            pathName.includes("upload") ? handleUpload() : handleEdit();
+            isUpload ? handleUpload() : handleEdit();
             router.push("/admin");
           }}
         >
-          {pathName.includes("upload") ? "제출하기" : "수정하기"}
+          {isUpload ? "제출하기" : "수정하기"}
         </div>
       </div>
     </div>

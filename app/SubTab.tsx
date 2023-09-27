@@ -12,6 +12,7 @@ interface SubTabProps {
 export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProps) => {
   const router = useRouter();
   const pathName = usePathname();
+  const isAdmin = pathName.includes("admin");
   const [password, setPassword] = useState<string>("");
 
   return (
@@ -102,7 +103,7 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
               marginTop: "15px",
             }}
           >
-            {!pathName.includes("admin") && (
+            {!isAdmin && (
               <div
                 className={`${styles["button"]} ${styles["sub-tab-button"]}`}
                 onClick={() => {
@@ -112,7 +113,7 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
                 <div>예약</div>
               </div>
             )}
-            {pathName.includes("admin") && (
+            {isAdmin && (
               <React.Fragment>
                 <div
                   className={`${styles["button"]} ${styles["sub-tab-button"]}`}
@@ -136,22 +137,24 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
               </React.Fragment>
             )}
           </div>
-          <div
-            style={{
-              height: "32px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: "1rem",
-              marginTop: "10px",
-            }}
-          >
-            <div style={{ margin: "10px" }}>관리자 비밀번호</div>
-            <input
-              className={styles["sub-tab-input"]}
-              onChange={e => setPassword(e.target.value)}
-            />
-          </div>
+          {isAdmin && (
+            <div
+              style={{
+                height: "32px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: "1rem",
+                marginTop: "10px",
+              }}
+            >
+              <div style={{ margin: "10px" }}>관리자 비밀번호</div>
+              <input
+                className={styles["sub-tab-input"]}
+                onChange={e => setPassword(e.target.value)}
+              />
+            </div>
+          )}
         </div>
       </div>
     )

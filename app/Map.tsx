@@ -6,19 +6,11 @@ import { BarberShop } from "./model/BarberShop";
 
 interface MapProps {
   setSelectedBarbershop: any;
+  barbershops: BarberShop[];
 }
 
-export const Map = ({ setSelectedBarbershop }: MapProps) => {
+export const Map = ({ setSelectedBarbershop, barbershops }: MapProps) => {
   const mapElement = useRef(null);
-  const [barbershops, setBarbershops] = useState<BarberShop[]>();
-
-  useEffect(() => {
-    async function loadData() {
-      setBarbershops(await fetchData());
-    }
-
-    loadData();
-  }, []);
 
   useEffect(() => {
     const { naver } = window as any;

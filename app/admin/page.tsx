@@ -4,14 +4,12 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
-  faPen,
   faPlus,
   faScissors,
   faSliders,
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "../page.module.css";
 import { FilterWindow } from "../FilterWindow";
-import { Upload } from "../Upload";
 import { Content } from "../Content";
 import { useRouter } from "next/navigation";
 
@@ -21,7 +19,6 @@ export default function Page() {
   const [showFilterWindow, setIsFilterActive] = useState<boolean>(false);
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
   const [selectedBarbershop, setSelectedBarbershop] = useState<any | null>();
-  const [password, setPassword] = useState<string>("");
   const router = useRouter();
 
   return (
@@ -88,7 +85,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-      {/* <Upload /> */}
       <Content
         selectedBarbershop={selectedBarbershop}
         setSelectedBarbershop={setSelectedBarbershop}
