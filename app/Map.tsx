@@ -37,7 +37,6 @@ export const Map = ({ setSelectedBarbershop }: MapProps) => {
       },
     };
     const map = new naver.maps.Map(mapElement.current, mapOptions);
-    // TODO: server에서 가져오기
 
     interface BarbershopProps {
       name: string;

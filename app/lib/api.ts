@@ -76,7 +76,7 @@ export async function uploadData(barbershopData: IBarberShop, password: string) 
 
 export const deleteData = async (id: string, password: string) => {
   try {
-    const response = await fetch("/api/barbershop", {
+    const response = await fetch(`/api/barbershop/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -98,15 +98,15 @@ export const deleteData = async (id: string, password: string) => {
   }
 };
 
-export const EditData = async (data: Partial<IBarberShop>, password: string) => {
+export const EditData = async (data: Partial<IBarberShop>, id: string, password: string) => {
   if (data !== null) {
     try {
-      const response = await fetch("/api/barbershop", {
+      const response = await fetch(`/api/barbershop/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ data: data, password: password }),
+        body: JSON.stringify({ ...data, password: password }),
       });
 
       if (response.status === 401) {

@@ -26,6 +26,7 @@ export async function GET(request: Request) {
   }
 
   try {
+    await connectMongoDB();
     let dataArr = await BarberShopModel.find(query);
     if (searchParams.barberCntRangeMin != null || searchParams.barberCntRangeMax != null) {
       dataArr = dataArr.filter(v => {
@@ -90,12 +91,12 @@ export async function PUT(request: Request) {
     await connectMongoDB();
 
     const { data, password } = await request.json();
-    const { name } = data.name;
+    const { id } = data.id;
 
     if (password !== process.env.UPLOAD_PASSWORD)
       return NextResponse.json({ message: "password is not correct" }, { status: 401 });
 
-    const existingData = await BarberShopModel.findOne({ name });
+    const existingData = await BarberShopModel.findOne({ id });
 
     if (!existingData) {
       return NextResponse.json({ message: "Data not found. Cannot update." }, { status: 404 });
@@ -124,54 +125,3 @@ export async function PUT(request: Request) {
     return NextResponse.json({ message: "Server Error" }, { status: 500 });
   }
 }
-
-// export async function PUT(request: Request) {
-//   try {
-//     require("dotenv").config();
-//     await connectMongoDB();
-
-//     const { data, password } = await request.json();
-//     const {
-//       id,
-//       imgUrl,
-//       artist,
-//       album,
-//       label,
-//       releaseDate,
-//       genre,
-//       link,
-//       text,
-//       uploadDate,
-//       duration,
-//       tracks,
-//     } = data;
-
-//     if (password !== process.env.UPROAD_PASSWORD)
-//       return NextResponse.json({ message: "password is not correct" }, { status: 401 });
-
-//     const existingData = await Music.findOne({ id });
-
-//     if (!existingData) {
-//       return NextResponse.json({ message: "Data not found. Cannot update." }, { status: 404 });
-//     }
-
-//     existingData.id = id;
-//     existingData.imgUrl = imgUrl;
-//     existingData.artist = artist;
-//     existingData.album = album;
-//     existingData.label = label;
-//     existingData.releaseDate = releaseDate;
-//     existingData.genre = genre;
-//     existingData.link = link;
-//     existingData.text = text;
-//     existingData.uploadDate = uploadDate;
-//     existingData.duration = duration;
-//     existingData.tracks = tracks;
-
-//     await existingData.save();
-//     return NextResponse.json(existingData.toJSON());
-//   } catch (error) {
-//     console.error(error);
-//     return NextResponse.json({ message: "Server Error" }, { status: 500 });
-//   }
-// }

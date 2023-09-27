@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faScissors, faSliders } from "@fortawesome/free-solid-svg-icons";
 import styles from "./page.module.css";
 import { Upload } from "./Upload";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [price, setPrice] = useState<number>(50000); // price원 이상
@@ -15,6 +16,7 @@ export default function Page() {
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
   const [selectedBarbershop, setSelectedBarbershop] = useState<any | null>();
   const [password, setPassword] = useState<string>("");
+  const router = useRouter();
 
   return (
     <div className={styles["container"]}>
@@ -31,7 +33,13 @@ export default function Page() {
         />
       </div>
       <div className={styles["nav-container"]}>
-        <div className={styles["title"]}>
+        <div
+          className={styles["title"]}
+          onClick={() => {
+            setSelectedBarbershop(null);
+            router.push("/admin");
+          }}
+        >
           <div>
             <FontAwesomeIcon icon={faScissors} />
           </div>

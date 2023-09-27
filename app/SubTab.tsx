@@ -50,7 +50,6 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
           </div>
           <div className={styles["sub-flexbox"]}>
             <div className={styles["sub-title"]}>바버</div>
-            {/* TODO: 2인 이상일 때 쉼표 넣기 */}
             <div className={styles["sub-information"]}>{`${selectedBarbershop.barberList
               .map((barber: string, index: number) => {
                 return index < selectedBarbershop.barberList.length - 1 ? `${barber}, ` : barber;
@@ -113,7 +112,6 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
                 <div>예약</div>
               </div>
             )}
-            {/* TODO: id로 뒤에 path를 만들고, 그 id로 바버샵 정보 fetch해오기 */}
             {pathName.includes("admin") && (
               <React.Fragment>
                 <div
@@ -128,6 +126,8 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
                   <div
                     onClick={async () => {
                       deleteData(selectedBarbershop.id, password);
+                      setSelectedBarbershop(null);
+                      router.push("/admin");
                     }}
                   >
                     삭제

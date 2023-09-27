@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import { fetchData, fetchBarbershopDataToEdit, EditData, uploadData } from "./lib/api";
 import { IBarberShop } from "./lib/data";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type Location = {
   description: string;
@@ -13,7 +14,7 @@ type Location = {
 export const Upload = () => {
   const [name, setName] = useState<string | undefined>("");
   // TODO: 배열을 string으로 바꿔서 input에 넣어주기
-  const [barberList, setBarberList] = useState<string[]>([]);
+  const [barberListToStr, setBarberListToStr] = useState<string>();
   const [location, setLocation] = useState<Location>({ description: "", lat: 0, lng: 0 });
   const [operatingTime, setOperatingTime] = useState<string | undefined>("");
   const [closedDays, setClosedDays] = useState<string | undefined>("");
@@ -27,10 +28,12 @@ export const Upload = () => {
   const [notice, setNotice] = useState<string | undefined>("");
   const [password, setPassword] = useState<string>("");
   const [barbershops, setBarbershops] = useState<IBarberShop>();
+  const router = useRouter();
   const pathName = decodeURIComponent(usePathname());
+  const id = pathName.split("/admin/")[1];
   const newBarbershopData: IBarberShop = {
     name: name,
-    barberList: Array.from(barberList).join("").split(", "),
+    barberList: barberListToStr?.split(", "),
     location: location,
     operatingTime: operatingTime,
     closedDays: closedDays,
@@ -51,12 +54,10 @@ export const Upload = () => {
   };
 
   const handleEdit = () => {
-    EditData(newBarbershopData, password);
+    EditData(newBarbershopData, id, password);
   };
 
   useEffect(() => {
-    const id = pathName.split("/admin/")[1];
-
     async function loadData() {
       setBarbershops(await fetchBarbershopDataToEdit(id));
     }
@@ -64,10 +65,12 @@ export const Upload = () => {
     loadData();
   }, []);
 
+  console.log(barbershops);
+
   useEffect(() => {
     setName(barbershops?.name);
     // ?? ===> undefined일 때만 뒤에 있는 값 반환
-    setBarberList([barbershops?.barberList?.join(", ") ?? ""]);
+    setBarberListToStr(barbershops?.barberList?.join(", "));
     setLocation({
       description: barbershops?.location.description ?? "",
       lat: barbershops?.location.lat ?? 0,
@@ -114,9 +117,9 @@ export const Upload = () => {
           <div className={styles["upload-title"]}>바버 이름</div>
           <input
             className={styles["upload-input"]}
-            value={barberList}
+            value={barberListToStr}
             onChange={e => {
-              setBarberList(e.target.value);
+              setBarberListToStr(e.target.value);
             }}
           />
         </div>
@@ -265,6 +268,7 @@ export const Upload = () => {
           style={{ padding: "5px 20px", marginTop: "30px" }}
           onClick={() => {
             pathName.includes("upload") ? handleUpload() : handleEdit();
+            router.push("/admin");
           }}
         >
           {pathName.includes("upload") ? "제출하기" : "수정하기"}
