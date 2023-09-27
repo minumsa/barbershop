@@ -6,7 +6,6 @@ import { Content } from "./Content";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faScissors, faSliders } from "@fortawesome/free-solid-svg-icons";
 import styles from "./page.module.css";
-import { Upload } from "./Upload";
 
 export default function Page() {
   const [price, setPrice] = useState<number>(50000); // price원 이상
@@ -62,7 +61,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-      {/* <Upload /> */}
       <Content
         selectedBarbershop={selectedBarbershop}
         setSelectedBarbershop={setSelectedBarbershop}
