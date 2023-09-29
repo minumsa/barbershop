@@ -122,11 +122,11 @@ export const Map = ({ setSelectedBarbershop, barbershops }: MapProps) => {
             <Barbershop
               name={data.name}
               location={data.location.description}
-              operatingTime={data.operatingTime}
-              closedDays={data.closedDays}
-              contact={data.contact}
-              barberList={data.barberList}
-              price={data.price}
+              operatingTime={data.operatingTime ?? ""}
+              closedDays={data.closedDays ?? ""}
+              contact={data.contact ?? ""}
+              barberList={data.barberList ?? []}
+              price={data.price ?? 0}
             />
           ),
         });
