@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { renderToString } from "react-dom/server";
 import styles from "./page.module.css";
-import { fetchData } from "./lib/api";
 import { BarberShop } from "./model/BarberShop";
 
 interface MapProps {
-  setSelectedBarbershop: any;
+  setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop>>;
   barbershops: BarberShop[];
 }
 
@@ -61,7 +60,7 @@ export const Map = ({ setSelectedBarbershop, barbershops }: MapProps) => {
           </div>
           <div className={styles["overlay-detail"]}>
             <div className={styles["overlay-detail-title"]}>휴무일</div>
-            <div>{closedDays === "" ? "없음" : closedDays}</div>
+            <div>{closedDays.length < 5 ? "없음" : closedDays}</div>
           </div>
           <div className={styles["overlay-detail"]}>
             <div className={styles["overlay-detail-title"]}>연락처</div>
@@ -144,7 +143,7 @@ export const Map = ({ setSelectedBarbershop, barbershops }: MapProps) => {
           setSelectedBarbershop(data);
         });
       }, []);
-  }, []);
+  }, [barbershops]);
 
   return <div ref={mapElement} style={{ width: "100%", height: "100%" }} />;
 };

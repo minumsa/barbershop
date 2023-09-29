@@ -20,6 +20,7 @@ export default function Page() {
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
   const [selectedBarbershop, setSelectedBarbershop] = useState<any | null>();
   const router = useRouter();
+  const [searchKeyword, setSearchKeyword] = useState<string>("");
 
   return (
     <div className={styles["container"]}>
@@ -57,6 +58,10 @@ export default function Page() {
               className={styles["search-input"]}
               placeholder="지역을 입력해주세요"
               style={{ paddingLeft: "35px" }}
+              value={searchKeyword}
+              onChange={e => {
+                setSearchKeyword(e.target.value);
+              }}
             />
             <div className={styles["search-button"]}>
               <div>검색</div>
@@ -90,6 +95,7 @@ export default function Page() {
         setSelectedBarbershop={setSelectedBarbershop}
         price={price}
         barber={barber}
+        searchKeyword={searchKeyword}
       />
     </div>
   );

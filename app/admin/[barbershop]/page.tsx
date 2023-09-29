@@ -23,18 +23,6 @@ export default function Page({ params }: any) {
 
   return (
     <div className={styles["container"]}>
-      <div
-        className={styles["filter-content"]}
-        style={showFilterWindow ? { position: "fixed" } : { display: "none" }}
-      >
-        <FilterWindow
-          setIsFilterActive={setIsFilterActive}
-          price={price}
-          setPrice={setPrice}
-          barber={barber}
-          setBarber={setBarber}
-        />
-      </div>
       <div className={styles["nav-container"]}>
         <div
           className={styles["title"]}
@@ -46,42 +34,6 @@ export default function Page({ params }: any) {
             <FontAwesomeIcon icon={faScissors} />
           </div>
           <div>Barber</div>
-        </div>
-        <div className={styles["search-container"]}>
-          <div className={styles["search"]}>
-            <div className={styles["magnifying-glass"]}>
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </div>
-            <input
-              className={styles["search-input"]}
-              placeholder="지역을 입력해주세요"
-              style={{ paddingLeft: "35px" }}
-            />
-            <div className={styles["search-button"]}>
-              <div>검색</div>
-            </div>
-          </div>
-        </div>
-        <div className={styles["category"]}>
-          <div
-            className={styles["filter-icon"]}
-            style={{ marginRight: "15px" }}
-            onClick={() => {
-              router.push("/admin/upload");
-            }}
-          >
-            <div>
-              <FontAwesomeIcon icon={faPlus} />
-            </div>
-          </div>
-          <div
-            className={styles["filter-icon"]}
-            onClick={() => {
-              handleFilter();
-            }}
-          >
-            <FontAwesomeIcon icon={faSliders} />
-          </div>
         </div>
       </div>
       <Upload id={id} />

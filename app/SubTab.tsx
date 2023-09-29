@@ -32,7 +32,7 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
           </div>
         </div>
         <div className={styles["sub-barbershop-image-container"]}>
-          {/* 중요 : width를 100%로 하고 height를 auto로*/}
+          {/* 중요 : width를 100%로 하고 height를 auto로 */}
           <div className={styles["image-container"]}>
             <Image
               src={selectedBarbershop.imgUrl}
@@ -47,7 +47,11 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
         <div className={styles["sub-information-container"]}>
           <div className={styles["sub-flexbox"]}>
             <div className={styles["sub-title"]}>소개</div>
-            <div className={styles["sub-information"]}>{selectedBarbershop.description}</div>
+            <div className={styles["sub-information"]}>
+              {selectedBarbershop.description.split("  ").map((text: string, index: number) => {
+                return <p key={index}>{text}</p>;
+              })}
+            </div>
           </div>
           <div className={styles["sub-flexbox"]}>
             <div className={styles["sub-title"]}>바버</div>
@@ -68,6 +72,12 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
                 {selectedBarbershop.location.description}
               </div>
             </a>
+          </div>
+          <div className={styles["sub-flexbox"]}>
+            <div className={styles["sub-title"]}>시술비</div>
+            <div className={styles["sub-information"]}>
+              {`${selectedBarbershop.price.toLocaleString()}원`}
+            </div>
           </div>
           <div className={styles["sub-flexbox"]}>
             <div className={styles["sub-title"]}>운영시간</div>

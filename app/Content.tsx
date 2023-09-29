@@ -10,7 +10,8 @@ interface ContentProps {
   price: number;
   barber: number;
   selectedBarbershop: string;
-  setSelectedBarbershop: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop>>;
+  searchKeyword: string;
 }
 
 export const Content = ({
@@ -18,16 +19,26 @@ export const Content = ({
   barber,
   selectedBarbershop,
   setSelectedBarbershop,
+  searchKeyword,
 }: ContentProps) => {
-  const [barbershops, setBarbershops] = useState<BarberShop[]>();
+  const [originBarbershops, setOriginBarbershops] = useState<BarberShop[]>([]);
+  const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
 
   useEffect(() => {
     async function loadData() {
-      setBarbershops(await fetchData());
+      setOriginBarbershops(await fetchData());
     }
 
     loadData();
   }, []);
+
+  useEffect(() => {
+    setBarbershops(
+      [...originBarbershops].filter(barbershop =>
+        barbershop.location.description.includes(searchKeyword)
+      )
+    );
+  }, [searchKeyword]);
 
   return (
     <div className={styles["content-container"]}>
@@ -42,7 +53,7 @@ export const Content = ({
             setSelectedBarbershop={setSelectedBarbershop}
             price={price}
             barber={barber}
-            barbershops={barbershops ? barbershops : []}
+            barbershops={searchKeyword === "" ? originBarbershops : barbershops}
           />
         )}
       </div>
@@ -57,7 +68,7 @@ export const Content = ({
         </div>
         <Map
           setSelectedBarbershop={setSelectedBarbershop}
-          barbershops={barbershops ? barbershops : []}
+          barbershops={searchKeyword === "" ? originBarbershops : barbershops}
         />
       </div>
     </div>
