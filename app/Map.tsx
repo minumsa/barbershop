@@ -14,7 +14,6 @@ export const Map = ({ setSelectedBarbershop, barbershops }: MapProps) => {
 
   useEffect(() => {
     const { naver } = window as any;
-
     if (!mapElement.current || !naver) return;
 
     // FIXME: 나중에 기본 장소 변경하기 - 현재 위치 or 종로구
@@ -132,20 +131,19 @@ export const Map = ({ setSelectedBarbershop, barbershops }: MapProps) => {
           ),
         });
 
+        naver.maps.Event.addListener(barbershopMarker, "click", function () {
+          if (infoWindow.getMap()) {
+            infoWindow.close();
+          } else {
+            infoWindow.open(map, barbershopMarker);
+          }
+        });
 
-      naver.maps.Event.addListener(barbershopMarker, "click", function () {
-        if (infoWindow.getMap()) {
-          infoWindow.close();
-        } else {
-          infoWindow.open(map, barbershopMarker);
-        }
-      });
-
-      const tmp = infoWindow.contentElement as HTMLElement;
-      tmp.getElementsByClassName(styles["button"])[0].addEventListener("click", function () {
-        setSelectedBarbershop(data);
-
-      });
+        const tmp = infoWindow.contentElement as HTMLElement;
+        tmp.getElementsByClassName(styles["button"])[0].addEventListener("click", function () {
+          setSelectedBarbershop(data);
+        });
+      }, []);
   }, []);
 
   return <div ref={mapElement} style={{ width: "100%", height: "100%" }} />;
