@@ -349,6 +349,11 @@
   padding: 2px 5px;
 }
 
+.sub-tab-button {
+  padding: 2px 30px;
+  margin: 0 5px;
+}
+
 .sub-title-container {
   display: flex;
 }
@@ -397,8 +402,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 85px;
-  /* width: fit-content; */
+  min-width: fit-content;
   height: fit-content;
   background-color: #fff;
   font-size: 0.8rem;
@@ -406,7 +410,7 @@
   border: 1px solid #000;
   border: 1px solid rgb(4, 117, 244);
   border-radius: 5px;
-  padding: 5px 0;
+  padding: 5px;
 }
 
 .test-detail {
@@ -447,4 +451,13 @@
   position: relative;
   width: 100%;
   height: auto;
+}
+
+.sub-tab-input {
+  width: 100px;
+  border: 1px solid #000;
+  font-size: 1rem;
+  font-family: "Montserrat", "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
+    "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }

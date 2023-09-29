@@ -1,11 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { FilterWindow } from "./FilterWindow";
-import { Content } from "./Content";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faScissors, faSliders } from "@fortawesome/free-solid-svg-icons";
-import styles from "./page.module.css";
+import {
+  faMagnifyingGlass,
+  faPlus,
+  faScissors,
+  faSliders,
+} from "@fortawesome/free-solid-svg-icons";
+import styles from "../page.module.css";
+import { FilterWindow } from "../FilterWindow";
+import { Content } from "../Content";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
@@ -59,6 +64,17 @@ export default function Page() {
           </div>
         </div>
         <div className={styles["category"]}>
+          <div
+            className={styles["filter-icon"]}
+            style={{ marginRight: "15px" }}
+            onClick={() => {
+              router.push("/admin/upload");
+            }}
+          >
+            <div>
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          </div>
           <div
             className={styles["filter-icon"]}
             onClick={() => {

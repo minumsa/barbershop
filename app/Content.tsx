@@ -2,6 +2,9 @@ import { Map } from "./Map";
 import { MainTab } from "./MainTab";
 import { SubTab } from "./SubTab";
 import styles from "./page.module.css";
+import { useEffect, useState } from "react";
+import { fetchData } from "./lib/api";
+import { BarberShop } from "./model/BarberShop";
 
 interface ContentProps {
   price: number;
@@ -16,6 +19,16 @@ export const Content = ({
   selectedBarbershop,
   setSelectedBarbershop,
 }: ContentProps) => {
+  const [barbershops, setBarbershops] = useState<BarberShop[]>();
+
+  useEffect(() => {
+    async function loadData() {
+      setBarbershops(await fetchData());
+    }
+
+    loadData();
+  }, []);
+
   return (
     <div className={styles["content-container"]}>
       <div className={styles["tab-container"]}>
@@ -25,7 +38,12 @@ export const Content = ({
             setSelectedBarbershop={setSelectedBarbershop}
           />
         ) : (
-          <MainTab setSelectedBarbershop={setSelectedBarbershop} price={price} barber={barber} />
+          <MainTab
+            setSelectedBarbershop={setSelectedBarbershop}
+            price={price}
+            barber={barber}
+            barbershops={barbershops ? barbershops : []}
+          />
         )}
       </div>
       <div className={styles["map-container"]}>
@@ -37,7 +55,10 @@ export const Content = ({
             바버 인원 : {barber === 3 ? "전체 선택" : barber === 2 ? "2인 이상" : `${barber}인`}
           </div>
         </div>
-        <Map setSelectedBarbershop={setSelectedBarbershop} />
+        <Map
+          setSelectedBarbershop={setSelectedBarbershop}
+          barbershops={barbershops ? barbershops : []}
+        />
       </div>
     </div>
   );

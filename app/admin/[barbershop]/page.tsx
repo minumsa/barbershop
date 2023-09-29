@@ -1,19 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { FilterWindow } from "./FilterWindow";
-import { Content } from "./Content";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faScissors, faSliders } from "@fortawesome/free-solid-svg-icons";
-import styles from "./page.module.css";
+import {
+  faMagnifyingGlass,
+  faPlus,
+  faScissors,
+  faSliders,
+} from "@fortawesome/free-solid-svg-icons";
+import { FilterWindow } from "@/app/FilterWindow";
+import { Upload } from "@/app/Upload";
+import styles from "@/app/page.module.css";
 import { useRouter } from "next/navigation";
 
-export default function Page() {
+export default function Page({ params }: any) {
+  const id = params.barbershop;
   const [price, setPrice] = useState<number>(50000); // price원 이상
   const [barber, setBarber] = useState<number>(3); // barber명 이상
   const [showFilterWindow, setIsFilterActive] = useState<boolean>(false);
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
-  const [selectedBarbershop, setSelectedBarbershop] = useState<any | null>();
   const router = useRouter();
 
   return (
@@ -34,7 +39,6 @@ export default function Page() {
         <div
           className={styles["title"]}
           onClick={() => {
-            setSelectedBarbershop(null);
             router.push("/admin");
           }}
         >
@@ -61,6 +65,17 @@ export default function Page() {
         <div className={styles["category"]}>
           <div
             className={styles["filter-icon"]}
+            style={{ marginRight: "15px" }}
+            onClick={() => {
+              router.push("/admin/upload");
+            }}
+          >
+            <div>
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          </div>
+          <div
+            className={styles["filter-icon"]}
             onClick={() => {
               handleFilter();
             }}
@@ -69,12 +84,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <Content
-        selectedBarbershop={selectedBarbershop}
-        setSelectedBarbershop={setSelectedBarbershop}
-        price={price}
-        barber={barber}
-      />
+      <Upload id={id} />
     </div>
   );
 }
