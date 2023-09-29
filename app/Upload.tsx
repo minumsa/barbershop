@@ -50,14 +50,6 @@ export const Upload = ({ id }: UploadProps) => {
     notice: notice,
   };
 
-  const handleUpload = () => {
-    uploadData(newBarbershopData, password);
-  };
-
-  const handleEdit = () => {
-    EditData(newBarbershopData, id, password);
-  };
-
   useEffect(() => {
     async function loadData() {
       setBarbershops(await fetchBarbershopDataToEdit(id));
@@ -84,6 +76,20 @@ export const Upload = ({ id }: UploadProps) => {
     setReservationUrl(barbershops?.reservationUrl);
     setContact(barbershops?.contact);
   }, [barbershops]);
+
+  const handleUpload = () => {
+    uploadData(newBarbershopData, password);
+  };
+
+  const handleEdit = () => {
+    EditData(newBarbershopData, id, password);
+  };
+
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      isUpload ? handleUpload() : handleEdit();
+    }
+  };
 
   return (
     <div className={styles["content-container"]} style={{ overflow: "auto", marginBottom: "50px" }}>
@@ -131,7 +137,7 @@ export const Upload = ({ id }: UploadProps) => {
           <div className={styles["upload-title"]}>위도(lat)</div>
           <input
             className={styles["upload-input"]}
-            value={location?.lat ?? ""}
+            value={location?.lat}
             type="number"
             onChange={e => {
               setLocation(prevLocation => ({
@@ -145,7 +151,7 @@ export const Upload = ({ id }: UploadProps) => {
           <div className={styles["upload-title"]}>경도(lng)</div>
           <input
             className={styles["upload-input"]}
-            value={location?.lng ?? ""}
+            value={location?.lng}
             onChange={e => {
               setLocation(prevLocation => ({
                 ...prevLocation,
@@ -198,7 +204,7 @@ export const Upload = ({ id }: UploadProps) => {
           <div className={styles["upload-title"]}>시술비</div>
           <input
             className={styles["upload-input"]}
-            value={price ?? ""}
+            value={price}
             onChange={e => {
               setPrice(Number(e.target.value));
             }}
@@ -252,6 +258,7 @@ export const Upload = ({ id }: UploadProps) => {
             onChange={e => {
               setPassword(e.target.value);
             }}
+            onKeyDown={handleEnter}
           />
         </div>
         <div

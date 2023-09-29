@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { renderToString } from "react-dom/server";
 import styles from "./page.module.css";
-import { fetchData } from "./lib/api";
 import { BarberShop } from "./model/BarberShop";
 
 interface MapProps {
-  setSelectedBarbershop: any;
+  setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop>>;
   barbershops: BarberShop[];
 }
 
@@ -17,7 +16,11 @@ export const Map = ({ setSelectedBarbershop, barbershops }: MapProps) => {
     if (!mapElement.current || !naver) return;
 
     // FIXME: 나중에 기본 장소 변경하기 - 현재 위치 or 종로구
-    const barbershop = new naver.maps.LatLng(37.56571603771177, 126.99485276474563);
+    // const barbershop = new naver.maps.LatLng(37.56571603771177, 126.99485276474563);
+    const barbershop = new naver.maps.LatLng(
+      barbershops[0]?.location.lat ?? 37.56571603771177,
+      barbershops[0]?.location.lng ?? 126.99485276474563
+    );
 
     const mapOptions = {
       center: barbershop,
@@ -61,7 +64,7 @@ export const Map = ({ setSelectedBarbershop, barbershops }: MapProps) => {
           </div>
           <div className={styles["overlay-detail"]}>
             <div className={styles["overlay-detail-title"]}>휴무일</div>
-            <div>{closedDays === "" ? "없음" : closedDays}</div>
+            <div>{closedDays.length < 5 ? "없음" : closedDays}</div>
           </div>
           <div className={styles["overlay-detail"]}>
             <div className={styles["overlay-detail-title"]}>연락처</div>
@@ -122,11 +125,11 @@ export const Map = ({ setSelectedBarbershop, barbershops }: MapProps) => {
             <Barbershop
               name={data.name}
               location={data.location.description}
-              operatingTime={data.operatingTime}
-              closedDays={data.closedDays}
-              contact={data.contact}
-              barberList={data.barberList}
-              price={data.price}
+              operatingTime={data.operatingTime ?? ""}
+              closedDays={data.closedDays ?? ""}
+              contact={data.contact ?? ""}
+              barberList={data.barberList ?? []}
+              price={data.price ?? 0}
             />
           ),
         });
@@ -144,7 +147,7 @@ export const Map = ({ setSelectedBarbershop, barbershops }: MapProps) => {
           setSelectedBarbershop(data);
         });
       }, []);
-  }, []);
+  }, [barbershops]);
 
   return <div ref={mapElement} style={{ width: "100%", height: "100%" }} />;
 };
