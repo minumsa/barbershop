@@ -93,6 +93,7 @@
   font-family: "Montserrat", "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
     system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
     "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  padding-left: 35px;
 }
 
 .magnifying-glass {
@@ -120,7 +121,6 @@
   display: flex;
   align-items: center;
   width: fit-content;
-  padding: 0 10px;
 }
 
 .content-container {

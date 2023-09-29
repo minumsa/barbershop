@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FilterWindow } from "./FilterWindow";
 import { Content } from "./Content";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,6 +16,11 @@ export default function Page() {
   const [selectedBarbershop, setSelectedBarbershop] = useState<any | null>();
   const router = useRouter();
   const [searchKeyword, setSearchKeyword] = useState<string>("");
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 500);
+  }, []);
 
   return (
     <div className={styles["container"]}>
@@ -31,7 +36,7 @@ export default function Page() {
           setBarber={setBarber}
         />
       </div>
-      <div className={styles["nav-container"]}>
+      <div className={styles["nav-container"]} style={isMobile ? { padding: "0 20px" } : {}}>
         <div
           className={styles["title"]}
           onClick={() => {
@@ -42,10 +47,13 @@ export default function Page() {
           <div>
             <FontAwesomeIcon icon={faScissors} />
           </div>
-          <div>Barber</div>
+          <div>{!isMobile && "Barber"}</div>
         </div>
         <div className={styles["search-container"]}>
-          <div className={styles["search"]}>
+          <div
+            className={styles["search"]}
+            style={isMobile ? { width: "85%", fontSize: "0.9rem" } : {}}
+          >
             <div className={styles["magnifying-glass"]}>
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </div>
@@ -53,7 +61,7 @@ export default function Page() {
             <input
               className={styles["search-input"]}
               placeholder="지역을 입력해주세요"
-              style={{ paddingLeft: "35px" }}
+              style={isMobile ? { fontSize: "0.9rem" } : {}}
               value={searchKeyword}
               onChange={e => {
                 setSearchKeyword(e.target.value);

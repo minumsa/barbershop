@@ -10,6 +10,11 @@ interface MapProps {
 
 export const Map = ({ setSelectedBarbershop, barbershops }: MapProps) => {
   const mapElement = useRef(null);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 500);
+  }, []);
 
   useEffect(() => {
     const { naver } = window as any;
