@@ -86,7 +86,9 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
           <div className={styles["sub-flexbox"]}>
             <div className={styles["sub-title"]}>휴무일</div>
             <div className={styles["sub-information"]}>
-              {selectedBarbershop.closedDays === "" ? "없음" : selectedBarbershop.closedDays}
+              {selectedBarbershop.closedDays === "" || !selectedBarbershop.closedDays
+                ? "없음"
+                : selectedBarbershop.closedDays}
             </div>
           </div>
           <div className={styles["sub-flexbox"]}>
