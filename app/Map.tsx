@@ -6,15 +6,11 @@ import { BarberShop } from "./model/BarberShop";
 interface MapProps {
   setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop>>;
   barbershops: BarberShop[];
+  isMobile: boolean;
 }
 
-export const Map = ({ setSelectedBarbershop, barbershops }: MapProps) => {
+export const Map = ({ setSelectedBarbershop, barbershops, isMobile }: MapProps) => {
   const mapElement = useRef(null);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-
-  useEffect(() => {
-    setIsMobile(window.innerWidth < 500);
-  }, []);
 
   useEffect(() => {
     const { naver } = window as any;
@@ -30,9 +26,9 @@ export const Map = ({ setSelectedBarbershop, barbershops }: MapProps) => {
     const mapOptions = {
       center: barbershop,
       zoom: 15,
-      zoomControl: true,
+      zoomControl: isMobile,
       zoomControlOptions: {
-        position: naver.maps.Position.RIGHT_BOTTOM,
+        position: isMobile ? naver.maps.Position.RIGHT_TOP : naver.maps.Position.RIGHT_BOTTOM,
       },
     };
     const map = new naver.maps.Map(mapElement.current, mapOptions);
@@ -113,7 +109,7 @@ export const Map = ({ setSelectedBarbershop, barbershops }: MapProps) => {
     };
 
     barbershops &&
-      barbershops.map((data, index) => {
+      barbershops.map(data => {
         const barbershopMarker = new naver.maps.Marker({
           position: new naver.maps.LatLng(data.location.lat, data.location.lng),
           map: map,
@@ -140,14 +136,19 @@ export const Map = ({ setSelectedBarbershop, barbershops }: MapProps) => {
         });
 
         naver.maps.Event.addListener(barbershopMarker, "click", function () {
-          if (infoWindow.getMap()) {
-            infoWindow.close();
+          if (isMobile) {
+            setSelectedBarbershop(data);
           } else {
-            infoWindow.open(map, barbershopMarker);
+            if (infoWindow.getMap()) {
+              infoWindow.close();
+            } else {
+              infoWindow.open(map, barbershopMarker);
+            }
           }
         });
 
         const tmp = infoWindow.contentElement as HTMLElement;
+
         tmp.getElementsByClassName(styles["button"])[0].addEventListener("click", function () {
           setSelectedBarbershop(data);
         });

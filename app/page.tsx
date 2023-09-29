@@ -89,6 +89,7 @@ export default function Page() {
         price={price}
         barber={barber}
         searchKeyword={searchKeyword}
+        isMobile={isMobile}
       />
     </div>
   );

@@ -12,6 +12,7 @@ interface ContentProps {
   selectedBarbershop: string;
   setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop>>;
   searchKeyword: string;
+  isMobile: boolean;
 }
 
 export const Content = ({
@@ -20,14 +21,10 @@ export const Content = ({
   selectedBarbershop,
   setSelectedBarbershop,
   searchKeyword,
+  isMobile,
 }: ContentProps) => {
   const [originBarbershops, setOriginBarbershops] = useState<BarberShop[]>([]);
   const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-
-  useEffect(() => {
-    setIsMobile(window.innerWidth < 500);
-  }, []);
 
   useEffect(() => {
     async function loadData() {
@@ -46,7 +43,10 @@ export const Content = ({
   }, [searchKeyword]);
 
   return (
-    <div className={styles["content-container"]}>
+    <div
+      className={styles["content-container"]}
+      style={isMobile ? { overflow: "scroll" } : undefined}
+    >
       {!isMobile && (
         <React.Fragment>
           <div className={styles["tab-container"]}>
@@ -54,6 +54,7 @@ export const Content = ({
               <SubTab
                 selectedBarbershop={selectedBarbershop}
                 setSelectedBarbershop={setSelectedBarbershop}
+                isMobile={isMobile}
               />
             ) : (
               <MainTab
@@ -76,14 +77,28 @@ export const Content = ({
             <Map
               setSelectedBarbershop={setSelectedBarbershop}
               barbershops={searchKeyword === "" ? originBarbershops : barbershops}
+              isMobile={isMobile}
             />
           </div>
         </React.Fragment>
       )}
-      <Map
-        setSelectedBarbershop={setSelectedBarbershop}
-        barbershops={searchKeyword === "" ? originBarbershops : barbershops}
-      />
+      {isMobile && (
+        <React.Fragment>
+          {selectedBarbershop ? (
+            <SubTab
+              selectedBarbershop={selectedBarbershop}
+              setSelectedBarbershop={setSelectedBarbershop}
+              isMobile={isMobile}
+            />
+          ) : (
+            <Map
+              setSelectedBarbershop={setSelectedBarbershop}
+              barbershops={searchKeyword === "" ? originBarbershops : barbershops}
+              isMobile={isMobile}
+            />
+          )}
+        </React.Fragment>
+      )}
     </div>
   );
 };
