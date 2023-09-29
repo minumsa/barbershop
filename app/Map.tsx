@@ -16,7 +16,11 @@ export const Map = ({ setSelectedBarbershop, barbershops }: MapProps) => {
     if (!mapElement.current || !naver) return;
 
     // FIXME: 나중에 기본 장소 변경하기 - 현재 위치 or 종로구
-    const barbershop = new naver.maps.LatLng(37.56571603771177, 126.99485276474563);
+    // const barbershop = new naver.maps.LatLng(37.56571603771177, 126.99485276474563);
+    const barbershop = new naver.maps.LatLng(
+      barbershops[0]?.location.lat ?? 37.56571603771177,
+      barbershops[0]?.location.lng ?? 126.99485276474563
+    );
 
     const mapOptions = {
       center: barbershop,
