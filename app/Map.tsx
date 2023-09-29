@@ -132,18 +132,19 @@ export const Map = ({ setSelectedBarbershop, barbershops }: MapProps) => {
           ),
         });
 
-        naver.maps.Event.addListener(barbershopMarker, "click", function (e) {
-          if (infoWindow.getMap()) {
-            infoWindow.close();
-          } else {
-            infoWindow.open(map, barbershopMarker);
-          }
-        });
 
-        const tmp = infoWindow.contentElement as HTMLElement;
-        tmp.getElementsByClassName(styles["button"])[0].addEventListener("click", function (e) {
-          setSelectedBarbershop(data);
-        });
+      naver.maps.Event.addListener(barbershopMarker, "click", function () {
+        if (infoWindow.getMap()) {
+          infoWindow.close();
+        } else {
+          infoWindow.open(map, barbershopMarker);
+        }
+      });
+
+      const tmp = infoWindow.contentElement as HTMLElement;
+      tmp.getElementsByClassName(styles["button"])[0].addEventListener("click", function () {
+        setSelectedBarbershop(data);
+
       });
   }, []);
 
