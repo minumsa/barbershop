@@ -1,15 +1,16 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { deleteData } from "./lib/api";
 import { usePathname, useRouter } from "next/navigation";
 
 interface SubTabProps {
   selectedBarbershop: any | null;
   setSelectedBarbershop: React.Dispatch<React.SetStateAction<any | null>>;
+  isMobile: boolean;
 }
 
-export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProps) => {
+export const SubTab = ({ selectedBarbershop, setSelectedBarbershop, isMobile }: SubTabProps) => {
   const router = useRouter();
   const pathName = usePathname();
   const isAdmin = pathName.includes("admin");
@@ -17,9 +18,12 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
 
   return (
     selectedBarbershop && (
-      <div className={styles["tab"]}>
+      <div className={styles["tab"]} style={{ width: "100%" }}>
         <div className={styles["sub-title-container"]}>
-          <div className={styles["tab-title"]}>
+          <div
+            className={styles["tab-title"]}
+            style={isMobile ? { padding: "10px 20px 0 20px", fontSize: "1rem" } : undefined}
+          >
             <div>{selectedBarbershop.name}</div>
             <div
               className={styles["close"]}
@@ -45,7 +49,10 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
           </div>
         </div>
         <div className={styles["sub-information-container"]}>
-          <div className={styles["sub-flexbox"]}>
+          <div
+            className={styles["sub-flexbox"]}
+            style={isMobile ? { padding: "0 15px" } : undefined}
+          >
             <div className={styles["sub-title"]}>소개</div>
             <div className={styles["sub-information"]}>
               {selectedBarbershop.description.split("  ").map((text: string, index: number) => {
@@ -53,7 +60,10 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
               })}
             </div>
           </div>
-          <div className={styles["sub-flexbox"]}>
+          <div
+            className={styles["sub-flexbox"]}
+            style={isMobile ? { padding: "0 15px" } : undefined}
+          >
             <div className={styles["sub-title"]}>바버</div>
             <div className={styles["sub-information"]}>{`${selectedBarbershop.barberList
               .map((barber: string, index: number) => {
@@ -61,7 +71,10 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
               })
               .join("")}`}</div>
           </div>
-          <div className={styles["sub-flexbox"]}>
+          <div
+            className={styles["sub-flexbox"]}
+            style={isMobile ? { padding: "0 15px" } : undefined}
+          >
             <div className={styles["sub-title"]}>주소</div>
             <a
               href={selectedBarbershop.locationUrl}
@@ -73,17 +86,26 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
               </div>
             </a>
           </div>
-          <div className={styles["sub-flexbox"]}>
+          <div
+            className={styles["sub-flexbox"]}
+            style={isMobile ? { padding: "0 15px" } : undefined}
+          >
             <div className={styles["sub-title"]}>시술비</div>
             <div className={styles["sub-information"]}>
               {`${selectedBarbershop.price.toLocaleString()}원`}
             </div>
           </div>
-          <div className={styles["sub-flexbox"]}>
+          <div
+            className={styles["sub-flexbox"]}
+            style={isMobile ? { padding: "0 15px" } : undefined}
+          >
             <div className={styles["sub-title"]}>운영시간</div>
             <div className={styles["sub-information"]}>{selectedBarbershop.operatingTime}</div>
           </div>
-          <div className={styles["sub-flexbox"]}>
+          <div
+            className={styles["sub-flexbox"]}
+            style={isMobile ? { padding: "0 15px" } : undefined}
+          >
             <div className={styles["sub-title"]}>휴무일</div>
             <div className={styles["sub-information"]}>
               {selectedBarbershop.closedDays === "" || !selectedBarbershop.closedDays
@@ -91,11 +113,17 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
                 : selectedBarbershop.closedDays}
             </div>
           </div>
-          <div className={styles["sub-flexbox"]}>
+          <div
+            className={styles["sub-flexbox"]}
+            style={isMobile ? { padding: "0 15px" } : undefined}
+          >
             <div className={styles["sub-title"]}>연락처</div>
             <div className={styles["sub-information"]}>{selectedBarbershop.contact}</div>
           </div>
-          <div className={styles["sub-flexbox"]}>
+          <div
+            className={styles["sub-flexbox"]}
+            style={isMobile ? { padding: "0 15px" } : undefined}
+          >
             <div className={styles["sub-title"]}>웹사이트</div>
             <div className={`${styles["sub-information"]} ${styles["barbershop-url"]}`}>
               <a
@@ -121,6 +149,7 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
                 onClick={() => {
                   window.open(selectedBarbershop.reservationUrl);
                 }}
+                style={isMobile ? { marginBottom: "50px" } : undefined}
               >
                 <div>예약</div>
               </div>
