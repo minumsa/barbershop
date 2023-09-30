@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
@@ -12,15 +12,21 @@ import styles from "../page.module.css";
 import { FilterWindow } from "../FilterWindow";
 import { Content } from "../Content";
 import { useRouter } from "next/navigation";
+import { BarberShop } from "../model/BarberShop";
 
 export default function Page() {
-  const [price, setPrice] = useState<number>(50000); // price원 이상
-  const [barber, setBarber] = useState<number>(3); // barber명 이상
+  const [price, setPrice] = useState<number>(50000);
+  const [barber, setBarber] = useState<number>(3);
   const [showFilterWindow, setIsFilterActive] = useState<boolean>(false);
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
-  const [selectedBarbershop, setSelectedBarbershop] = useState<any | null>();
+  const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
   const router = useRouter();
   const [searchKeyword, setSearchKeyword] = useState<string>("");
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 500);
+  }, []);
 
   return (
     <div className={styles["container"]}>
@@ -96,6 +102,7 @@ export default function Page() {
         price={price}
         barber={barber}
         searchKeyword={searchKeyword}
+        isMobile={isMobile}
       />
     </div>
   );

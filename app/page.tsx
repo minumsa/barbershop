@@ -9,8 +9,8 @@ import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
-  const [price, setPrice] = useState<number>(50000); // price원 이상
-  const [barber, setBarber] = useState<number>(3); // barber명 이상
+  const [price, setPrice] = useState<number>(50000);
+  const [barber, setBarber] = useState<number>(3);
   const [showFilterWindow, setIsFilterActive] = useState<boolean>(false);
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
   const [selectedBarbershop, setSelectedBarbershop] = useState<any | null>();
@@ -44,9 +44,7 @@ export default function Page() {
             router.push("/admin");
           }}
         >
-          <div>
-            <FontAwesomeIcon icon={faScissors} />
-          </div>
+          <FontAwesomeIcon icon={faScissors} />
           <div>{!isMobile && "Barber"}</div>
         </div>
         <div className={styles["search-container"]}>
@@ -57,7 +55,6 @@ export default function Page() {
             <div className={styles["magnifying-glass"]}>
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </div>
-            {/* TODO: 검색 키워드가 포함된 주소에 해당하는 데이터만 보여주기 */}
             <input
               className={styles["search-input"]}
               placeholder="지역을 입력해주세요"

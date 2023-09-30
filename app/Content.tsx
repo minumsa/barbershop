@@ -9,8 +9,8 @@ import { BarberShop } from "./model/BarberShop";
 interface ContentProps {
   price: number;
   barber: number;
-  selectedBarbershop: string;
-  setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop>>;
+  selectedBarbershop: BarberShop | null | undefined;
+  setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop | null | undefined>>;
   searchKeyword: string;
   isMobile: boolean;
 }
