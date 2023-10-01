@@ -288,7 +288,7 @@
   border-radius: 50%;
 }
 
-.sub-barbershop-image-container {
+.subtab-image-container {
   display: flex;
   margin-bottom: 10px;
 }
@@ -350,12 +350,19 @@
   padding: 2px 5px;
 }
 
-.sub-tab-button {
+.subtab-button-container {
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+  margin-top: 15px;
+}
+
+.subtab-button {
   padding: 2px 30px;
   margin: 0 5px;
 }
 
-.sub-title-container {
+.subtab-title-container {
   display: flex;
 }
 
@@ -364,27 +371,27 @@
   height: 100%;
 }
 
-.sub-information-container {
+.subtab-information-container {
   display: flex;
   flex-direction: column;
 }
 
-.sub-flexbox {
+.subtab-flexbox {
   display: flex;
   line-height: 200%;
   font-size: 1rem;
   margin-bottom: 2px;
 }
 
-.sub-title {
+.subtab-title {
   min-width: 90px;
 }
 
-.sub-information-title {
+.subtab-information-title {
   font-weight: 500;
 }
 
-.sub-information {
+.subtab-information {
   width: 100%;
 }
 
@@ -454,7 +461,7 @@
   height: auto;
 }
 
-.sub-tab-input {
+.subtab-input {
   width: 100px;
   border: 1px solid #000;
   font-size: 1rem;
@@ -466,4 +473,49 @@
 .paragraph {
   text-indent: 10%;
   /* white-space: pre-wrap; */
+}
+
+.password-container {
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.password {
+  margin: 10px;
+}
+
+@media (max-width: 499px) {
+  .nav-container {
+    padding: 0 20px;
+  }
+
+  .search {
+    width: 85%;
+    font-size: 0.9rem;
+  }
+
+  .search-input {
+    font-size: 0.9rem;
+  }
+
+  .content-container {
+    overflow: scroll;
+  }
+
+  .subtab-flexbox {
+    padding: 0 15px;
+  }
+
+  .tab-title {
+    padding: 10px 20px 0 20px;
+    font-size: 1rem;
+  }
+
+  .subtab-button {
+    margin-bottom: 50px;
+  }
 }

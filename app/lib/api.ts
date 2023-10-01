@@ -1,4 +1,4 @@
-import { IBarberShop } from "./data";
+import { BarberShop } from "./data";
 
 export async function fetchData() {
   try {
@@ -21,7 +21,7 @@ export async function fetchData() {
   }
 }
 
-export async function fetchBarbershopDataToEdit(id: string) {
+export async function fetchDataforEdit(id: string) {
   try {
     const response = await fetch(`/api/barbershop/${id}`, {
       method: "GET",
@@ -42,7 +42,7 @@ export async function fetchBarbershopDataToEdit(id: string) {
   }
 }
 
-export async function uploadData(barbershopData: IBarberShop, password: string) {
+export async function uploadData(barbershopData: BarberShop, password: string) {
   if (barbershopData !== null) {
     try {
       const response = await fetch("/api/barbershop", {
@@ -98,7 +98,7 @@ export const deleteData = async (id: string, password: string) => {
   }
 };
 
-export const EditData = async (data: Partial<IBarberShop>, id: string, password: string) => {
+export const EditData = async (data: Partial<BarberShop>, id: string, password: string) => {
   if (data !== null) {
     try {
       const response = await fetch(`/api/barbershop/${id}`, {

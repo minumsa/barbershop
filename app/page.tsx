@@ -7,15 +7,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faScissors, faSliders } from "@fortawesome/free-solid-svg-icons";
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
+import { BarberShop } from "./model/BarberShop";
 
 export default function Page() {
   const [price, setPrice] = useState<number>(50000);
   const [barber, setBarber] = useState<number>(3);
   const [showFilterWindow, setIsFilterActive] = useState<boolean>(false);
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
-  const [selectedBarbershop, setSelectedBarbershop] = useState<any | null>();
+  const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
   const router = useRouter();
   const [searchKeyword, setSearchKeyword] = useState<string>("");
+  // TODO: 모바일 상태를 체크하는 방식이 이게 최선일까? 더 좋은 방식이 있을 것 같다
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
@@ -36,7 +38,7 @@ export default function Page() {
           setBarber={setBarber}
         />
       </div>
-      <div className={styles["nav-container"]} style={isMobile ? { padding: "0 20px" } : {}}>
+      <div className={styles["nav-container"]}>
         <div
           className={styles["title"]}
           onClick={() => {
@@ -48,17 +50,13 @@ export default function Page() {
           <div>{!isMobile && "Barber"}</div>
         </div>
         <div className={styles["search-container"]}>
-          <div
-            className={styles["search"]}
-            style={isMobile ? { width: "85%", fontSize: "0.9rem" } : {}}
-          >
+          <div className={styles["search"]}>
             <div className={styles["magnifying-glass"]}>
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </div>
             <input
               className={styles["search-input"]}
               placeholder="지역을 입력해주세요"
-              style={isMobile ? { fontSize: "0.9rem" } : {}}
               value={searchKeyword}
               onChange={e => {
                 setSearchKeyword(e.target.value);

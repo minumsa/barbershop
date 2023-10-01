@@ -1,21 +1,17 @@
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
-import { fetchData } from "./lib/api";
 import { BarberShop } from "./model/BarberShop";
-// import { barbershops } from "./lib/data";
 
 interface MainTabProps {
   setSelectedBarbershop: React.Dispatch<React.SetStateAction<any | null>>;
-  price: number;
   barber: number;
   barbershops: BarberShop[];
 }
 
-export const MainTab = ({ setSelectedBarbershop, price, barber, barbershops }: MainTabProps) => {
+export const MainTab = ({ setSelectedBarbershop, barber, barbershops }: MainTabProps) => {
   const [orderType, setOrderType] = useState<string>("name-asc");
   const [filteredBarbershops, setFilteredBarbershops] = useState<BarberShop[]>();
 
-  // TODO: 업로드 오름차순/내림차순은 추후에 몽고DB 데이터 연결되면 넣기
   useEffect(() => {
     switch (orderType) {
       case "name-asc":

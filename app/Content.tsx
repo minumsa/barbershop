@@ -43,10 +43,7 @@ export const Content = ({
   }, [searchKeyword]);
 
   return (
-    <div
-      className={styles["content-container"]}
-      style={isMobile ? { overflow: "scroll" } : undefined}
-    >
+    <div className={styles["content-container"]}>
       {!isMobile && (
         <React.Fragment>
           <div className={styles["tab-container"]}>
@@ -54,12 +51,10 @@ export const Content = ({
               <SubTab
                 selectedBarbershop={selectedBarbershop}
                 setSelectedBarbershop={setSelectedBarbershop}
-                isMobile={isMobile}
               />
             ) : (
               <MainTab
                 setSelectedBarbershop={setSelectedBarbershop}
-                price={price}
                 barber={barber}
                 barbershops={searchKeyword === "" ? originBarbershops : barbershops}
               />
@@ -88,7 +83,6 @@ export const Content = ({
             <SubTab
               selectedBarbershop={selectedBarbershop}
               setSelectedBarbershop={setSelectedBarbershop}
-              isMobile={isMobile}
             />
           ) : (
             <Map

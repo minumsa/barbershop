@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
 
 interface MapProps {
-  setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop>>;
+  setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop | null | undefined>>;
   barbershops: BarberShop[];
   isMobile: boolean;
 }
@@ -33,6 +33,20 @@ export const Map = ({ setSelectedBarbershop, barbershops, isMobile }: MapProps) 
     };
     const map = new naver.maps.Map(mapElement.current, mapOptions);
 
+    interface BarbershopItemProps {
+      title: string;
+      data: string | React.ReactNode[];
+    }
+
+    const BarbershopItem = ({ title, data }: BarbershopItemProps) => {
+      return (
+        <div className={styles["overlay-detail"]}>
+          <div className={styles["overlay-detail-title"]}>{title}</div>
+          <div>{data}</div>
+        </div>
+      );
+    };
+
     interface BarbershopProps {
       name: string;
       location: string;
@@ -55,36 +69,19 @@ export const Map = ({ setSelectedBarbershop, barbershops, isMobile }: MapProps) 
       return (
         <div className={styles["is-inner"]}>
           <div>{name}</div>
-          <div className={styles["overlay-detail"]}>
-            <div className={styles["overlay-detail-title"]}>주소</div>
-            <div>{location}</div>
-          </div>
-          <div className={styles["overlay-detail"]}>
-            <div className={styles["overlay-detail-title"]}>운영시간</div>
-            <div>{operatingTime}</div>
-          </div>
-          <div className={styles["overlay-detail"]}>
-            <div className={styles["overlay-detail-title"]}>휴무일</div>
-            <div>{closedDays.length < 5 ? "없음" : closedDays}</div>
-          </div>
-          <div className={styles["overlay-detail"]}>
-            <div className={styles["overlay-detail-title"]}>연락처</div>
-            <div>{contact}</div>
-          </div>
-          <div className={styles["overlay-detail"]}>
-            <div className={styles["overlay-detail-title"]}>바버</div>
-            <div>
-              {barberList.map((barber, index) => {
-                return (
-                  <span key={index}>{index < barberList.length - 1 ? `${barber}, ` : barber}</span>
-                );
-              })}
-            </div>
-          </div>
-          <div className={styles["overlay-detail"]}>
-            <div className={styles["overlay-detail-title"]}>시술비</div>
-            <div>{price?.toLocaleString()}원</div>
-          </div>
+          <BarbershopItem title={"주소"} data={location} />
+          <BarbershopItem title={"운영시간"} data={operatingTime} />
+          <BarbershopItem title={"휴무일"} data={closedDays.length < 5 ? "없음" : closedDays} />
+          <BarbershopItem title={"연락처"} data={contact} />
+          <BarbershopItem
+            title={"바버"}
+            data={barberList.map((barber, index) => {
+              return (
+                <span key={index}>{index < barberList.length - 1 ? `${barber}, ` : barber}</span>
+              );
+            })}
+          />
+          <BarbershopItem title={"시술비"} data={price?.toLocaleString()} />
           <div className={styles["overlay-detail"]} style={{ padding: 0 }}>
             <div className={styles["more-button-container"]}>
               <div className={styles["button"]}>
@@ -155,5 +152,5 @@ export const Map = ({ setSelectedBarbershop, barbershops, isMobile }: MapProps) 
       }, []);
   }, [barbershops]);
 
-  return <div ref={mapElement} style={{ width: "100%", height: "100%" }} />;
+  return <div ref={mapElement} className={styles["map-container"]} />;
 };

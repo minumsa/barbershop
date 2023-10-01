@@ -45,7 +45,6 @@ export const FilterWindow = ({
             step={5000}
             value={price}
             onChange={e => {
-              // 이벤트 객체에서 숫자 값을 추출
               const newPrice = Number(e.target.value);
               setPrice(newPrice);
             }}
