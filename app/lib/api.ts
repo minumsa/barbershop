@@ -1,3 +1,5 @@
+import BarberShopModel from "../api/db/BarberShopModel";
+import connectMongoDB from "../api/db/mongodb";
 import { BarberShop } from "./data";
 
 export async function fetchData() {
@@ -10,7 +12,28 @@ export async function fetchData() {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to upload barbershop data");
+      throw new Error("Failed to get barbershop data");
+    }
+
+    let data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function searchData(keyword: string) {
+  try {
+    const response = await fetch(`/api/barbershop/search?query=${keyword}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to get barbershop data");
     }
 
     let data = await response.json();
@@ -31,7 +54,7 @@ export async function fetchDataforEdit(id: string) {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to upload barbershop data");
+      throw new Error("Failed to get barbershop data");
     }
 
     let data = await response.json();

@@ -8,6 +8,7 @@ import { faMagnifyingGlass, faScissors, faSliders } from "@fortawesome/free-soli
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
 import { BarberShop } from "./model/BarberShop";
+import { searchData } from "./lib/api";
 
 export default function Page() {
   const [price, setPrice] = useState<number>(50000);
@@ -16,13 +17,24 @@ export default function Page() {
   const handleFilter = () => setIsFilterActive(!showFilterWindow);
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
   const router = useRouter();
-  const [searchKeyword, setSearchKeyword] = useState<string>("");
+  const [keyword, setKeyword] = useState<string>("");
   // TODO: 모바일 상태를 체크하는 방식이 이게 최선일까? 더 좋은 방식이 있을 것 같다
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [barbershops, setBarbershops] = useState<BarberShop>();
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 500);
   }, []);
+
+  const handleSearch = async () => {
+    try {
+      const barbershops = await searchData(keyword);
+      setBarbershops(barbershops);
+    } catch (error) {
+      console.error("Error in handleSearch:", error);
+    }
+  };
+  console.log(barbershops);
 
   return (
     <div className={styles["container"]}>
@@ -43,7 +55,7 @@ export default function Page() {
           className={styles["title"]}
           onClick={() => {
             setSelectedBarbershop(null);
-            router.push("/admin");
+            router.push("/");
           }}
         >
           <FontAwesomeIcon icon={faScissors} />
@@ -57,13 +69,19 @@ export default function Page() {
             <input
               className={styles["search-input"]}
               placeholder="지역을 입력해주세요"
-              value={searchKeyword}
+              value={keyword}
               onChange={e => {
-                setSearchKeyword(e.target.value);
+                setKeyword(e.target.value);
               }}
             />
             <div className={styles["search-button"]}>
-              <div>검색</div>
+              <div
+                onClick={() => {
+                  handleSearch();
+                }}
+              >
+                검색
+              </div>
             </div>
           </div>
         </div>
@@ -83,7 +101,7 @@ export default function Page() {
         setSelectedBarbershop={setSelectedBarbershop}
         price={price}
         barber={barber}
-        searchKeyword={searchKeyword}
+        keyword={keyword}
         isMobile={isMobile}
       />
     </div>
