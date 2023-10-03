@@ -1,5 +1,3 @@
-import BarberShopModel from "../api/db/BarberShopModel";
-import connectMongoDB from "../api/db/mongodb";
 import { BarberShop } from "./data";
 
 export async function fetchData() {

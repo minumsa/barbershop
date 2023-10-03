@@ -2,17 +2,16 @@ import { Map } from "./Map";
 import { MainTab } from "./MainTab";
 import { SubTab } from "./SubTab";
 import styles from "./page.module.css";
-import React, { useEffect, useState } from "react";
-import { fetchData, searchData } from "./lib/api";
 import { BarberShop } from "./model/BarberShop";
+import React from "react";
 
 interface ContentProps {
   price: number;
   barber: number;
   selectedBarbershop: BarberShop | null | undefined;
   setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop | null | undefined>>;
-  keyword: string;
   isMobile: boolean;
+  barbershops: BarberShop[];
 }
 
 export const Content = ({
@@ -20,33 +19,9 @@ export const Content = ({
   barber,
   selectedBarbershop,
   setSelectedBarbershop,
-  keyword,
   isMobile,
+  barbershops,
 }: ContentProps) => {
-  const [originBarbershops, setOriginBarbershops] = useState<BarberShop[]>([]);
-  const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
-
-  useEffect(() => {
-    async function loadData() {
-      setOriginBarbershops(await fetchData());
-    }
-
-    loadData();
-  }, []);
-
-  // // TODO: 서버에서 검색해서 가져오기
-  // useEffect(() => {
-  //   async function loadData() {
-  //     setBarbershops(await searchData(keyword));
-  //   }
-
-  //   keyword && loadData();
-
-  //   setBarbershops(
-  //     [...originBarbershops].filter(barbershop => barbershop.location.description.includes(keyword))
-  //   );
-  // }, [keyword]);
-
   return (
     <div className={styles["content-container"]}>
       {!isMobile && (
@@ -61,7 +36,7 @@ export const Content = ({
               <MainTab
                 setSelectedBarbershop={setSelectedBarbershop}
                 barber={barber}
-                barbershops={keyword === "" ? originBarbershops : barbershops}
+                barbershops={barbershops}
               />
             )}
           </div>
@@ -76,7 +51,7 @@ export const Content = ({
             </div>
             <Map
               setSelectedBarbershop={setSelectedBarbershop}
-              barbershops={keyword === "" ? originBarbershops : barbershops}
+              barbershops={barbershops}
               isMobile={isMobile}
             />
           </div>
@@ -92,7 +67,7 @@ export const Content = ({
           ) : (
             <Map
               setSelectedBarbershop={setSelectedBarbershop}
-              barbershops={keyword === "" ? originBarbershops : barbershops}
+              barbershops={barbershops}
               isMobile={isMobile}
             />
           )}

@@ -13,6 +13,7 @@ import { FilterWindow } from "../FilterWindow";
 import { Content } from "../Content";
 import { useRouter } from "next/navigation";
 import { BarberShop } from "../model/BarberShop";
+import { fetchData, searchData } from "../lib/api";
 
 export default function Page() {
   const [price, setPrice] = useState<number>(50000);
@@ -23,10 +24,26 @@ export default function Page() {
   const router = useRouter();
   const [keyword, setKeyword] = useState<string>("");
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 500);
+
+    async function loadAllData() {
+      setBarbershops(await fetchData());
+    }
+
+    loadAllData();
   }, []);
+
+  const handleSearch = async () => {
+    try {
+      const barbershops = await searchData(keyword);
+      setBarbershops(barbershops);
+    } catch (error) {
+      console.error("Error in handleSearch:", error);
+    }
+  };
 
   return (
     <div className={styles["container"]}>
@@ -70,7 +87,13 @@ export default function Page() {
               }}
             />
             <div className={styles["search-button"]}>
-              <div>검색</div>
+              <div
+                onClick={() => {
+                  handleSearch();
+                }}
+              >
+                검색
+              </div>
             </div>
           </div>
         </div>
@@ -101,8 +124,8 @@ export default function Page() {
         setSelectedBarbershop={setSelectedBarbershop}
         price={price}
         barber={barber}
-        keyword={keyword}
         isMobile={isMobile}
+        barbershops={barbershops}
       />
     </div>
   );

@@ -8,7 +8,7 @@ import { faMagnifyingGlass, faScissors, faSliders } from "@fortawesome/free-soli
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
 import { BarberShop } from "./model/BarberShop";
-import { searchData } from "./lib/api";
+import { fetchData, searchData } from "./lib/api";
 
 export default function Page() {
   const [price, setPrice] = useState<number>(50000);
@@ -20,10 +20,16 @@ export default function Page() {
   const [keyword, setKeyword] = useState<string>("");
   // TODO: 모바일 상태를 체크하는 방식이 이게 최선일까? 더 좋은 방식이 있을 것 같다
   const [isMobile, setIsMobile] = useState<boolean>(false);
-  const [barbershops, setBarbershops] = useState<BarberShop>();
+  const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 500);
+
+    async function loadAllData() {
+      setBarbershops(await fetchData());
+    }
+
+    loadAllData();
   }, []);
 
   const handleSearch = async () => {
@@ -34,7 +40,6 @@ export default function Page() {
       console.error("Error in handleSearch:", error);
     }
   };
-  console.log(barbershops);
 
   return (
     <div className={styles["container"]}>
@@ -101,8 +106,8 @@ export default function Page() {
         setSelectedBarbershop={setSelectedBarbershop}
         price={price}
         barber={barber}
-        keyword={keyword}
         isMobile={isMobile}
+        barbershops={barbershops}
       />
     </div>
   );
