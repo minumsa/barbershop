@@ -9,19 +9,23 @@ interface MainTabProps {
 }
 
 export const MainTab = ({ setSelectedBarbershop, barber, barbershops }: MainTabProps) => {
-  const [orderType, setOrderType] = useState<string>("name-asc");
+  const [orderType, setOrderType] = useState<string>("name");
   const [filteredBarbershops, setFilteredBarbershops] = useState<BarberShop[]>();
 
   useEffect(() => {
     switch (orderType) {
-      case "name-asc":
+      case "name":
         barbershops &&
           setFilteredBarbershops([...barbershops].sort((a, b) => a.name.localeCompare(b.name)));
         break;
-      case "name-desc":
-        barbershops &&
-          setFilteredBarbershops([...barbershops].sort((a, b) => b.name.localeCompare(a.name)));
-        break;
+      // case "open":
+      //   barbershops &&
+      //     setFilteredBarbershops([...barbershops].sort((a, b) => b.name.localeCompare(a.name)));
+      //   break;
+      // case "upload":
+      //   barbershops &&
+      //     setFilteredBarbershops([...barbershops].sort((a, b) => b.name.localeCompare(a.name)));
+      //   break;
     }
   }, [orderType]);
 
@@ -48,12 +52,34 @@ export const MainTab = ({ setSelectedBarbershop, barber, barbershops }: MainTabP
         <div>{`총 ${
           filteredBarbershops?.length ? filteredBarbershops?.length : 0
         }개의 검색 결과`}</div>
-        <select className={styles["tab-select"]} onChange={e => setOrderType(e.target.value)}>
+        {/* TODO: 나중에 바버샵 변수에 업로드일, 개점일 추가 */}
+        <div className={styles["tab-order"]}>
+          <ul className={styles["tab-ul"]}>
+            <li className={styles["tab-li"]}>
+              <button
+                className={styles["tab-button"]}
+                onClick={() => {
+                  setOrderType("name");
+                }}
+                style={orderType === "name" ? { color: "#000" } : { color: "#666" }}
+              >
+                이름순
+              </button>
+            </li>
+            <li className={styles["tab-li"]}>
+              <button className={styles["tab-button"]}>업로드순</button>
+            </li>
+            <li>
+              <button className={styles["tab-button"]}>개점일순</button>
+            </li>
+          </ul>
+        </div>
+        {/* <select className={styles["tab-select"]} onChange={e => setOrderType(e.target.value)}>
           <option value="name-asc">이름 오름차순</option>
           <option value="name-desc">이름 내림차순</option>
           <option value="upload-asc">업로드 오름차순</option>
           <option value="upload-desc">업로드 내림차순</option>
-        </select>
+        </select> */}
       </div>
       {filteredBarbershops?.map((data: any, index: number) => {
         return (
