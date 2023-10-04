@@ -41,6 +41,13 @@ export default function Page() {
     }
   };
 
+  const handleSearchEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      console.log("Enter!");
+      handleSearch();
+    }
+  };
+
   return (
     <div className={styles["container"]}>
       <div
@@ -78,6 +85,7 @@ export default function Page() {
               onChange={e => {
                 setKeyword(e.target.value);
               }}
+              onKeyDown={handleSearchEnter}
             />
             <div className={styles["search-button"]}>
               <div
