@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
+import { useSelector } from "react-redux";
 
 interface MainTabProps {
   setSelectedBarbershop: React.Dispatch<React.SetStateAction<any | null>>;
   barber: number;
-  barbershops: BarberShop[];
 }
 
-export const MainTab = ({ setSelectedBarbershop, barber, barbershops }: MainTabProps) => {
+export const MainTab = ({ setSelectedBarbershop, barber }: MainTabProps) => {
   const [orderType, setOrderType] = useState<string>("name");
   const [filteredBarbershops, setFilteredBarbershops] = useState<BarberShop[]>();
+  const barbershops = useSelector(state => state.barbershops);
 
   useEffect(() => {
     switch (orderType) {

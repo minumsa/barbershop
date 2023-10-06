@@ -9,6 +9,8 @@ import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
 import { BarberShop } from "./model/BarberShop";
 import { fetchData, searchData } from "./lib/api";
+import { legacy_createStore as createStore } from "redux";
+import { Provider } from "react-redux";
 
 export default function Page() {
   const [price, setPrice] = useState<number>(50000);
@@ -48,75 +50,89 @@ export default function Page() {
     }
   };
 
+  const reducer = (currentState, action) => {
+    if (currentState === undefined) {
+      return {
+        barbershops: barbershops,
+      };
+    }
+
+    const newState = { ...currentState };
+    return newState;
+  };
+
+  const store = createStore(reducer);
+
   return (
-    <div className={styles["container"]}>
-      <div
-        className={styles["filter-content"]}
-        style={showFilterWindow ? { position: "fixed" } : { display: "none" }}
-      >
-        <FilterWindow
-          setIsFilterActive={setIsFilterActive}
-          price={price}
-          setPrice={setPrice}
-          barber={barber}
-          setBarber={setBarber}
-        />
-      </div>
-      <div className={styles["nav-container"]}>
+    <Provider store={store}>
+      <div className={styles["container"]}>
         <div
-          className={styles["title"]}
-          onClick={() => {
-            setSelectedBarbershop(null);
-            router.push("/");
-          }}
+          className={styles["filter-content"]}
+          style={showFilterWindow ? { position: "fixed" } : { display: "none" }}
         >
-          <FontAwesomeIcon icon={faScissors} />
-          <div>{!isMobile && "Barber"}</div>
+          <FilterWindow
+            setIsFilterActive={setIsFilterActive}
+            price={price}
+            setPrice={setPrice}
+            barber={barber}
+            setBarber={setBarber}
+          />
         </div>
-        <div className={styles["search-container"]}>
-          <div className={styles["search"]}>
-            <div className={styles["magnifying-glass"]}>
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </div>
-            <input
-              className={styles["search-input"]}
-              placeholder="지역을 입력해주세요"
-              value={keyword}
-              onChange={e => {
-                setKeyword(e.target.value);
-              }}
-              onKeyDown={handleSearchEnter}
-            />
-            <div className={styles["search-button"]}>
-              <div
-                onClick={() => {
-                  handleSearch();
+        <div className={styles["nav-container"]}>
+          <div
+            className={styles["title"]}
+            onClick={() => {
+              setSelectedBarbershop(null);
+              router.push("/");
+            }}
+          >
+            <FontAwesomeIcon icon={faScissors} />
+            <div>{!isMobile && "Barber"}</div>
+          </div>
+          <div className={styles["search-container"]}>
+            <div className={styles["search"]}>
+              <div className={styles["magnifying-glass"]}>
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </div>
+              <input
+                className={styles["search-input"]}
+                placeholder="지역을 입력해주세요"
+                value={keyword}
+                onChange={e => {
+                  setKeyword(e.target.value);
                 }}
-              >
-                검색
+                onKeyDown={handleSearchEnter}
+              />
+              <div className={styles["search-button"]}>
+                <div
+                  onClick={() => {
+                    handleSearch();
+                  }}
+                >
+                  검색
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className={styles["category"]}>
-          <div
-            className={styles["filter-icon"]}
-            onClick={() => {
-              handleFilter();
-            }}
-          >
-            <FontAwesomeIcon icon={faSliders} />
+          <div className={styles["category"]}>
+            <div
+              className={styles["filter-icon"]}
+              onClick={() => {
+                handleFilter();
+              }}
+            >
+              <FontAwesomeIcon icon={faSliders} />
+            </div>
           </div>
         </div>
+        <Content
+          selectedBarbershop={selectedBarbershop}
+          setSelectedBarbershop={setSelectedBarbershop}
+          price={price}
+          barber={barber}
+          isMobile={isMobile}
+        />
       </div>
-      <Content
-        selectedBarbershop={selectedBarbershop}
-        setSelectedBarbershop={setSelectedBarbershop}
-        price={price}
-        barber={barber}
-        isMobile={isMobile}
-        barbershops={barbershops}
-      />
-    </div>
+    </Provider>
   );
 }

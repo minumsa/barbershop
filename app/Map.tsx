@@ -2,14 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import { renderToString } from "react-dom/server";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
+import { useSelector } from "react-redux";
 
 interface MapProps {
   setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop | null | undefined>>;
-  barbershops: BarberShop[];
   isMobile: boolean;
 }
 
-export const Map = ({ setSelectedBarbershop, barbershops, isMobile }: MapProps) => {
+export const Map = ({ setSelectedBarbershop, isMobile }: MapProps) => {
+  const barbershops: BarberShop[] = useSelector(state => state.barbershops);
   const mapElement = useRef(null);
 
   useEffect(() => {

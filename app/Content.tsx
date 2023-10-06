@@ -4,6 +4,7 @@ import { SubTab } from "./SubTab";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
 import React from "react";
+import { useSelector } from "react-redux";
 
 interface ContentProps {
   price: number;
@@ -11,7 +12,6 @@ interface ContentProps {
   selectedBarbershop: BarberShop | null | undefined;
   setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop | null | undefined>>;
   isMobile: boolean;
-  barbershops: BarberShop[];
 }
 
 export const Content = ({
@@ -20,7 +20,6 @@ export const Content = ({
   selectedBarbershop,
   setSelectedBarbershop,
   isMobile,
-  barbershops,
 }: ContentProps) => {
   return (
     <div className={styles["content-container"]}>
@@ -33,11 +32,7 @@ export const Content = ({
                 setSelectedBarbershop={setSelectedBarbershop}
               />
             ) : (
-              <MainTab
-                setSelectedBarbershop={setSelectedBarbershop}
-                barber={barber}
-                barbershops={barbershops}
-              />
+              <MainTab setSelectedBarbershop={setSelectedBarbershop} barber={barber} />
             )}
           </div>
           <div className={styles["map-container"]}>
@@ -49,11 +44,7 @@ export const Content = ({
                 바버 인원 : {barber === 3 ? "전체 선택" : barber === 2 ? "2인 이상" : `${barber}인`}
               </div>
             </div>
-            <Map
-              setSelectedBarbershop={setSelectedBarbershop}
-              barbershops={barbershops}
-              isMobile={isMobile}
-            />
+            <Map setSelectedBarbershop={setSelectedBarbershop} isMobile={isMobile} />
           </div>
         </React.Fragment>
       )}
@@ -65,11 +56,7 @@ export const Content = ({
               setSelectedBarbershop={setSelectedBarbershop}
             />
           ) : (
-            <Map
-              setSelectedBarbershop={setSelectedBarbershop}
-              barbershops={barbershops}
-              isMobile={isMobile}
-            />
+            <Map setSelectedBarbershop={setSelectedBarbershop} isMobile={isMobile} />
           )}
         </React.Fragment>
       )}
