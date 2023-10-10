@@ -96,6 +96,9 @@ export default function Page() {
           <FilterWindow />
         </div>
         {/* TODO: Nav 컴포넌트로 분리하기 */}
+        {/* TODO: X 누르면 정상적으로 FilterWindow 닫히게 만들기 */}
+        {/* TODO: 홈페이지 아이콘 수정 */}
+        {/* TODO: MainTab 너비 더 크게 */}
         <div className={styles["nav-container"]}>
           <div
             className={styles["title"]}
