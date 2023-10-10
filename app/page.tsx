@@ -10,11 +10,9 @@ import { useRouter } from "next/navigation";
 import { BarberShop } from "./model/BarberShop";
 import { fetchData, searchData } from "./lib/api";
 import { legacy_createStore as createStore } from "redux";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 
 export default function Page() {
-  const [price, setPrice] = useState<number>(50000);
-  const [barber, setBarber] = useState<number>(3);
   const [showFilterWindow, setShowFilterWindow] = useState<boolean>(false);
   const handleFilter = () => setShowFilterWindow(!showFilterWindow);
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
@@ -97,6 +95,7 @@ export default function Page() {
         >
           <FilterWindow />
         </div>
+        {/* TODO: Nav 컴포넌트로 분리하기 */}
         <div className={styles["nav-container"]}>
           <div
             className={styles["title"]}
