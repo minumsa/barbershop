@@ -1,20 +1,31 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { deleteData } from "./lib/api";
 import { usePathname, useRouter } from "next/navigation";
 import { BarberShop } from "./model/BarberShop";
+import { useDispatch, useSelector } from "react-redux";
 
 interface SubTabProps {
   selectedBarbershop: any | null;
   setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop | null | undefined>>;
 }
 
-export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProps) => {
+export const SubTab = () => {
   const router = useRouter();
   const pathName = usePathname();
   const isAdmin = pathName.includes("admin");
   const [password, setPassword] = useState<string>("");
+  // const { selectedBarbershop, setSelectedBarbershop } = useSelector((state: SubTabProps) => ({
+  //   selectedBarbershop: state.selectedBarbershop,
+  //   setSelectedBarbershop: state.setSelectedBarbershop,
+  // }));
+  const selector = useSelector((state: SubTabProps) => ({
+    selectedBarbershop: state.selectedBarbershop,
+    setSelectedBarbershop: state.setSelectedBarbershop,
+  }));
+  const { selectedBarbershop, setSelectedBarbershop } = useMemo(() => selector, [selector]);
+  const dispatch = useDispatch();
 
   interface ItemBlockProps {
     title: string;
@@ -39,7 +50,7 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
             <div
               className={styles["close"]}
               onClick={() => {
-                setSelectedBarbershop(null);
+                dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: null });
               }}
             >
               ×
@@ -138,7 +149,7 @@ export const SubTab = ({ selectedBarbershop, setSelectedBarbershop }: SubTabProp
                   <div
                     onClick={async () => {
                       deleteData(selectedBarbershop.id, password);
-                      setSelectedBarbershop(null);
+                      dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: null });
                       router.push("/admin");
                     }}
                   >

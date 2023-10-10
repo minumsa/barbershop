@@ -1,17 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 interface MainTabProps {
-  setSelectedBarbershop: React.Dispatch<React.SetStateAction<any | null>>;
+  barbershops: BarberShop[];
   barber: number;
 }
 
-export const MainTab = ({ setSelectedBarbershop, barber }: MainTabProps) => {
+export const MainTab = () => {
   const [orderType, setOrderType] = useState<string>("name");
   const [filteredBarbershops, setFilteredBarbershops] = useState<BarberShop[]>();
-  const barbershops = useSelector(state => state.barbershops);
+  // const { barbershops, barber } = useSelector((state: MainTabProps) => ({
+  //   barbershops: state.barbershops,
+  //   barber: state.barber,
+  // }));
+  const selector = useSelector((state: MainTabProps) => ({
+    barbershops: state.barbershops,
+    barber: state.barber,
+  }));
+  const { barbershops, barber } = useMemo(() => selector, [selector]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     switch (orderType) {
@@ -88,7 +97,7 @@ export const MainTab = ({ setSelectedBarbershop, barber }: MainTabProps) => {
             className={styles["list-container"]}
             key={index}
             onClick={() => {
-              setSelectedBarbershop(data);
+              dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: data });
             }}
           >
             <div

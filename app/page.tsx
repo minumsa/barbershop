@@ -15,8 +15,8 @@ import { Provider } from "react-redux";
 export default function Page() {
   const [price, setPrice] = useState<number>(50000);
   const [barber, setBarber] = useState<number>(3);
-  const [showFilterWindow, setIsFilterActive] = useState<boolean>(false);
-  const handleFilter = () => setIsFilterActive(!showFilterWindow);
+  const [showFilterWindow, setShowFilterWindow] = useState<boolean>(false);
+  const handleFilter = () => setShowFilterWindow(!showFilterWindow);
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
   const router = useRouter();
   const [keyword, setKeyword] = useState<string>("");
@@ -54,11 +54,35 @@ export default function Page() {
     if (currentState === undefined) {
       return {
         barbershops: barbershops,
+        price: 50000,
+        barber: 3,
+        showFilterWindow: false,
+        isMobile: isMobile,
+        selectedBarbershop: selectedBarbershop,
       };
     }
 
     const newState = { ...currentState };
-    return newState;
+
+    switch (action.type) {
+      case "SET_PRICE":
+        newState.price = action.payload;
+        return newState;
+      case "SET_BARBER":
+        newState.barber = action.payload;
+        return newState;
+      case "SET_SHOW_FILTER_WINDOW":
+        newState.showFilterWindow = action.payload;
+        return newState;
+      case "SET_IS_MOBILE":
+        newState.isMobile = action.payload;
+        return newState;
+      case "SET_SELECTED_BARBERSHOP":
+        newState.selectedBarbershop = action.payload;
+        return newState;
+      default:
+        return currentState;
+    }
   };
 
   const store = createStore(reducer);
@@ -70,13 +94,7 @@ export default function Page() {
           className={styles["filter-content"]}
           style={showFilterWindow ? { position: "fixed" } : { display: "none" }}
         >
-          <FilterWindow
-            setIsFilterActive={setIsFilterActive}
-            price={price}
-            setPrice={setPrice}
-            barber={barber}
-            setBarber={setBarber}
-          />
+          <FilterWindow />
         </div>
         <div className={styles["nav-container"]}>
           <div
@@ -125,13 +143,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <Content
-          selectedBarbershop={selectedBarbershop}
-          setSelectedBarbershop={setSelectedBarbershop}
-          price={price}
-          barber={barber}
-          isMobile={isMobile}
-        />
+        <Content />
       </div>
     </Provider>
   );

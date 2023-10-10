@@ -3,37 +3,41 @@ import { MainTab } from "./MainTab";
 import { SubTab } from "./SubTab";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
-import React from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 
 interface ContentProps {
   price: number;
   barber: number;
-  selectedBarbershop: BarberShop | null | undefined;
-  setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop | null | undefined>>;
   isMobile: boolean;
+  selectedBarbershop: BarberShop | null | undefined;
 }
 
-export const Content = ({
-  price,
-  barber,
-  selectedBarbershop,
-  setSelectedBarbershop,
-  isMobile,
-}: ContentProps) => {
+export const Content = () => {
+  // const { price, barber, isMobile, selectedBarbershop, setSelectedBarbershop } = useSelector(
+  //   (state: ContentProps) => ({
+  //     price: state.price,
+  //     barber: state.barber,
+  //     isMobile: state.isMobile,
+  //     selectedBarbershop: state.selectedBarbershop,
+  //     setSelectedBarbershop: state.setSelectedBarbershop,
+  //   })
+  // );
+
+  const selector = useSelector((state: ContentProps) => ({
+    price: state.price,
+    barber: state.barber,
+    isMobile: state.isMobile,
+    selectedBarbershop: state.selectedBarbershop,
+  }));
+  const { price, barber, isMobile, selectedBarbershop } = useMemo(() => selector, [selector]);
+
   return (
     <div className={styles["content-container"]}>
       {!isMobile && (
         <React.Fragment>
           <div className={styles["tab-container"]}>
-            {selectedBarbershop ? (
-              <SubTab
-                selectedBarbershop={selectedBarbershop}
-                setSelectedBarbershop={setSelectedBarbershop}
-              />
-            ) : (
-              <MainTab setSelectedBarbershop={setSelectedBarbershop} barber={barber} />
-            )}
+            {selectedBarbershop ? <SubTab /> : <MainTab />}
           </div>
           <div className={styles["map-container"]}>
             <div className={styles["filter-box"]}>
@@ -44,22 +48,11 @@ export const Content = ({
                 바버 인원 : {barber === 3 ? "전체 선택" : barber === 2 ? "2인 이상" : `${barber}인`}
               </div>
             </div>
-            <Map setSelectedBarbershop={setSelectedBarbershop} isMobile={isMobile} />
+            <Map />
           </div>
         </React.Fragment>
       )}
-      {isMobile && (
-        <React.Fragment>
-          {selectedBarbershop ? (
-            <SubTab
-              selectedBarbershop={selectedBarbershop}
-              setSelectedBarbershop={setSelectedBarbershop}
-            />
-          ) : (
-            <Map setSelectedBarbershop={setSelectedBarbershop} isMobile={isMobile} />
-          )}
-        </React.Fragment>
-      )}
+      {isMobile && <React.Fragment>{selectedBarbershop ? <SubTab /> : <Map />}</React.Fragment>}
     </div>
   );
 };

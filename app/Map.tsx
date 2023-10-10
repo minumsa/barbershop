@@ -1,17 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { renderToString } from "react-dom/server";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 interface MapProps {
-  setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop | null | undefined>>;
+  barbershops: BarberShop[];
   isMobile: boolean;
+  setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop | null | undefined>>;
 }
 
-export const Map = ({ setSelectedBarbershop, isMobile }: MapProps) => {
-  const barbershops: BarberShop[] = useSelector(state => state.barbershops);
+export const Map = () => {
+  // const { barbershops, isMobile } = useSelector((state: MapProps) => ({
+  //   barbershops: state.barbershops,
+  //   isMobile: state.isMobile,
+  // }));
+  const selector = useSelector((state: MapProps) => ({
+    barbershops: state.barbershops,
+    isMobile: state.isMobile,
+  }));
+  const { barbershops, isMobile } = useMemo(() => selector, [selector]);
   const mapElement = useRef(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const { naver } = window as any;
@@ -132,7 +142,7 @@ export const Map = ({ setSelectedBarbershop, isMobile }: MapProps) => {
 
         naver.maps.Event.addListener(barbershopMarker, "click", function () {
           if (isMobile) {
-            setSelectedBarbershop(data);
+            dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: data });
           } else {
             if (infoWindow.getMap()) {
               infoWindow.close();
@@ -145,7 +155,7 @@ export const Map = ({ setSelectedBarbershop, isMobile }: MapProps) => {
         const tmp = infoWindow.contentElement as HTMLElement;
 
         tmp.getElementsByClassName(styles["button"])[0].addEventListener("click", function () {
-          setSelectedBarbershop(data);
+          dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: data });
         });
       }, []);
   }, [barbershops]);

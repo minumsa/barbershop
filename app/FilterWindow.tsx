@@ -1,26 +1,30 @@
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./page.module.css";
+import { useMemo } from "react";
 
 interface FilterWindowProps {
-  setIsFilterActive: React.Dispatch<React.SetStateAction<boolean>>;
   price: number;
-  setPrice: React.Dispatch<React.SetStateAction<number>>;
   barber: number;
-  setBarber: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const FilterWindow = ({
-  setIsFilterActive,
-  price,
-  setPrice,
-  barber,
-  setBarber,
-}: FilterWindowProps) => {
+export const FilterWindow = () => {
+  // const { price, barber } = useSelector((state: FilterWindowProps) => ({
+  //   price: state.price,
+  //   barber: state.barber,
+  // }));
+  const selector = useSelector((state: FilterWindowProps) => ({
+    price: state.price,
+    barber: state.barber,
+  }));
+  const { price, barber } = useMemo(() => selector, [selector]);
+  const dispatch = useDispatch();
+
   return (
     <div className={styles["filter-container"]}>
       <div
         className={styles["filter-close"]}
         onClick={() => {
-          setIsFilterActive(false);
+          dispatch({ type: "SET_SHOW_FILTER_WINDOW", payload: false });
         }}
       >
         <div>지도 옵션</div>
@@ -46,7 +50,7 @@ export const FilterWindow = ({
             value={price}
             onChange={e => {
               const newPrice = Number(e.target.value);
-              setPrice(newPrice);
+              dispatch({ type: "SET_PRICE", payload: newPrice });
             }}
           />
           <datalist id="price-markers">
@@ -80,7 +84,7 @@ export const FilterWindow = ({
             list="barber-markers"
             onChange={e => {
               const newBarber = Number(e.target.value);
-              setBarber(newBarber);
+              dispatch({ type: "SET_BARBER", payload: newBarber });
             }}
           />
           <datalist id="barber-markers">
