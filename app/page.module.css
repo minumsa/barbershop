@@ -331,8 +331,8 @@
 .list-information {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   font-size: 0.95rem;
-  padding: 15px 0 10px 0;
 }
 
 .list-name {

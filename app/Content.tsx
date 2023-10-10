@@ -3,7 +3,7 @@ import { MainTab } from "./MainTab";
 import { SubTab } from "./SubTab";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
-import React, { useMemo } from "react";
+import React from "react";
 import { shallowEqual, useSelector } from "react-redux";
 
 interface ContentProps {

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
@@ -6,15 +6,17 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 interface MainTabProps {
   barbershops: BarberShop[];
   barber: number;
+  price: number;
 }
 
 export const MainTab = () => {
   const [orderType, setOrderType] = useState<string>("name");
   const [filteredBarbershops, setFilteredBarbershops] = useState<BarberShop[]>();
-  const { barbershops, barber } = useSelector(
+  const { barbershops, barber, price } = useSelector(
     (state: MainTabProps) => ({
       barbershops: state.barbershops,
       barber: state.barber,
+      price: state.price,
     }),
     shallowEqual
   );
@@ -44,15 +46,21 @@ export const MainTab = () => {
         [...barbershops]
           .sort((a, b) => a.name.localeCompare(b.name))
           .filter(data => {
-            // null이나 undefined가 아니면
-            if (data.barberList != null) {
-              if (barber === 1) return data.barberList.length === 1;
-              if (barber === 2) return data.barberList.length >= 2;
-              if (barber === 3) return data.barberList.length > 0;
+            if (data.barberList) {
+              if (barber === 1) {
+                return data.barberList.length === barber;
+              } else if (barber === 2) {
+                return data.barberList.length >= barber;
+              } else {
+                return true;
+              }
             }
           })
+          .filter(data => {
+            if (data.price) return price >= data.price;
+          })
       );
-  }, [barber, barbershops]);
+  }, [barber, price, barbershops]);
 
   return (
     <div className={styles["tab"]}>

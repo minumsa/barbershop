@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { renderToString } from "react-dom/server";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";

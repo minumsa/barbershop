@@ -1,6 +1,5 @@
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import styles from "./page.module.css";
-import { useMemo } from "react";
 
 interface FilterWindowProps {
   price: number;
@@ -15,11 +14,7 @@ export const FilterWindow = () => {
     }),
     shallowEqual
   );
-  // const selector = useSelector((state: FilterWindowProps) => ({
-  //   price: state.price,
-  //   barber: state.barber,
-  // }));
-  // const { price, barber } = useMemo(() => selector, [selector]);
+
   const dispatch = useDispatch();
 
   return (

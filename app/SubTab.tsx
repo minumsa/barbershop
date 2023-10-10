@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { deleteData } from "./lib/api";
 import { usePathname, useRouter } from "next/navigation";
 import { BarberShop } from "./model/BarberShop";
