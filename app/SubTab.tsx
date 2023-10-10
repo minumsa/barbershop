@@ -4,7 +4,7 @@ import React, { useMemo, useState } from "react";
 import { deleteData } from "./lib/api";
 import { usePathname, useRouter } from "next/navigation";
 import { BarberShop } from "./model/BarberShop";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 interface SubTabProps {
   selectedBarbershop: any | null;
@@ -16,15 +16,13 @@ export const SubTab = () => {
   const pathName = usePathname();
   const isAdmin = pathName.includes("admin");
   const [password, setPassword] = useState<string>("");
-  // const { selectedBarbershop, setSelectedBarbershop } = useSelector((state: SubTabProps) => ({
-  //   selectedBarbershop: state.selectedBarbershop,
-  //   setSelectedBarbershop: state.setSelectedBarbershop,
-  // }));
-  const selector = useSelector((state: SubTabProps) => ({
-    selectedBarbershop: state.selectedBarbershop,
-    setSelectedBarbershop: state.setSelectedBarbershop,
-  }));
-  const { selectedBarbershop, setSelectedBarbershop } = useMemo(() => selector, [selector]);
+  const { selectedBarbershop } = useSelector(
+    (state: SubTabProps) => ({
+      selectedBarbershop: state.selectedBarbershop,
+    }),
+    shallowEqual
+  );
+
   const dispatch = useDispatch();
 
   interface ItemBlockProps {

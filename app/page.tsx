@@ -50,6 +50,7 @@ export default function Page() {
     }
   };
 
+  // TODO: currentState, action 타입 지정하기
   const reducer = (currentState, action) => {
     if (currentState === undefined) {
       return {

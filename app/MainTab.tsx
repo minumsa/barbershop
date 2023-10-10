@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 interface MainTabProps {
   barbershops: BarberShop[];
@@ -11,15 +11,14 @@ interface MainTabProps {
 export const MainTab = () => {
   const [orderType, setOrderType] = useState<string>("name");
   const [filteredBarbershops, setFilteredBarbershops] = useState<BarberShop[]>();
-  // const { barbershops, barber } = useSelector((state: MainTabProps) => ({
-  //   barbershops: state.barbershops,
-  //   barber: state.barber,
-  // }));
-  const selector = useSelector((state: MainTabProps) => ({
-    barbershops: state.barbershops,
-    barber: state.barber,
-  }));
-  const { barbershops, barber } = useMemo(() => selector, [selector]);
+  const { barbershops, barber } = useSelector(
+    (state: MainTabProps) => ({
+      barbershops: state.barbershops,
+      barber: state.barber,
+    }),
+    shallowEqual
+  );
+
   const dispatch = useDispatch();
 
   useEffect(() => {

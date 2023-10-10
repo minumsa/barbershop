@@ -4,7 +4,7 @@ import { SubTab } from "./SubTab";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
 import React, { useMemo } from "react";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 
 interface ContentProps {
   price: number;
@@ -14,23 +14,15 @@ interface ContentProps {
 }
 
 export const Content = () => {
-  // const { price, barber, isMobile, selectedBarbershop, setSelectedBarbershop } = useSelector(
-  //   (state: ContentProps) => ({
-  //     price: state.price,
-  //     barber: state.barber,
-  //     isMobile: state.isMobile,
-  //     selectedBarbershop: state.selectedBarbershop,
-  //     setSelectedBarbershop: state.setSelectedBarbershop,
-  //   })
-  // );
-
-  const selector = useSelector((state: ContentProps) => ({
-    price: state.price,
-    barber: state.barber,
-    isMobile: state.isMobile,
-    selectedBarbershop: state.selectedBarbershop,
-  }));
-  const { price, barber, isMobile, selectedBarbershop } = useMemo(() => selector, [selector]);
+  const { price, barber, isMobile, selectedBarbershop } = useSelector(
+    (state: ContentProps) => ({
+      price: state.price,
+      barber: state.barber,
+      isMobile: state.isMobile,
+      selectedBarbershop: state.selectedBarbershop,
+    }),
+    shallowEqual
+  );
 
   return (
     <div className={styles["content-container"]}>

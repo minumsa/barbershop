@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { renderToString } from "react-dom/server";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 interface MapProps {
   barbershops: BarberShop[];
@@ -11,15 +11,14 @@ interface MapProps {
 }
 
 export const Map = () => {
-  // const { barbershops, isMobile } = useSelector((state: MapProps) => ({
-  //   barbershops: state.barbershops,
-  //   isMobile: state.isMobile,
-  // }));
-  const selector = useSelector((state: MapProps) => ({
-    barbershops: state.barbershops,
-    isMobile: state.isMobile,
-  }));
-  const { barbershops, isMobile } = useMemo(() => selector, [selector]);
+  const { barbershops, isMobile } = useSelector(
+    (state: MapProps) => ({
+      barbershops: state.barbershops,
+      isMobile: state.isMobile,
+    }),
+    shallowEqual
+  );
+
   const mapElement = useRef(null);
   const dispatch = useDispatch();
 
