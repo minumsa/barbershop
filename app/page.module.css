@@ -471,12 +471,21 @@
   min-width: fit-content;
   height: fit-content;
   background-color: #fff;
-  font-size: 0.8rem;
+  font-size: 0.75em;
   font-weight: 500;
   border: 1px solid #000;
-  border: 1px solid rgb(4, 117, 244);
-  border-radius: 5px;
+  /* border-radius: 5px; */
   padding: 5px;
+
+  z-index: 1;
+}
+
+.pin-container:hover {
+  z-index: 100;
+}
+
+.pin-container:hover {
+  background-color: yellow;
 }
 
 .test-detail {

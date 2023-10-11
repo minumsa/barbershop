@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { renderToString } from "react-dom/server";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
@@ -74,6 +74,7 @@ export const Map = () => {
     }: BarbershopProps) => {
       return (
         <div className={styles["is-inner"]}>
+          <button className={styles["filter-button"]}>×</button>
           <div>{name}</div>
           <BarbershopItem title={"주소"} data={location} />
           <BarbershopItem title={"운영시간"} data={operatingTime} />
@@ -106,7 +107,7 @@ export const Map = () => {
     const BarbershopIcon = ({ name }: BarbershopIconProps) => {
       return (
         <div className={styles["pin-container"]}>
-          <div>{`💇‍♂️${name}`}</div>
+          <div>{name}</div>
         </div>
       );
     };
@@ -155,6 +156,12 @@ export const Map = () => {
         tmp.getElementsByClassName(styles["button"])[0].addEventListener("click", function () {
           dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: data });
         });
+
+        tmp
+          .getElementsByClassName(styles["filter-button"])[0]
+          .addEventListener("click", function () {
+            infoWindow.close();
+          });
       }, []);
   }, [barbershops]);
 
