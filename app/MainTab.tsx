@@ -7,16 +7,17 @@ interface MainTabProps {
   barbershops: BarberShop[];
   barber: number;
   price: number;
+  filteredBarbershops: BarberShop[];
 }
 
 export const MainTab = () => {
   const [orderType, setOrderType] = useState<string>("name");
-  const [filteredBarbershops, setFilteredBarbershops] = useState<BarberShop[]>();
-  const { barbershops, barber, price } = useSelector(
+  const { barbershops, barber, price, filteredBarbershops } = useSelector(
     (state: MainTabProps) => ({
       barbershops: state.barbershops,
       barber: state.barber,
       price: state.price,
+      filteredBarbershops: state.filteredBarbershops,
     }),
     shallowEqual
   );
@@ -27,7 +28,11 @@ export const MainTab = () => {
     switch (orderType) {
       case "name":
         barbershops &&
-          setFilteredBarbershops([...barbershops].sort((a, b) => a.name.localeCompare(b.name)));
+          // setFilteredBarbershops([...barbershops].sort((a, b) => a.name.localeCompare(b.name)));
+          dispatch({
+            type: "SET_FILTERED_BARBERSHOPS",
+            payload: [...barbershops].sort((a, b) => a.name.localeCompare(b.name)),
+          });
         break;
       // case "open":
       //   barbershops &&
@@ -42,8 +47,27 @@ export const MainTab = () => {
 
   useEffect(() => {
     barbershops &&
-      setFilteredBarbershops(
-        [...barbershops]
+      // setFilteredBarbershops(
+      //   [...barbershops]
+      //     .sort((a, b) => a.name.localeCompare(b.name))
+      //     .filter(data => {
+      //       if (data.barberList) {
+      //         if (barber === 1) {
+      //           return data.barberList.length === barber;
+      //         } else if (barber === 2) {
+      //           return data.barberList.length >= barber;
+      //         } else {
+      //           return true;
+      //         }
+      //       }
+      //     })
+      //     .filter(data => {
+      //       if (data.price) return price >= data.price;
+      //     })
+      // );
+      dispatch({
+        type: "SET_FILTERED_BARBERSHOPS",
+        payload: [...barbershops]
           .sort((a, b) => a.name.localeCompare(b.name))
           .filter(data => {
             if (data.barberList) {
@@ -58,8 +82,8 @@ export const MainTab = () => {
           })
           .filter(data => {
             if (data.price) return price >= data.price;
-          })
-      );
+          }),
+      });
   }, [barber, price, barbershops]);
 
   return (

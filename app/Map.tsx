@@ -5,16 +5,16 @@ import { BarberShop } from "./model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 interface MapProps {
-  barbershops: BarberShop[];
+  filteredBarbershops: BarberShop[];
   isMobile: boolean;
   setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop | null | undefined>>;
 }
 
 export const Map = () => {
-  const { barbershops, isMobile } = useSelector(
+  const { isMobile, filteredBarbershops } = useSelector(
     (state: MapProps) => ({
-      barbershops: state.barbershops,
       isMobile: state.isMobile,
+      filteredBarbershops: state.filteredBarbershops,
     }),
     shallowEqual
   );
@@ -25,8 +25,11 @@ export const Map = () => {
     const { naver } = window as any;
     if (!mapElement.current || !naver) return;
 
-    const barbershop = barbershops
-      ? new naver.maps.LatLng(barbershops[0]?.location.lat, barbershops[0]?.location.lng)
+    const barbershop = filteredBarbershops
+      ? new naver.maps.LatLng(
+          filteredBarbershops[0]?.location.lat,
+          filteredBarbershops[0]?.location.lng
+        )
       : new naver.maps.LatLng(37.56571603771177, 126.99485276474563);
 
     const mapOptions = {
@@ -112,8 +115,8 @@ export const Map = () => {
       );
     };
 
-    barbershops &&
-      barbershops.map(data => {
+    filteredBarbershops &&
+      filteredBarbershops.map(data => {
         const barbershopMarker = new naver.maps.Marker({
           position: new naver.maps.LatLng(data.location.lat, data.location.lng),
           map: map,
@@ -163,7 +166,7 @@ export const Map = () => {
             infoWindow.close();
           });
       }, []);
-  }, [barbershops]);
+  }, [filteredBarbershops]);
 
   return <div ref={mapElement} className={styles["map-container"]} />;
 };

@@ -13,6 +13,7 @@ import { Nav } from "./Nav";
 
 export default function Page() {
   const [showFilterWindow, setShowFilterWindow] = useState<boolean>(false);
+  // const [filteredBarbershops, setFilteredBarbershops] = useState<BarberShop[]>();
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
   const router = useRouter();
   const [keyword, setKeyword] = useState<string>("");
@@ -41,6 +42,7 @@ export default function Page() {
         isMobile: isMobile,
         selectedBarbershop: selectedBarbershop,
         keyword: keyword,
+        filteredBarbershops: [],
       };
     }
 
@@ -67,6 +69,9 @@ export default function Page() {
         return newState;
       case "SET_KEYWORD":
         newState.keyword = action.payload;
+        return newState;
+      case "SET_FILTERED_BARBERSHOPS":
+        newState.filteredBarbershops = action.payload;
         return newState;
       default:
         return currentState;
