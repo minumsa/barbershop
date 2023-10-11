@@ -468,24 +468,19 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: fit-content;
-  height: fit-content;
+  min-width: 20px;
+  width: fit-content;
+  height: 20px;
   background-color: #fff;
   font-size: 0.75em;
   font-weight: 500;
   border: 1px solid #000;
   /* border-radius: 5px; */
-  padding: 5px;
-
   z-index: 1;
 }
 
 .pin-container:hover {
   z-index: 100;
-}
-
-.pin-container:hover {
-  background-color: yellow;
 }
 
 .test-detail {

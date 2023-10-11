@@ -20,6 +20,10 @@ export const Map = () => {
   );
   const mapElement = useRef(null);
   const dispatch = useDispatch();
+  const [activeMarkerId, setActiveMarkerId] = useState<string>();
+  const [showInfoWindow, setShowInfoWindow] = useState<boolean>(false);
+  console.log("activeMarkerId", activeMarkerId);
+  console.log("showInfoWindow", showInfoWindow);
 
   useEffect(() => {
     const { naver } = window as any;
@@ -105,12 +109,16 @@ export const Map = () => {
 
     interface BarbershopIconProps {
       name: string;
+      id: string;
     }
 
-    const BarbershopIcon = ({ name }: BarbershopIconProps) => {
+    const BarbershopIcon = ({ name, id }: BarbershopIconProps) => {
       return (
-        <div className={styles["pin-container"]}>
-          <div>{name}</div>
+        <div
+          className={styles["pin-container"]}
+          style={id === activeMarkerId ? { padding: "0 5px" } : undefined}
+        >
+          <div>{id === activeMarkerId && name}</div>
         </div>
       );
     };
@@ -121,7 +129,7 @@ export const Map = () => {
           position: new naver.maps.LatLng(data.location.lat, data.location.lng),
           map: map,
           icon: {
-            content: renderToString(<BarbershopIcon name={data.name} />),
+            content: renderToString(<BarbershopIcon name={data.name} id={data.id} />),
             size: new naver.maps.Size(50, 50),
             origin: new naver.maps.Point(0, 0),
             anchor: new naver.maps.Point(45, 10),
@@ -148,10 +156,21 @@ export const Map = () => {
           } else {
             if (infoWindow.getMap()) {
               infoWindow.close();
+              // setClickedMarkerId(undefined);
+              // setShowInfoWindow(false);
             } else {
+              setShowInfoWindow(true);
               infoWindow.open(map, barbershopMarker);
             }
           }
+        });
+
+        naver.maps.Event.addListener(barbershopMarker, "mouseover", function () {
+          if (showInfoWindow === false) setActiveMarkerId(data.id);
+        });
+
+        naver.maps.Event.addListener(barbershopMarker, "mouseout", function () {
+          if (showInfoWindow === false) setActiveMarkerId(undefined);
         });
 
         const tmp = infoWindow.contentElement as HTMLElement;
@@ -163,10 +182,12 @@ export const Map = () => {
         tmp
           .getElementsByClassName(styles["filter-button"])[0]
           .addEventListener("click", function () {
+            setActiveMarkerId(undefined);
+            setShowInfoWindow(false);
             infoWindow.close();
           });
       }, []);
-  }, [filteredBarbershops]);
+  }, [filteredBarbershops, activeMarkerId]);
 
   return <div ref={mapElement} className={styles["map-container"]} />;
 };
