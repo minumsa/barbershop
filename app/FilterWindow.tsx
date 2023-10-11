@@ -24,15 +24,17 @@ export const FilterWindow = () => {
       className={styles["filter-content"]}
       style={showFilterWindow ? { position: "fixed" } : { display: "none" }}
     >
+      <button
+        className={styles["filter-button"]}
+        onClick={() => {
+          dispatch({ type: "SET_SHOW_FILTER_WINDOW", payload: false });
+        }}
+      >
+        ×
+      </button>
       <div className={styles["filter-container"]}>
-        <div
-          className={styles["filter-close"]}
-          onClick={() => {
-            dispatch({ type: "SET_SHOW_FILTER_WINDOW", payload: false });
-          }}
-        >
+        <div className={styles["filter-close"]}>
           <div>지도 옵션</div>
-          <div className={styles["close"]}>×</div>
         </div>
         <div style={{ display: "flex", marginTop: "15px" }}>
           <div>시술비</div>

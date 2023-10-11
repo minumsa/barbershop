@@ -18,7 +18,6 @@ export const Map = () => {
     }),
     shallowEqual
   );
-
   const mapElement = useRef(null);
   const dispatch = useDispatch();
 
