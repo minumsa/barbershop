@@ -3,18 +3,16 @@
 import { useEffect, useState } from "react";
 import { FilterWindow } from "./FilterWindow";
 import { Content } from "./Content";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faScissors, faSliders } from "@fortawesome/free-solid-svg-icons";
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
 import { BarberShop } from "./model/BarberShop";
-import { fetchData, searchData } from "./lib/api";
+import { fetchData } from "./lib/api";
 import { legacy_createStore as createStore } from "redux";
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
+import { Nav } from "./Nav";
 
 export default function Page() {
   const [showFilterWindow, setShowFilterWindow] = useState<boolean>(false);
-  const handleFilter = () => setShowFilterWindow(!showFilterWindow);
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
   const router = useRouter();
   const [keyword, setKeyword] = useState<string>("");
@@ -32,22 +30,6 @@ export default function Page() {
     loadAllData();
   }, []);
 
-  const handleSearch = async () => {
-    try {
-      const barbershops = await searchData(keyword);
-      setBarbershops(barbershops);
-    } catch (error) {
-      console.error("Error in handleSearch:", error);
-    }
-  };
-
-  const handleSearchEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      console.log("Enter!");
-      handleSearch();
-    }
-  };
-
   // TODO: currentState, action 타입 지정하기
   const reducer = (currentState, action) => {
     if (currentState === undefined) {
@@ -58,6 +40,7 @@ export default function Page() {
         showFilterWindow: false,
         isMobile: isMobile,
         selectedBarbershop: selectedBarbershop,
+        keyword: keyword,
       };
     }
 
@@ -70,6 +53,9 @@ export default function Page() {
       case "SET_BARBER":
         newState.barber = action.payload;
         return newState;
+      case "SET_BARBERSHOPS":
+        newState.barbershops = action.payload;
+        return newState;
       case "SET_SHOW_FILTER_WINDOW":
         newState.showFilterWindow = action.payload;
         return newState;
@@ -78,6 +64,9 @@ export default function Page() {
         return newState;
       case "SET_SELECTED_BARBERSHOP":
         newState.selectedBarbershop = action.payload;
+        return newState;
+      case "SET_KEYWORD":
+        newState.keyword = action.payload;
         return newState;
       default:
         return currentState;
@@ -89,63 +78,11 @@ export default function Page() {
   return (
     <Provider store={store}>
       <div className={styles["container"]}>
-        <div
-          className={styles["filter-content"]}
-          style={showFilterWindow ? { position: "fixed" } : { display: "none" }}
-        >
-          <FilterWindow />
-        </div>
+        <FilterWindow />
         {/* TODO: Nav 컴포넌트로 분리하기 */}
-        {/* TODO: X 누르면 정상적으로 FilterWindow 닫히게 만들기 */}
         {/* TODO: 홈페이지 아이콘 수정 */}
         {/* TODO: MainTab 너비 더 크게 */}
-        <div className={styles["nav-container"]}>
-          <div
-            className={styles["title"]}
-            onClick={() => {
-              setSelectedBarbershop(null);
-              router.push("/");
-            }}
-          >
-            <FontAwesomeIcon icon={faScissors} />
-            <div>{!isMobile && "Barber"}</div>
-          </div>
-          <div className={styles["search-container"]}>
-            <div className={styles["search"]}>
-              <div className={styles["magnifying-glass"]}>
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
-              </div>
-              <input
-                className={styles["search-input"]}
-                placeholder="지역을 입력해주세요"
-                value={keyword}
-                onChange={e => {
-                  setKeyword(e.target.value);
-                }}
-                onKeyDown={handleSearchEnter}
-              />
-              <div className={styles["search-button"]}>
-                <div
-                  onClick={() => {
-                    handleSearch();
-                  }}
-                >
-                  검색
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className={styles["category"]}>
-            <div
-              className={styles["filter-icon"]}
-              onClick={() => {
-                handleFilter();
-              }}
-            >
-              <FontAwesomeIcon icon={faSliders} />
-            </div>
-          </div>
-        </div>
+        <Nav />
         <Content />
       </div>
     </Provider>

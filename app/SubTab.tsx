@@ -3,12 +3,10 @@ import styles from "./page.module.css";
 import React, { useState } from "react";
 import { deleteData } from "./lib/api";
 import { usePathname, useRouter } from "next/navigation";
-import { BarberShop } from "./model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 interface SubTabProps {
   selectedBarbershop: any | null;
-  setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop | null | undefined>>;
 }
 
 export const SubTab = () => {
