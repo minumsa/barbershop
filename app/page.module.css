@@ -401,7 +401,7 @@
 }
 
 .overlay-detail-title {
-  width: 100px;
+  width: 80px;
 }
 
 .more-button-container {
@@ -482,14 +482,28 @@
   align-items: center;
   min-width: 20px;
   width: fit-content;
-  height: 20px;
-  background-color: #fff;
+  height: fit-content;
+  /* background-color: #fff; */
   font-size: 0.75em;
   font-weight: 500;
-  border: 1px solid #000;
+  /* border: 1px solid #000; */
   /* border-radius: 100px; */
   z-index: 1;
-  padding: 3px 6px;
+  /* padding: 3px 6px; */
+}
+
+.pin-circle {
+  width: 17px;
+  height: 17px;
+  background-color: #000;
+  border-radius: 50%;
+  /* border: 1px solid #fff; */
+  text-shadow: -1px 0px #fff, 0px 1px #fff, 1px 0px #fff, 0px -1px #fff;
+  margin-bottom: 2px;
+}
+
+.pin-name {
+  text-shadow: -1px 0px #fff, 0px 1px #fff, 1px 0px #fff, 0px -1px #fff;
 }
 
 .test-detail {
@@ -557,6 +571,17 @@
 
 .password {
   margin: 10px;
+}
+
+.flexbox-row-center {
+  display: flex;
+  justify-content: center;
+}
+
+.string-center-border {
+  width: fit-content;
+  height: 22px;
+  border-bottom: 1px solid #000;
 }
 
 @media (max-width: 499px) {

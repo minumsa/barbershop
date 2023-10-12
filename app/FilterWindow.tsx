@@ -34,9 +34,7 @@ export const FilterWindow = () => {
       </button>
       <div className={styles["filter-container"]}>
         <div className={styles["filter-close"]}>
-          <div style={{ width: "fit-content", height: "22px", borderBottom: "1px solid #000" }}>
-            지도 옵션
-          </div>
+          <div className={styles["string-center-border"]}>지도 옵션</div>
         </div>
         <div style={{ display: "flex", marginTop: "10px" }}>
           <div style={{ width: "80px", height: "22px" }}>시술비</div>

@@ -136,7 +136,7 @@ export const MainTab = () => {
               style={{ backgroundImage: `url("${data.imgUrl}")` }}
             ></div>
             <div className={styles["list-information"]}>
-              <div className={styles["list-name"]}>{data.name}</div>
+              <div className={styles["list-name"]}>{`${data.name}`}</div>
               <div className={styles["list-location"]}>{data.location.description}</div>
             </div>
           </div>

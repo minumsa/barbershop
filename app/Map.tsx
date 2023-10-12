@@ -81,7 +81,9 @@ export const Map = () => {
       return (
         <div className={styles["is-inner"]}>
           <button className={styles["filter-button"]}>×</button>
-          <div>{name}</div>
+          <div className={styles["flexbox-row-center"]} style={{ marginBottom: "5px" }}>
+            <div className={styles["string-center-border"]}>{name}</div>
+          </div>
           <BarbershopItem title={"주소"} data={location} />
           <BarbershopItem title={"운영시간"} data={operatingTime} />
           <BarbershopItem title={"휴무일"} data={closedDays.length < 5 ? "없음" : closedDays} />
@@ -117,7 +119,8 @@ export const Map = () => {
           className={styles["pin-container"]}
           style={id === activeMarkerId ? { zIndex: 100 } : undefined}
         >
-          <div>{name}</div>
+          <div className={styles["pin-circle"]}></div>
+          <div className={styles["pin-name"]}>{name}</div>
         </div>
       );
     };
