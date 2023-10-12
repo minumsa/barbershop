@@ -76,6 +76,7 @@
   max-width: 500px;
   height: 35px;
   border: 1px solid #000;
+  border-radius: 100px;
   /* border-radius: 5px; */
   font-size: 1rem;
   justify-content: flex-end;
@@ -94,6 +95,7 @@
     system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
     "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   padding-left: 35px;
+  border-radius: 100px;
 }
 
 .magnifying-glass {
@@ -132,7 +134,7 @@
 .filter-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 50px;
+  margin-bottom: 35px;
 }
 
 .filter-content {
@@ -162,10 +164,10 @@
 
 .filter-close {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .filter-input {
@@ -181,7 +183,7 @@
   right: 0;
   width: fit-content;
   height: fit-content;
-  padding: 10px 15px;
+  padding: 7px 10px;
   background-color: #fff;
   border-top: 1px solid #000;
   border-left: 1px solid #000;
@@ -254,9 +256,9 @@
   align-items: center;
   justify-content: space-between;
   font-size: 1rem;
-  padding: 10px 5px 0 5px;
   margin-bottom: 10px;
   border-bottom: 1px solid #000;
+  padding-bottom: 7px;
 }
 
 .tab-button {
@@ -265,6 +267,14 @@
   cursor: pointer;
   font-size: 1rem;
   color: #666;
+  /* border: 1px solid #666; */
+  border-radius: 100px;
+  margin-right: 3px;
+  padding: 3px 6px;
+}
+
+.tab-button:last-of-type {
+  margin-right: 0;
 }
 
 .filter-blank {
@@ -290,6 +300,7 @@
   list-style: none;
   display: flex;
   width: 100%;
+  margin: 7px 0;
 }
 
 .tab-li {
@@ -464,6 +475,7 @@
 }
 
 .pin-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -475,12 +487,9 @@
   font-size: 0.75em;
   font-weight: 500;
   border: 1px solid #000;
-  /* border-radius: 5px; */
+  /* border-radius: 100px; */
   z-index: 1;
-}
-
-.pin-container:hover {
-  z-index: 100;
+  padding: 3px 6px;
 }
 
 .test-detail {

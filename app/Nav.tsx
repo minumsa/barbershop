@@ -47,7 +47,7 @@ export const Nav = () => {
           router.push("/");
         }}
       >
-        <FontAwesomeIcon icon={faScissors} />
+        {/* <FontAwesomeIcon icon={faScissors} /> */}
         <div>{!isMobile && "Barber"}</div>
       </div>
       <div className={styles["search-container"]}>

@@ -67,9 +67,9 @@ export default function Page() {
             router.push("/admin");
           }}
         >
-          <div>
+          {/* <div>
             <FontAwesomeIcon icon={faScissors} />
-          </div>
+          </div> */}
           <div>Barber</div>
         </div>
         <div className={styles["search-container"]}>

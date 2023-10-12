@@ -5,21 +5,24 @@ import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
 import React from "react";
 import { shallowEqual, useSelector } from "react-redux";
+import { NoData } from "./NoData";
 
 interface ContentProps {
   price: number;
   barber: number;
   isMobile: boolean;
   selectedBarbershop: BarberShop | null | undefined;
+  filteredBarbershops: BarberShop[];
 }
 
 export const Content = () => {
-  const { price, barber, isMobile, selectedBarbershop } = useSelector(
+  const { price, barber, isMobile, selectedBarbershop, filteredBarbershops } = useSelector(
     (state: ContentProps) => ({
       price: state.price,
       barber: state.barber,
       isMobile: state.isMobile,
       selectedBarbershop: state.selectedBarbershop,
+      filteredBarbershops: state.filteredBarbershops,
     }),
     shallowEqual
   );
@@ -40,7 +43,7 @@ export const Content = () => {
                 바버 인원 : {barber === 3 ? "전체 선택" : barber === 2 ? "2인 이상" : `${barber}인`}
               </div>
             </div>
-            <Map />
+            {filteredBarbershops.length === 0 ? <NoData /> : <Map />}
           </div>
         </React.Fragment>
       )}

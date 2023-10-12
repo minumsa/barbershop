@@ -18,12 +18,11 @@ export const Map = () => {
     }),
     shallowEqual
   );
+
   const mapElement = useRef(null);
   const dispatch = useDispatch();
   const [activeMarkerId, setActiveMarkerId] = useState<string>();
   const [showInfoWindow, setShowInfoWindow] = useState<boolean>(false);
-  console.log("activeMarkerId", activeMarkerId);
-  console.log("showInfoWindow", showInfoWindow);
 
   useEffect(() => {
     const { naver } = window as any;
@@ -116,9 +115,9 @@ export const Map = () => {
       return (
         <div
           className={styles["pin-container"]}
-          style={id === activeMarkerId ? { padding: "0 5px" } : undefined}
+          style={id === activeMarkerId ? { zIndex: 100 } : undefined}
         >
-          <div>{id === activeMarkerId && name}</div>
+          <div>{name}</div>
         </div>
       );
     };

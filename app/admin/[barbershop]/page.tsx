@@ -19,9 +19,9 @@ export default function Page({ params }: any) {
             router.push("/admin");
           }}
         >
-          <div>
+          {/* <div>
             <FontAwesomeIcon icon={faScissors} />
-          </div>
+          </div> */}
           <div>Barber</div>
         </div>
       </div>

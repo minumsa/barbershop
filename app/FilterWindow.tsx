@@ -34,16 +34,16 @@ export const FilterWindow = () => {
       </button>
       <div className={styles["filter-container"]}>
         <div className={styles["filter-close"]}>
-          <div>지도 옵션</div>
-        </div>
-        <div style={{ display: "flex", marginTop: "15px" }}>
-          <div>시술비</div>
-          <div style={{ paddingLeft: "30px" }}>
-            {price === 50000 ? "전체 선택" : `${price.toLocaleString()}원 이하`}
+          <div style={{ width: "fit-content", height: "22px", borderBottom: "1px solid #000" }}>
+            지도 옵션
           </div>
         </div>
+        <div style={{ display: "flex", marginTop: "10px" }}>
+          <div style={{ width: "80px", height: "22px" }}>시술비</div>
+          <div>{price === 50000 ? "전체 선택" : `${price.toLocaleString()}원 이하`}</div>
+        </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ paddingTop: "20px" }}>
+          <div style={{ paddingTop: "10px" }}>
             <input
               className="filter-input"
               type="range"
@@ -70,14 +70,12 @@ export const FilterWindow = () => {
             </datalist>
           </div>
         </div>
-        <div style={{ display: "flex", marginTop: "50px" }}>
-          <div>바버 인원</div>
-          <div style={{ paddingLeft: "30px" }}>
-            {barber === 1 ? "1인" : barber === 2 ? "2인 이상" : "전체 선택"}
-          </div>
+        <div style={{ display: "flex", marginTop: "40px" }}>
+          <div style={{ width: "80px" }}>바버 인원</div>
+          <div>{barber === 1 ? "1인" : barber === 2 ? "2인 이상" : "전체 선택"}</div>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ paddingTop: "20px" }}>
+          <div style={{ paddingTop: "10px" }}>
             <input
               className="filter-input"
               type="range"
