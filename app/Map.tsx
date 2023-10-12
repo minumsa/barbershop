@@ -96,7 +96,7 @@ export const Map = () => {
               );
             })}
           />
-          <BarbershopItem title={"시술비"} data={price?.toLocaleString()} />
+          <BarbershopItem title={"시술비"} data={`${price?.toLocaleString()}원`} />
           <div className={styles["overlay-detail"]} style={{ padding: 0 }}>
             <div className={styles["more-button-container"]}>
               <div className={styles["button"]}>

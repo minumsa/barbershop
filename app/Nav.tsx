@@ -48,7 +48,21 @@ export const Nav = () => {
         }}
       >
         {/* <FontAwesomeIcon icon={faScissors} /> */}
-        <div>{!isMobile && "Barber"}</div>
+        <div>
+          {!isMobile && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                alignContent: "center",
+              }}
+            >
+              <div>Barber</div>
+              <div className={styles["title-circle"]}></div>
+              <div>MR</div>
+            </div>
+          )}
+        </div>
       </div>
       <div className={styles["search-container"]}>
         <div className={styles["search"]}>
