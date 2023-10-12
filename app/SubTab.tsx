@@ -42,7 +42,9 @@ export const SubTab = () => {
       <div className={styles["tab"]}>
         <div className={styles["subtab-title-container"]}>
           <div className={styles["tab-title"]}>
-            <div>{selectedBarbershop.name}</div>
+            <div style={{ height: "24px", borderBottom: "1px solid #000" }}>
+              {selectedBarbershop.name}
+            </div>
             <div
               className={styles["close"]}
               onClick={() => {
@@ -81,7 +83,7 @@ export const SubTab = () => {
               .join("")}`}
           />
           <ItemBlock
-            title={"바버"}
+            title={"주소"}
             data={
               <a
                 href={selectedBarbershop.locationUrl}

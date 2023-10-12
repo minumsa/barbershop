@@ -119,7 +119,10 @@ export const Map = () => {
           className={styles["pin-container"]}
           style={id === activeMarkerId ? { zIndex: 100 } : undefined}
         >
-          <div className={styles["pin-circle"]}></div>
+          <div
+            className={styles["pin-circle"]}
+            // style={id === activeMarkerId ? { backgroundColor: "#53a0c7" } : undefined}
+          ></div>
           <div className={styles["pin-name"]}>{name}</div>
         </div>
       );

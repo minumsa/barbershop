@@ -58,6 +58,18 @@ input[type="range"] {
   margin: 0;
 }
 
+input[type="range"]::-ms-thumb {
+  margin-top: 1px;
+  box-shadow: 0px 0px 0px #000000;
+  border: 1px solid #2497e3;
+  width: 18px;
+  height: 18px;
+  /* width: 18px; */
+  border-radius: 25px;
+  background: #a1d0ff;
+  cursor: pointer;
+}
+
 p:first-of-type,
 p:last-of-type {
   margin: 0;
