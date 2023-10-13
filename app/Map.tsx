@@ -37,8 +37,8 @@ export const Map = () => {
 
     const mapOptions = {
       center: barbershop,
-      zoom: 15,
-      zoomControl: isMobile,
+      zoom: 17,
+      zoomControl: true,
       zoomControlOptions: {
         position: isMobile ? naver.maps.Position.RIGHT_TOP : naver.maps.Position.RIGHT_BOTTOM,
       },
@@ -115,14 +115,8 @@ export const Map = () => {
 
     const BarbershopIcon = ({ name, id }: BarbershopIconProps) => {
       return (
-        <div
-          className={styles["pin-container"]}
-          style={id === activeMarkerId ? { zIndex: 100 } : undefined}
-        >
-          <div
-            className={styles["pin-circle"]}
-            // style={id === activeMarkerId ? { backgroundColor: "#53a0c7" } : undefined}
-          ></div>
+        <div className={styles["pin-container"]}>
+          <div className={styles["pin-circle"]}></div>
           <div className={styles["pin-name"]}>{name}</div>
         </div>
       );
@@ -192,7 +186,7 @@ export const Map = () => {
             infoWindow.close();
           });
       }, []);
-  }, [filteredBarbershops, activeMarkerId]);
+  }, [filteredBarbershops]);
 
   return <div ref={mapElement} className={styles["map-container"]} />;
 };

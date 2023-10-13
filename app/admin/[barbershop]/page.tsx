@@ -14,15 +14,15 @@ export default function Page({ params }: any) {
     <div className={styles["container"]}>
       <div className={styles["nav-container"]}>
         <div
-          className={styles["title"]}
-          onClick={() => {
-            router.push("/admin");
+          style={{
+            display: "flex",
+            alignItems: "center",
+            alignContent: "center",
           }}
         >
-          {/* <div>
-            <FontAwesomeIcon icon={faScissors} />
-          </div> */}
           <div>Barber</div>
+          <div className={styles["title-circle"]}></div>
+          <div>MR</div>
         </div>
       </div>
       <Upload id={id} />

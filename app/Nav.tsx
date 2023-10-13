@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./page.module.css";
-import { faMagnifyingGlass, faScissors, faSliders } from "@fortawesome/free-solid-svg-icons";
-import { useRouter } from "next/navigation";
+import { faMagnifyingGlass, faPlus, faSliders } from "@fortawesome/free-solid-svg-icons";
+import { usePathname, useRouter } from "next/navigation";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { searchData } from "./lib/api";
 
@@ -22,6 +22,9 @@ export const Nav = () => {
     }),
     shallowEqual
   );
+
+  const pathName = usePathname();
+  const isAdmin = pathName.includes("admin");
 
   const handleSearch = async () => {
     try {
@@ -90,6 +93,19 @@ export const Nav = () => {
         </div>
       </div>
       <div className={styles["category"]}>
+        {isAdmin && (
+          <div
+            className={styles["filter-icon"]}
+            style={{ marginRight: "15px" }}
+            onClick={() => {
+              router.push("/admin/upload");
+            }}
+          >
+            <div>
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          </div>
+        )}
         <div
           className={styles["filter-icon"]}
           onClick={() => {

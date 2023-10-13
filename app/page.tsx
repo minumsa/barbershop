@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { FilterWindow } from "./FilterWindow";
 import { Content } from "./Content";
 import styles from "./page.module.css";
-import { useRouter } from "next/navigation";
 import { BarberShop } from "./model/BarberShop";
 import { fetchData } from "./lib/api";
 import { legacy_createStore as createStore } from "redux";
@@ -12,10 +11,7 @@ import { Provider } from "react-redux";
 import { Nav } from "./Nav";
 
 export default function Page() {
-  const [showFilterWindow, setShowFilterWindow] = useState<boolean>(false);
-  // const [filteredBarbershops, setFilteredBarbershops] = useState<BarberShop[]>();
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
-  const router = useRouter();
   const [keyword, setKeyword] = useState<string>("");
   // TODO: 모바일 상태를 체크하는 방식이 이게 최선일까? 더 좋은 방식이 있을 것 같다
   const [isMobile, setIsMobile] = useState<boolean>(false);
