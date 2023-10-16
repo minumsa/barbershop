@@ -58,7 +58,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  font-weight: 450;
+  font-weight: 550;
 }
 
 .search-container {
@@ -524,13 +524,25 @@
 
 .subtab-flexbox {
   display: flex;
-  line-height: 200%;
+  line-height: 190%;
   font-size: 1.05rem;
-  margin-bottom: 2px;
+  /* margin-bottom: 2px; */
+  border-bottom: 1px solid #e9e8eb;
+}
+
+.subtab-flexbox:last-of-type {
+  border-bottom: 2px solid #000;
 }
 
 .subtab-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
   min-width: 90px;
+  background-color: #333;
+  font-weight: 450;
+  height: 36px;
 }
 
 .subtab-information-title {
@@ -540,6 +552,8 @@
 .subtab-information {
   width: 100%;
   text-align: justify;
+  padding: 0 10px;
+  margin-top: 0.5px;
 }
 
 .barbershop-url {

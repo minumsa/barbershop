@@ -61,7 +61,11 @@ export const SubTab = () => {
               width={0}
               height={0}
               sizes="100vw"
-              style={{ width: "100%", height: "auto", borderRadius: "10px" }}
+              style={{
+                width: "100%",
+                height: "auto",
+                // borderRadius: "10px"
+              }}
             />
           </div>
         </div>
@@ -80,23 +84,18 @@ export const SubTab = () => {
               })
               .join("")}`}
           />
-          <ItemBlock
-            title={"주소"}
-            data={
+          <div className={styles["subtab-flexbox"]}>
+            <div className={styles["subtab-title"]}>주소</div>
+            <div className={`${styles["subtab-information"]} ${styles["barbershop-url"]}`}>
               <a
                 href={selectedBarbershop.locationUrl}
                 target="_blank"
-                style={{ textDecoration: "underline", color: "#000", cursor: "pointer" }}
+                style={{ textDecoration: "underline", color: "#000" }}
               >
-                <div
-                  className={styles["subtab-information"]}
-                  style={{ textDecoration: "underline" }}
-                >
-                  {selectedBarbershop.location.description}
-                </div>
+                {selectedBarbershop.location.description}
               </a>
-            }
-          />
+            </div>
+          </div>
           <ItemBlock title={"시술비"} data={`${selectedBarbershop.price.toLocaleString()}원`} />
           <ItemBlock title={"운영시간"} data={selectedBarbershop.operatingTime} />
           <ItemBlock
