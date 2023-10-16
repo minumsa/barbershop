@@ -35,12 +35,18 @@ export const Content = () => {
             {selectedBarbershop ? <SubTab /> : <MainTab />}
           </div>
           <div className={styles["map-container"]}>
-            <div className={styles["filter-box"]}>
-              <div className={styles["filter-box-content"]}>
-                시술비 : {price === 50000 ? "전체 선택" : `${price.toLocaleString()}원 이하,`}
+            <div className={styles["filter-box-container"]}>
+              <div className={styles["filter-box"]}>
+                <div className={styles["filter-box-title"]}>{`시술비 :`}</div>
+                <div className={styles["filter-box-content"]}>
+                  {price === 50000 ? "전체 선택" : `${price.toLocaleString()}원 이하,`}
+                </div>
               </div>
-              <div className={styles["filter-box-content"]}>
-                바버 인원 : {barber === 3 ? "전체 선택" : barber === 2 ? "2인 이상" : `${barber}인`}
+              <div className={styles["filter-box"]}>
+                <div className={styles["filter-box-title"]}>{`바버 인원 :`}</div>
+                <div className={styles["filter-box-content"]}>
+                  {barber === 3 ? "전체 선택" : barber === 2 ? "2인 이상" : `${barber}인`}
+                </div>
               </div>
             </div>
             {filteredBarbershops.length === 0 ? <NoData /> : <Map />}

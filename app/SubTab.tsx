@@ -42,9 +42,7 @@ export const SubTab = () => {
       <div className={styles["tab"]}>
         <div className={styles["subtab-title-container"]}>
           <div className={styles["tab-title"]}>
-            <div style={{ height: "24px", borderBottom: "1px solid #000" }}>
-              {selectedBarbershop.name}
-            </div>
+            <div className={styles["tab-title-name"]}>{selectedBarbershop.name}</div>
             <div
               className={styles["close"]}
               onClick={() => {

@@ -90,9 +90,13 @@ export const MainTab = () => {
     <div className={styles["tab"]}>
       <div className={styles["tab-title"]}>바버샵 리스트</div>
       <div className={styles["tab-filter"]}>
-        <div>{`총 ${
-          filteredBarbershops?.length ? filteredBarbershops?.length : 0
-        }개의 검색 결과`}</div>
+        <div style={{ display: "flex" }}>
+          <div className={styles["filter-box-title"]}>총</div>
+          <div className={styles["filter-box-content"]}>{`${
+            filteredBarbershops?.length ? filteredBarbershops?.length : 0
+          }개`}</div>
+          <div>의 검색 결과</div>
+        </div>
         {/* TODO: 나중에 바버샵 변수에 업로드일, 개점일 추가 */}
         <div className={styles["tab-order"]}>
           <ul className={styles["tab-ul"]}>
