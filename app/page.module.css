@@ -590,6 +590,17 @@
 }
 
 .pin-name {
+  /* --clr-bg: transparent;
+  --clr-underline: #01ff01;
+  --clr-pos-from: 55%;
+  --clr-pos-to: 85%;
+  transition: all 0.1s ease-in;
+  background: linear-gradient(
+    180deg,
+    var(--clr-bg) 0 var(--clr-pos-from),
+    var(--clr-underline) var(--clr-pos-from) var(--clr-pos-to),
+    var(--clr-bg) var(--clr-pos-to) 100%
+  ); */
   text-shadow: -1px 0px #fff, 0px 1px #fff, 1px 0px #fff, 0px -1px #fff;
 }
 

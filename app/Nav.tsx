@@ -4,6 +4,7 @@ import { faMagnifyingGlass, faPlus, faSliders } from "@fortawesome/free-solid-sv
 import { usePathname, useRouter } from "next/navigation";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { searchData } from "./lib/api";
+import { useState } from "react";
 
 interface Nav {
   keyword: string;
@@ -22,13 +23,15 @@ export const Nav = () => {
     }),
     shallowEqual
   );
+  const [currentKeyword, setCurrentKeyword] = useState<string>("");
 
   const pathName = usePathname();
   const isAdmin = pathName.includes("admin");
 
   const handleSearch = async () => {
     try {
-      const barbershops = await searchData(keyword);
+      const barbershops = await searchData(currentKeyword);
+      dispatch({ type: "SET_KEYWORD", payload: currentKeyword });
       dispatch({ type: "SET_BARBERSHOPS", payload: barbershops });
     } catch (error) {
       console.error("Error in handleSearch:", error);
@@ -75,9 +78,9 @@ export const Nav = () => {
           <input
             className={styles["search-input"]}
             placeholder="지역을 입력해주세요"
-            value={keyword}
+            value={currentKeyword}
             onChange={e => {
-              dispatch({ type: "SET_KEYWORD", payload: e.target.value });
+              setCurrentKeyword(e.target.value);
             }}
             onKeyDown={handleSearchEnter}
           />

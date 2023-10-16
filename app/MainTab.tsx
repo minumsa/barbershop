@@ -8,16 +8,18 @@ interface MainTabProps {
   barber: number;
   price: number;
   filteredBarbershops: BarberShop[];
+  keyword: string;
 }
 
 export const MainTab = () => {
   const [orderType, setOrderType] = useState<string>("name");
-  const { barbershops, barber, price, filteredBarbershops } = useSelector(
+  const { barbershops, barber, price, filteredBarbershops, keyword } = useSelector(
     (state: MainTabProps) => ({
       barbershops: state.barbershops,
       barber: state.barber,
       price: state.price,
       filteredBarbershops: state.filteredBarbershops,
+      keyword: state.keyword,
     }),
     shallowEqual
   );
@@ -91,6 +93,12 @@ export const MainTab = () => {
       <div className={styles["tab-title"]}>바버샵 리스트</div>
       <div className={styles["tab-filter"]}>
         <div style={{ display: "flex" }}>
+          {keyword.length > 1 && (
+            <div className={styles["filter-box-title"]}>
+              <span className={styles["filter-box-content"]}> {keyword}</span>
+              <span>에 대한</span>
+            </div>
+          )}
           <div className={styles["filter-box-title"]}>총</div>
           <div className={styles["filter-box-content"]}>{`${
             filteredBarbershops?.length ? filteredBarbershops?.length : 0
