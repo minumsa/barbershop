@@ -74,7 +74,7 @@
   display: flex;
   width: 70%;
   max-width: 500px;
-  height: 35px;
+  height: 37.5px;
   border: 1px solid #000;
   border-radius: 100px;
   /* border-radius: 5px; */
@@ -202,7 +202,8 @@
 
 .filter-box-content {
   --clr-bg: transparent;
-  --clr-underline: #fffe01;
+  /* --clr-underline: #fffe01; */
+  --clr-underline: #01ff01;
   --clr-pos-from: 55%;
   --clr-pos-to: 85%;
   transition: all 0.1s ease-in;
@@ -241,14 +242,16 @@
   font-weight: 250;
 }
 
+.tab-flexbox {
+  display: flex;
+}
+
 .tab-container {
   min-width: 500px;
   width: 500px;
-  /* height: calc(100% - 110px); */
   border-right: 1px solid #000;
   padding: 15px 30px;
   overflow: scroll;
-  /* height: 100%; */
   z-index: 1100;
   background-color: #fff;
 }
@@ -264,6 +267,29 @@
   display: flex;
   flex-direction: column;
   padding-bottom: 50px;
+}
+
+/* TODO: 오른쪽 책갈피 테스트 */
+.tab-bookmark {
+  display: flex;
+  position: absolute;
+  bottom: calc(100% - 130px);
+  left: 500px;
+  background-color: #fff;
+  border: 1px solid #000000;
+  border-radius: 100px;
+  text-align: center;
+  z-index: 100;
+  max-width: 100px;
+  width: 100%;
+  height: 37.5px;
+  justify-content: flex-end;
+  align-items: center;
+  cursor: pointer;
+}
+
+.tab-bookmark:hover {
+  left: 510px;
 }
 
 .detail-bar-container {
@@ -359,7 +385,7 @@
 .tab-title-name {
   height: 24px;
   --clr-bg: transparent;
-  --clr-underline: #fffe01;
+  --clr-underline: #01ff01;
   --clr-pos-from: 55%;
   --clr-pos-to: 85%;
   transition: all 0.1s ease-in;
@@ -377,6 +403,7 @@
   padding: 10px 0;
   width: 100%;
   height: fit-content;
+  cursor: pointer;
 }
 
 .list-container:last-child {

@@ -4,7 +4,7 @@ import { SubTab } from "./SubTab";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
 import React from "react";
-import { shallowEqual, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { NoData } from "./NoData";
 
 interface ContentProps {
@@ -26,13 +26,28 @@ export const Content = () => {
     }),
     shallowEqual
   );
+  const dispatch = useDispatch();
 
   return (
     <div className={styles["content-container"]}>
       {!isMobile && (
         <React.Fragment>
-          <div className={styles["tab-container"]}>
-            {selectedBarbershop ? <SubTab /> : <MainTab />}
+          <div className={styles["tab-flexbox"]}>
+            <div className={styles["tab-container"]}>
+              {selectedBarbershop ? <SubTab /> : <MainTab />}
+            </div>
+            {selectedBarbershop && (
+              <div
+                className={styles["tab-bookmark"]}
+                onClick={() => {
+                  dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: null });
+                }}
+              >
+                <div className={styles["close"]} style={{ marginRight: "10px" }}>
+                  ×
+                </div>
+              </div>
+            )}
           </div>
           <div className={styles["map-container"]}>
             <div className={styles["filter-box-container"]}>
