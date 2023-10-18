@@ -203,7 +203,8 @@
 .filter-box-content {
   --clr-bg: transparent;
   /* --clr-underline: #fffe01; */
-  --clr-underline: #01ff01;
+  /* --clr-underline: #01ff01; */
+  --clr-underline: #9999;
   --clr-pos-from: 55%;
   --clr-pos-to: 85%;
   transition: all 0.1s ease-in;
@@ -385,7 +386,8 @@
 .tab-title-name {
   height: 24px;
   --clr-bg: transparent;
-  --clr-underline: #01ff01;
+  --clr-underline: #9999;
+  /* --clr-underline: #01ff01; */
   --clr-pos-from: 55%;
   --clr-pos-to: 85%;
   transition: all 0.1s ease-in;
@@ -404,21 +406,6 @@
   width: 100%;
   height: fit-content;
   cursor: pointer;
-}
-
-/* TODO: 나중에 블로그에 정리 */
-.list-container:hover .list-name-text {
-  --clr-bg: transparent;
-  --clr-underline: #9999;
-  --clr-pos-from: 55%;
-  --clr-pos-to: 85%;
-  transition: all 0.1s ease-in;
-  background: linear-gradient(
-    180deg,
-    var(--clr-bg) 0 var(--clr-pos-from),
-    var(--clr-underline) var(--clr-pos-from) var(--clr-pos-to),
-    var(--clr-bg) var(--clr-pos-to) 100%
-  );
 }
 
 .list-container:last-child {
@@ -560,7 +547,7 @@
   align-items: center;
   color: #fff;
   min-width: 90px;
-  background-color: #333;
+  background-color: #999;
   font-weight: 450;
   height: 36px;
 }
