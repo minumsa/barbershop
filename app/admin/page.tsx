@@ -1,102 +1,88 @@
 "use client";
 
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMagnifyingGlass,
-  faPlus,
-  faScissors,
-  faSliders,
-} from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
 import styles from "../page.module.css";
 import { FilterWindow } from "../FilterWindow";
 import { Content } from "../Content";
-import { useRouter } from "next/navigation";
+import { BarberShop } from "../model/BarberShop";
+import { fetchData } from "../lib/api";
+import { Provider } from "react-redux";
+import { Nav } from "../Nav";
+import { legacy_createStore as createStore } from "redux";
 
 export default function Page() {
-  const [price, setPrice] = useState<number>(50000); // price원 이상
-  const [barber, setBarber] = useState<number>(3); // barber명 이상
-  const [showFilterWindow, setIsFilterActive] = useState<boolean>(false);
-  const handleFilter = () => setIsFilterActive(!showFilterWindow);
-  const [selectedBarbershop, setSelectedBarbershop] = useState<any | null>();
-  const router = useRouter();
-  const [searchKeyword, setSearchKeyword] = useState<string>("");
+  const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
+  const [keyword, setKeyword] = useState<string>("");
+  // TODO: 모바일 상태를 체크하는 방식이 이게 최선일까? 더 좋은 방식이 있을 것 같다
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 500);
+
+    async function loadAllData() {
+      setBarbershops(await fetchData());
+    }
+
+    loadAllData();
+  }, []);
+
+  // TODO: currentState, action 타입 지정하기
+  const reducer = (currentState: any, action: any) => {
+    if (currentState === undefined) {
+      return {
+        barbershops: barbershops,
+        price: 50000,
+        barber: 3,
+        showFilterWindow: false,
+        isMobile: isMobile,
+        selectedBarbershop: selectedBarbershop,
+        keyword: keyword,
+        filteredBarbershops: [],
+      };
+    }
+
+    const newState = { ...currentState };
+
+    switch (action.type) {
+      case "SET_PRICE":
+        newState.price = action.payload;
+        return newState;
+      case "SET_BARBER":
+        newState.barber = action.payload;
+        return newState;
+      case "SET_BARBERSHOPS":
+        newState.barbershops = action.payload;
+        return newState;
+      case "SET_SHOW_FILTER_WINDOW":
+        newState.showFilterWindow = action.payload;
+        return newState;
+      case "SET_IS_MOBILE":
+        newState.isMobile = action.payload;
+        return newState;
+      case "SET_SELECTED_BARBERSHOP":
+        newState.selectedBarbershop = action.payload;
+        return newState;
+      case "SET_KEYWORD":
+        newState.keyword = action.payload;
+        return newState;
+      case "SET_FILTERED_BARBERSHOPS":
+        newState.filteredBarbershops = action.payload;
+        return newState;
+      default:
+        return currentState;
+    }
+  };
+
+  const store = createStore(reducer);
 
   return (
-    <div className={styles["container"]}>
-      <div
-        className={styles["filter-content"]}
-        style={showFilterWindow ? { position: "fixed" } : { display: "none" }}
-      >
-        <FilterWindow
-          setIsFilterActive={setIsFilterActive}
-          price={price}
-          setPrice={setPrice}
-          barber={barber}
-          setBarber={setBarber}
-        />
+    <Provider store={store}>
+      <FilterWindow />
+      <div className={`${styles["container"]}`}>
+        <Nav />
+        <Content />
       </div>
-      <div className={styles["nav-container"]}>
-        <div
-          className={styles["title"]}
-          onClick={() => {
-            setSelectedBarbershop(null);
-            router.push("/admin");
-          }}
-        >
-          <div>
-            <FontAwesomeIcon icon={faScissors} />
-          </div>
-          <div>Barber</div>
-        </div>
-        <div className={styles["search-container"]}>
-          <div className={styles["search"]}>
-            <div className={styles["magnifying-glass"]}>
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </div>
-            <input
-              className={styles["search-input"]}
-              placeholder="지역을 입력해주세요"
-              style={{ paddingLeft: "35px" }}
-              value={searchKeyword}
-              onChange={e => {
-                setSearchKeyword(e.target.value);
-              }}
-            />
-            <div className={styles["search-button"]}>
-              <div>검색</div>
-            </div>
-          </div>
-        </div>
-        <div className={styles["category"]}>
-          <div
-            className={styles["filter-icon"]}
-            style={{ marginRight: "15px" }}
-            onClick={() => {
-              router.push("/admin/upload");
-            }}
-          >
-            <div>
-              <FontAwesomeIcon icon={faPlus} />
-            </div>
-          </div>
-          <div
-            className={styles["filter-icon"]}
-            onClick={() => {
-              handleFilter();
-            }}
-          >
-            <FontAwesomeIcon icon={faSliders} />
-          </div>
-        </div>
-      </div>
-      <Content
-        selectedBarbershop={selectedBarbershop}
-        setSelectedBarbershop={setSelectedBarbershop}
-        price={price}
-        barber={barber}
-        searchKeyword={searchKeyword}
-      />
-    </div>
+    </Provider>
   );
 }

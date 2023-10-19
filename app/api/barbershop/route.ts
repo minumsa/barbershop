@@ -2,7 +2,7 @@ import { GetRequest } from "@/app/model/api/barbershop/GET";
 import { NextResponse } from "next/server";
 import BarberShopModel from "../db/BarberShopModel";
 import connectMongoDB from "../db/mongodb";
-import { ensureId, ensurePassword, handleError } from "../errors";
+import { handleError } from "../errors";
 
 export async function GET(request: Request) {
   const searchParams = (() => {
@@ -52,8 +52,6 @@ export async function POST(request: Request) {
     if (password !== process.env.UPLOAD_PASSWORD)
       return NextResponse.json({ message: "password is not correct" }, { status: 401 });
 
-    // ensurePassword(password);
-
     const newBarbershop = await BarberShopModel.create(reqJson);
 
     return NextResponse.json(newBarbershop.toJSON());
@@ -71,13 +69,13 @@ export async function DELETE(request: Request) {
     if (password !== process.env.UPLOAD_PASSWORD)
       return NextResponse.json({ message: "password is not correct" }, { status: 401 });
 
-    const existingData = await BarberShopModel.findOne({ id });
+    const prevData = await BarberShopModel.findOne({ id });
 
-    if (!existingData) {
+    if (!prevData) {
       return NextResponse.json({ message: "Data not found" }, { status: 404 });
     }
 
-    await existingData.deleteOne();
+    await prevData.deleteOne();
 
     return NextResponse.json({ message: "Data deleted successfully" });
   } catch (error) {
@@ -96,30 +94,30 @@ export async function PUT(request: Request) {
     if (password !== process.env.UPLOAD_PASSWORD)
       return NextResponse.json({ message: "password is not correct" }, { status: 401 });
 
-    const existingData = await BarberShopModel.findOne({ id });
+    const prevData = await BarberShopModel.findOne({ id });
 
-    if (!existingData) {
+    if (!prevData) {
       return NextResponse.json({ message: "Data not found. Cannot update." }, { status: 404 });
     }
 
-    existingData.name = data.name;
-    existingData.location.description = data.location.description;
-    existingData.location.lat = data.location.lat;
-    existingData.location.lng = data.location.lng;
-    existingData.description = data.description;
-    existingData.contact = data.contact;
-    existingData.barbershopUrl = data.barbershopUrl;
-    existingData.price = data.price;
-    existingData.barberList = data.barberList;
-    existingData.operatingTime = data.operatingTime;
-    existingData.closedDays = data.closedDays;
-    existingData.reservationUrl = data.reservationUrl;
-    existingData.imgUrl = data.imgUrl;
-    existingData.locationUrl = data.locationUrl;
-    existingData.notice = data.notice;
+    prevData.name = data.name;
+    prevData.location.description = data.location.description;
+    prevData.location.lat = data.location.lat;
+    prevData.location.lng = data.location.lng;
+    prevData.description = data.description;
+    prevData.contact = data.contact;
+    prevData.barbershopUrl = data.barbershopUrl;
+    prevData.price = data.price;
+    prevData.barberList = data.barberList;
+    prevData.operatingTime = data.operatingTime;
+    prevData.closedDays = data.closedDays;
+    prevData.reservationUrl = data.reservationUrl;
+    prevData.imgUrl = data.imgUrl;
+    prevData.locationUrl = data.locationUrl;
+    prevData.notice = data.notice;
 
-    await existingData.save();
-    return NextResponse.json(existingData.toJSON());
+    await prevData.save();
+    return NextResponse.json(prevData.toJSON());
   } catch (error) {
     console.error(error);
     return NextResponse.json({ message: "Server Error" }, { status: 500 });

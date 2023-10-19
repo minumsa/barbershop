@@ -2,103 +2,73 @@ import { Map } from "./Map";
 import { MainTab } from "./MainTab";
 import { SubTab } from "./SubTab";
 import styles from "./page.module.css";
-import React, { useEffect, useState } from "react";
-import { fetchData } from "./lib/api";
 import { BarberShop } from "./model/BarberShop";
+import React from "react";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { NoData } from "./NoData";
 
 interface ContentProps {
   price: number;
   barber: number;
-  selectedBarbershop: string;
-  setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop>>;
-  searchKeyword: string;
   isMobile: boolean;
+  selectedBarbershop: BarberShop | null | undefined;
+  filteredBarbershops: BarberShop[];
 }
 
-export const Content = ({
-  price,
-  barber,
-  selectedBarbershop,
-  setSelectedBarbershop,
-  searchKeyword,
-  isMobile,
-}: ContentProps) => {
-  const [originBarbershops, setOriginBarbershops] = useState<BarberShop[]>([]);
-  const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
-
-  useEffect(() => {
-    async function loadData() {
-      setOriginBarbershops(await fetchData());
-    }
-
-    loadData();
-  }, []);
-
-  useEffect(() => {
-    setBarbershops(
-      [...originBarbershops].filter(barbershop =>
-        barbershop.location.description.includes(searchKeyword)
-      )
-    );
-  }, [searchKeyword]);
+export const Content = () => {
+  const { price, barber, isMobile, selectedBarbershop, filteredBarbershops } = useSelector(
+    (state: ContentProps) => ({
+      price: state.price,
+      barber: state.barber,
+      isMobile: state.isMobile,
+      selectedBarbershop: state.selectedBarbershop,
+      filteredBarbershops: state.filteredBarbershops,
+    }),
+    shallowEqual
+  );
+  const dispatch = useDispatch();
 
   return (
-    <div
-      className={styles["content-container"]}
-      style={isMobile ? { overflow: "scroll" } : undefined}
-    >
+    <div className={styles["content-container"]}>
       {!isMobile && (
         <React.Fragment>
-          <div className={styles["tab-container"]}>
-            {selectedBarbershop ? (
-              <SubTab
-                selectedBarbershop={selectedBarbershop}
-                setSelectedBarbershop={setSelectedBarbershop}
-                isMobile={isMobile}
-              />
-            ) : (
-              <MainTab
-                setSelectedBarbershop={setSelectedBarbershop}
-                price={price}
-                barber={barber}
-                barbershops={searchKeyword === "" ? originBarbershops : barbershops}
-              />
+          <div className={styles["tab-flexbox"]}>
+            <div className={styles["tab-container"]}>
+              {selectedBarbershop ? <SubTab /> : <MainTab />}
+            </div>
+            {selectedBarbershop && (
+              <div
+                className={styles["tab-bookmark"]}
+                onClick={() => {
+                  dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: null });
+                }}
+              >
+                <div className={styles["close"]} style={{ marginRight: "10px" }}>
+                  ×
+                </div>
+              </div>
             )}
           </div>
           <div className={styles["map-container"]}>
-            <div className={styles["filter-box"]}>
-              <div className={styles["filter-box-content"]}>
-                시술비 : {price === 50000 ? "전체 선택" : `${price.toLocaleString()}원 이하,`}
+            <div className={styles["filter-box-container"]}>
+              <div className={styles["filter-box"]}>
+                <div className={styles["filter-box-title"]}>{`시술비 :`}</div>
+                <div className={styles["filter-box-content"]}>
+                  {price === 50000 ? "전체 선택" : `${price.toLocaleString()}원 이하,`}
+                </div>
               </div>
-              <div className={styles["filter-box-content"]}>
-                바버 인원 : {barber === 3 ? "전체 선택" : barber === 2 ? "2인 이상" : `${barber}인`}
+              <div className={styles["filter-box"]}>
+                <div className={styles["filter-box-title"]}>{`바버 인원 :`}</div>
+                <div className={styles["filter-box-content"]}>
+                  {barber === 3 ? "전체 선택" : barber === 2 ? "2인 이상" : `${barber}인`}
+                </div>
               </div>
             </div>
-            <Map
-              setSelectedBarbershop={setSelectedBarbershop}
-              barbershops={searchKeyword === "" ? originBarbershops : barbershops}
-              isMobile={isMobile}
-            />
+            {filteredBarbershops.length === 0 ? <NoData /> : <Map />}
           </div>
         </React.Fragment>
       )}
-      {isMobile && (
-        <React.Fragment>
-          {selectedBarbershop ? (
-            <SubTab
-              selectedBarbershop={selectedBarbershop}
-              setSelectedBarbershop={setSelectedBarbershop}
-              isMobile={isMobile}
-            />
-          ) : (
-            <Map
-              setSelectedBarbershop={setSelectedBarbershop}
-              barbershops={searchKeyword === "" ? originBarbershops : barbershops}
-              isMobile={isMobile}
-            />
-          )}
-        </React.Fragment>
-      )}
+      {isMobile && <React.Fragment>{selectedBarbershop ? <SubTab /> : <Map />}</React.Fragment>}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { IBarberShop } from "./data";
+import { BarberShop } from "./data";
 
 export async function fetchData() {
   try {
@@ -10,7 +10,7 @@ export async function fetchData() {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to upload barbershop data");
+      throw new Error("Failed to get barbershop data");
     }
 
     let data = await response.json();
@@ -21,7 +21,28 @@ export async function fetchData() {
   }
 }
 
-export async function fetchBarbershopDataToEdit(id: string) {
+export async function searchData(keyword: string) {
+  try {
+    const response = await fetch(`/api/barbershop/search?query=${keyword}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to get barbershop data");
+    }
+
+    let data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function fetchDataforEdit(id: string) {
   try {
     const response = await fetch(`/api/barbershop/${id}`, {
       method: "GET",
@@ -31,7 +52,7 @@ export async function fetchBarbershopDataToEdit(id: string) {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to upload barbershop data");
+      throw new Error("Failed to get barbershop data");
     }
 
     let data = await response.json();
@@ -42,7 +63,7 @@ export async function fetchBarbershopDataToEdit(id: string) {
   }
 }
 
-export async function uploadData(barbershopData: IBarberShop, password: string) {
+export async function uploadData(barbershopData: BarberShop, password: string) {
   if (barbershopData !== null) {
     try {
       const response = await fetch("/api/barbershop", {
@@ -98,7 +119,7 @@ export const deleteData = async (id: string, password: string) => {
   }
 };
 
-export const EditData = async (data: Partial<IBarberShop>, id: string, password: string) => {
+export const EditData = async (data: Partial<BarberShop>, id: string, password: string) => {
   if (data !== null) {
     try {
       const response = await fetch(`/api/barbershop/${id}`, {

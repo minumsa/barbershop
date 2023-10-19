@@ -58,7 +58,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 550;
 }
 
 .search-container {
@@ -74,9 +74,9 @@
   display: flex;
   width: 70%;
   max-width: 500px;
-  height: 35px;
+  height: 37.5px;
   border: 1px solid #000;
-  /* border-radius: 5px; */
+  border-radius: 100px;
   font-size: 1rem;
   justify-content: flex-end;
   align-items: center;
@@ -89,21 +89,16 @@
   flex-grow: 1;
   font-size: 1rem;
   border: none;
-  /* font-family: "Montserrat", "GothicA1"; */
   font-family: "Montserrat", "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
     system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
     "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   padding-left: 35px;
+  border-radius: 100px;
 }
 
 .magnifying-glass {
   position: absolute;
-  /* display: flex; */
   padding-left: 10px;
-  /* flex-direction: column; */
-  /* justify-content: center; */
-  /* width: fit-content; */
-  /* cursor: pointer; */
   left: 0;
 }
 
@@ -132,7 +127,7 @@
 .filter-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 50px;
+  margin-bottom: 35px;
 }
 
 .filter-content {
@@ -144,8 +139,8 @@
   width: 350px;
   background-color: #fff;
   border: 1px solid #000;
-  z-index: 1000;
-  padding: 10px 25px;
+  z-index: 10000;
+  padding: 25px 25px 0 25px;
 }
 
 .filter-icon {
@@ -156,23 +151,23 @@
 
 .close {
   font-size: 2.5rem;
-  font-weight: 300;
+  font-weight: 250;
   cursor: pointer;
 }
 
 .filter-close {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .filter-input {
   width: 200px;
 }
 
-.filter-box {
+.filter-box-container {
   font-size: 0.9rem;
   font-weight: 400;
   display: flex;
@@ -181,7 +176,7 @@
   right: 0;
   width: fit-content;
   height: fit-content;
-  padding: 10px 15px;
+  padding: 7px 10px;
   background-color: #fff;
   border-top: 1px solid #000;
   border-left: 1px solid #000;
@@ -189,30 +184,103 @@
   z-index: 1000;
 }
 
-.filter-box-content {
+.filter-box {
+  display: flex;
   margin-right: 10px;
 }
 
-.filter-box-content:last-of-type {
+.filter-box-title {
+  margin-right: 0.3rem;
+}
+
+.filter-box-content {
+  --clr-bg: transparent;
+  --clr-underline: #9999;
+  --clr-pos-from: 55%;
+  --clr-pos-to: 85%;
+  transition: all 0.1s ease-in;
+  background: linear-gradient(
+    180deg,
+    var(--clr-bg) 0 var(--clr-pos-from),
+    var(--clr-underline) var(--clr-pos-from) var(--clr-pos-to),
+    var(--clr-bg) var(--clr-pos-to) 100%
+  );
+}
+
+.filter-box:last-of-type {
   margin-right: 0;
 }
 
+.filter-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Montserrat", "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
+    "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  top: -11px;
+  right: -12px;
+  background-size: 11.5px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  border: 1px solid black;
+  border-radius: 50%;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 2.2rem;
+  font-weight: 250;
+}
+
+.tab-flexbox {
+  display: flex;
+}
+
 .tab-container {
-  min-width: 450px;
-  width: 450px;
-  /* height: calc(100% - 110px); */
+  min-width: 500px;
+  width: 500px;
   border-right: 1px solid #000;
-  padding: 15px 20px;
+  padding: 15px 30px;
   overflow: scroll;
-  height: 100%;
   z-index: 1100;
   background-color: #fff;
 }
 
+.tab-container::-webkit-scrollbar {
+  display: none;
+}
+
 .tab {
+  position: relative;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  padding-bottom: 100px;
+  padding-bottom: 50px;
+}
+
+/* TODO: 오른쪽 책갈피 테스트 */
+.tab-bookmark {
+  display: flex;
+  position: absolute;
+  bottom: calc(100% - 130px);
+  left: 500px;
+  background-color: #fff;
+  border: 1px solid #000000;
+  border-radius: 100px;
+  text-align: center;
+  z-index: 100;
+  max-width: 100px;
+  width: 100%;
+  height: 37.5px;
+  justify-content: flex-end;
+  align-items: center;
+  cursor: pointer;
+}
+
+.tab-bookmark:hover {
+  left: 510px;
 }
 
 .detail-bar-container {
@@ -222,7 +290,6 @@
 .map-container {
   width: 100%;
   height: 100%;
-  /* height: calc(100% - 70px); */
 }
 
 .tab-filter {
@@ -230,9 +297,24 @@
   align-items: center;
   justify-content: space-between;
   font-size: 1rem;
-  padding: 10px 5px;
   margin-bottom: 10px;
   border-bottom: 1px solid #000;
+  padding-bottom: 7px;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #666;
+  border-radius: 100px;
+  margin-right: 3px;
+  padding: 3px 6px;
+}
+
+.tab-button:last-of-type {
+  margin-right: 0;
 }
 
 .filter-blank {
@@ -240,7 +322,6 @@
 }
 
 .tab-select {
-  /* font-family: "Montserrat", "GothicA1"; */
   font-family: "Montserrat", "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
     system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
     "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
@@ -248,6 +329,34 @@
   font-size: 1rem;
   border: none;
   padding-right: 10px;
+}
+
+.tab-order {
+  display: flex;
+}
+
+.tab-ul {
+  list-style: none;
+  display: flex;
+  width: 100%;
+  margin: 7px 0;
+}
+
+.tab-li {
+  position: relative;
+  margin-right: 5px;
+}
+
+.tab-li::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 100%;
+  background-color: rgb(196, 196, 196);
+  right: -4px;
+  top: 10px;
 }
 
 .tab-title {
@@ -258,6 +367,24 @@
   height: 50px;
   justify-content: space-between;
   align-items: center;
+  font-weight: 500;
+}
+
+.tab-title-name {
+  height: 24px;
+  --clr-bg: transparent;
+  --clr-underline: #9999;
+  /* --clr-underline: #01ff01; */
+  --clr-pos-from: 55%;
+  --clr-pos-to: 85%;
+  transition: all 0.1s ease-in;
+  background: linear-gradient(
+    180deg,
+    var(--clr-bg) 0 var(--clr-pos-from),
+    var(--clr-underline) var(--clr-pos-from) var(--clr-pos-to),
+    var(--clr-bg) var(--clr-pos-to) 100%
+  );
+  /* border-bottom: 1px solid #000 */
 }
 
 .list-container {
@@ -265,6 +392,7 @@
   padding: 10px 0;
   width: 100%;
   height: fit-content;
+  cursor: pointer;
 }
 
 .list-container:last-child {
@@ -272,7 +400,6 @@
 }
 
 .barbershop-image-container {
-  /* style={{ display: "flex", position: "relative", width: "100px", height: "100px" }} */
   display: flex;
   position: relative;
   min-width: 100px;
@@ -287,7 +414,7 @@
   border-radius: 50%;
 }
 
-.sub-barbershop-image-container {
+.subtab-image-container {
   display: flex;
   margin-bottom: 10px;
 }
@@ -295,8 +422,8 @@
 .list-information {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   font-size: 0.95rem;
-  padding: 15px 0 10px 0;
 }
 
 .list-name {
@@ -305,6 +432,11 @@
   padding-right: 10px;
   padding-bottom: 8px;
   cursor: pointer;
+  width: 100%;
+}
+
+.list-name-text {
+  width: fit-content;
 }
 
 .list-location {
@@ -331,7 +463,7 @@
 }
 
 .overlay-detail-title {
-  width: 100px;
+  width: 80px;
 }
 
 .more-button-container {
@@ -349,12 +481,27 @@
   padding: 2px 5px;
 }
 
-.sub-tab-button {
-  padding: 2px 30px;
-  margin: 0 5px;
+.subtab-button-container {
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+  margin-top: 15px;
 }
 
-.sub-title-container {
+.subtab-button {
+  padding: 8px 30px;
+  margin: 0 5px;
+  border-color: #666;
+  color: #666;
+  border-radius: 100px;
+}
+
+.subtab-button:hover {
+  border-color: #000;
+  color: #000;
+}
+
+.subtab-title-container {
   display: flex;
 }
 
@@ -363,28 +510,43 @@
   height: 100%;
 }
 
-.sub-information-container {
+.subtab-information-container {
   display: flex;
   flex-direction: column;
 }
 
-.sub-flexbox {
+.subtab-flexbox {
   display: flex;
-  line-height: 200%;
-  font-size: 1rem;
-  margin-bottom: 2px;
+  line-height: 190%;
+  font-size: 1.05rem;
+  /* margin-bottom: 2px; */
+  border-bottom: 1px solid #e9e8eb;
 }
 
-.sub-title {
+.subtab-flexbox:last-of-type {
+  border-bottom: 2px solid #000;
+}
+
+.subtab-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
   min-width: 90px;
+  background-color: #999;
+  font-weight: 450;
+  height: 36px;
 }
 
-.sub-information-title {
+.subtab-information-title {
   font-weight: 500;
 }
 
-.sub-information {
+.subtab-information {
   width: 100%;
+  text-align: justify;
+  padding: 0 10px;
+  margin-top: 0.5px;
 }
 
 .barbershop-url {
@@ -398,19 +560,38 @@
 }
 
 .pin-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: fit-content;
+  min-width: 20px;
+  width: 110px;
   height: fit-content;
-  background-color: #fff;
-  font-size: 0.8rem;
+  font-size: 0.75em;
   font-weight: 500;
-  border: 1px solid #000;
-  border: 1px solid rgb(4, 117, 244);
-  border-radius: 5px;
-  padding: 5px;
+  z-index: 1;
+  bottom: 1px;
+  right: 10px;
+}
+
+.pin-circle {
+  width: 16px;
+  height: 16px;
+  background-color: #000;
+  border-radius: 50%;
+  margin-bottom: 2px;
+}
+
+.title-circle {
+  width: 16px;
+  height: 16px;
+  background-color: #000;
+  border-radius: 50%;
+}
+
+.pin-name {
+  text-shadow: -1px 0px #fff, 0px 1px #fff, 1px 0px #fff, 0px -1px #fff;
 }
 
 .test-detail {
@@ -453,7 +634,7 @@
   height: auto;
 }
 
-.sub-tab-input {
+.subtab-input {
   width: 100px;
   border: 1px solid #000;
   font-size: 1rem;
@@ -465,4 +646,60 @@
 .paragraph {
   text-indent: 10%;
   /* white-space: pre-wrap; */
+}
+
+.password-container {
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.password {
+  margin: 10px;
+}
+
+.flexbox-row-center {
+  display: flex;
+  justify-content: center;
+}
+
+.string-center-border {
+  width: fit-content;
+  height: 22px;
+  border-bottom: 1px solid #000;
+}
+
+@media (max-width: 499px) {
+  .nav-container {
+    padding: 0 20px;
+  }
+
+  .search {
+    width: 85%;
+    font-size: 0.9rem;
+  }
+
+  .search-input {
+    font-size: 0.9rem;
+  }
+
+  .content-container {
+    overflow: scroll;
+  }
+
+  .subtab-flexbox {
+    padding: 0 15px;
+  }
+
+  .tab-title {
+    padding: 10px 20px 0 20px;
+    font-size: 1rem;
+  }
+
+  .subtab-button {
+    margin-bottom: 50px;
+  }
 }

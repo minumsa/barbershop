@@ -2,7 +2,7 @@ export const filterData = {
   priceRange: {},
 };
 
-export interface IBarberShop {
+export interface BarberShop {
   name?: string;
   barberList?: string[];
   location: {

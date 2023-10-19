@@ -2,36 +2,62 @@ import React, { useEffect, useRef, useState } from "react";
 import { renderToString } from "react-dom/server";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 interface MapProps {
-  setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop>>;
-  barbershops: BarberShop[];
+  filteredBarbershops: BarberShop[];
   isMobile: boolean;
+  setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop | null | undefined>>;
 }
 
-export const Map = ({ setSelectedBarbershop, barbershops, isMobile }: MapProps) => {
+export const Map = () => {
+  const { isMobile, filteredBarbershops } = useSelector(
+    (state: MapProps) => ({
+      isMobile: state.isMobile,
+      filteredBarbershops: state.filteredBarbershops,
+    }),
+    shallowEqual
+  );
+
   const mapElement = useRef(null);
+  const dispatch = useDispatch();
+  const [activeMarkerId, setActiveMarkerId] = useState<string>();
+  const [showInfoWindow, setShowInfoWindow] = useState<boolean>(false);
 
   useEffect(() => {
     const { naver } = window as any;
     if (!mapElement.current || !naver) return;
 
-    // FIXME: 나중에 기본 장소 변경하기 - 현재 위치 or 종로구
-    // const barbershop = new naver.maps.LatLng(37.56571603771177, 126.99485276474563);
-    const barbershop = new naver.maps.LatLng(
-      barbershops[0]?.location.lat ?? 37.56571603771177,
-      barbershops[0]?.location.lng ?? 126.99485276474563
-    );
+    const barbershop = filteredBarbershops
+      ? new naver.maps.LatLng(
+          filteredBarbershops[0]?.location.lat,
+          filteredBarbershops[0]?.location.lng
+        )
+      : new naver.maps.LatLng(37.56571603771177, 126.99485276474563);
 
     const mapOptions = {
       center: barbershop,
-      zoom: 15,
-      zoomControl: isMobile,
+      zoom: 17,
+      zoomControl: true,
       zoomControlOptions: {
         position: isMobile ? naver.maps.Position.RIGHT_TOP : naver.maps.Position.RIGHT_BOTTOM,
       },
     };
     const map = new naver.maps.Map(mapElement.current, mapOptions);
+
+    interface BarbershopItemProps {
+      title: string;
+      data: string | React.ReactNode[];
+    }
+
+    const BarbershopItem = ({ title, data }: BarbershopItemProps) => {
+      return (
+        <div className={styles["overlay-detail"]}>
+          <div className={styles["overlay-detail-title"]}>{title}</div>
+          <div>{data}</div>
+        </div>
+      );
+    };
 
     interface BarbershopProps {
       name: string;
@@ -54,37 +80,23 @@ export const Map = ({ setSelectedBarbershop, barbershops, isMobile }: MapProps) 
     }: BarbershopProps) => {
       return (
         <div className={styles["is-inner"]}>
-          <div>{name}</div>
-          <div className={styles["overlay-detail"]}>
-            <div className={styles["overlay-detail-title"]}>주소</div>
-            <div>{location}</div>
+          <button className={styles["filter-button"]}>×</button>
+          <div className={styles["flexbox-row-center"]} style={{ marginBottom: "5px" }}>
+            <div className={styles["string-center-border"]}>{name}</div>
           </div>
-          <div className={styles["overlay-detail"]}>
-            <div className={styles["overlay-detail-title"]}>운영시간</div>
-            <div>{operatingTime}</div>
-          </div>
-          <div className={styles["overlay-detail"]}>
-            <div className={styles["overlay-detail-title"]}>휴무일</div>
-            <div>{closedDays.length < 5 ? "없음" : closedDays}</div>
-          </div>
-          <div className={styles["overlay-detail"]}>
-            <div className={styles["overlay-detail-title"]}>연락처</div>
-            <div>{contact}</div>
-          </div>
-          <div className={styles["overlay-detail"]}>
-            <div className={styles["overlay-detail-title"]}>바버</div>
-            <div>
-              {barberList.map((barber, index) => {
-                return (
-                  <span key={index}>{index < barberList.length - 1 ? `${barber}, ` : barber}</span>
-                );
-              })}
-            </div>
-          </div>
-          <div className={styles["overlay-detail"]}>
-            <div className={styles["overlay-detail-title"]}>시술비</div>
-            <div>{price?.toLocaleString()}원</div>
-          </div>
+          <BarbershopItem title={"주소"} data={location} />
+          <BarbershopItem title={"운영시간"} data={operatingTime} />
+          <BarbershopItem title={"휴무일"} data={closedDays.length < 5 ? "없음" : closedDays} />
+          <BarbershopItem title={"연락처"} data={contact} />
+          <BarbershopItem
+            title={"바버"}
+            data={barberList.map((barber, index) => {
+              return (
+                <span key={index}>{index < barberList.length - 1 ? `${barber}, ` : barber}</span>
+              );
+            })}
+          />
+          <BarbershopItem title={"시술비"} data={`${price?.toLocaleString()}원`} />
           <div className={styles["overlay-detail"]} style={{ padding: 0 }}>
             <div className={styles["more-button-container"]}>
               <div className={styles["button"]}>
@@ -98,23 +110,25 @@ export const Map = ({ setSelectedBarbershop, barbershops, isMobile }: MapProps) 
 
     interface BarbershopIconProps {
       name: string;
+      id: string;
     }
 
-    const BarbershopIcon = ({ name }: BarbershopIconProps) => {
+    const BarbershopIcon = ({ name, id }: BarbershopIconProps) => {
       return (
         <div className={styles["pin-container"]}>
-          <div>{`💇‍♂️${name}`}</div>
+          <div className={styles["pin-circle"]}></div>
+          <div className={styles["pin-name"]}>{name}</div>
         </div>
       );
     };
 
-    barbershops &&
-      barbershops.map(data => {
+    filteredBarbershops &&
+      filteredBarbershops.map(data => {
         const barbershopMarker = new naver.maps.Marker({
           position: new naver.maps.LatLng(data.location.lat, data.location.lng),
           map: map,
           icon: {
-            content: renderToString(<BarbershopIcon name={data.name} />),
+            content: renderToString(<BarbershopIcon name={data.name} id={data.id} />),
             size: new naver.maps.Size(50, 50),
             origin: new naver.maps.Point(0, 0),
             anchor: new naver.maps.Point(45, 10),
@@ -137,23 +151,40 @@ export const Map = ({ setSelectedBarbershop, barbershops, isMobile }: MapProps) 
 
         naver.maps.Event.addListener(barbershopMarker, "click", function () {
           if (isMobile) {
-            setSelectedBarbershop(data);
+            dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: data });
           } else {
             if (infoWindow.getMap()) {
               infoWindow.close();
             } else {
+              setShowInfoWindow(true);
               infoWindow.open(map, barbershopMarker);
             }
           }
         });
 
+        naver.maps.Event.addListener(barbershopMarker, "mouseover", function () {
+          if (showInfoWindow === false) setActiveMarkerId(data.id);
+        });
+
+        naver.maps.Event.addListener(barbershopMarker, "mouseout", function () {
+          if (showInfoWindow === false) setActiveMarkerId(undefined);
+        });
+
         const tmp = infoWindow.contentElement as HTMLElement;
 
         tmp.getElementsByClassName(styles["button"])[0].addEventListener("click", function () {
-          setSelectedBarbershop(data);
+          dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: data });
         });
-      }, []);
-  }, [barbershops]);
 
-  return <div ref={mapElement} style={{ width: "100%", height: "100%" }} />;
+        tmp
+          .getElementsByClassName(styles["filter-button"])[0]
+          .addEventListener("click", function () {
+            setActiveMarkerId(undefined);
+            setShowInfoWindow(false);
+            infoWindow.close();
+          });
+      }, []);
+  }, [filteredBarbershops]);
+
+  return <div ref={mapElement} className={styles["map-container"]} />;
 };
