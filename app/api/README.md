@@ -279,3 +279,45 @@
     **Content:** `{ message : "Data not found" }`
 
     
+**바버샵 이미지 수정**
+----
+  바버샵 이미지를 수정합니다.
+* **URL**
+
+  /api/barbershop/:id/image
+
+* **Method:**
+
+  `PUT`
+
+*  **URL Path Params**
+
+   **Required:**
+
+   `id=[string]`
+
+* **FormData Params**
+  중요 : 파일을 업로드 해야되기에 FormData 를 사용하였습니다.
+
+  * id : string
+    * 수정할 바버샵의 id
+  * password : string
+    * 어드민 비번
+  * image : File
+    * 이미지 파일.
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:**
+      Barbershop
+
+* **Error Response:**
+
+  * **Code:** 401 <br />
+    **Content:** `{ error : "password is not correct" }`
+
+  OR
+
+  * **Code:** 404 <br />
+    **Content:** `{ message : "Data not found" }`
