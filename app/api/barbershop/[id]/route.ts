@@ -3,7 +3,7 @@ import BarberShopModel from "../../db/BarberShopModel";
 import connectMongoDB from "../../db/mongodb";
 import { ensureId, ensurePassword, handleError, notFoundError } from "../../errors";
 
-export async function GET({ params: { id } }: { params: { id: string } }) {
+export async function GET(request: Request, { params: { id } }: { params: { id: string } }) {
   try {
     await connectMongoDB();
     ensureId(id);

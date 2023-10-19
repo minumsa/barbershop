@@ -28,7 +28,7 @@ export default function Page() {
   }, []);
 
   // TODO: currentState, action 타입 지정하기
-  const reducer = (currentState, action) => {
+  const reducer = (currentState: any, action: any) => {
     if (currentState === undefined) {
       return {
         barbershops: barbershops,
