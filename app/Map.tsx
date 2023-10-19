@@ -155,8 +155,6 @@ export const Map = () => {
           } else {
             if (infoWindow.getMap()) {
               infoWindow.close();
-              // setClickedMarkerId(undefined);
-              // setShowInfoWindow(false);
             } else {
               setShowInfoWindow(true);
               infoWindow.open(map, barbershopMarker);

@@ -30,43 +30,16 @@ export const MainTab = () => {
     switch (orderType) {
       case "name":
         barbershops &&
-          // setFilteredBarbershops([...barbershops].sort((a, b) => a.name.localeCompare(b.name)));
           dispatch({
             type: "SET_FILTERED_BARBERSHOPS",
             payload: [...barbershops].sort((a, b) => a.name.localeCompare(b.name)),
           });
         break;
-      // case "open":
-      //   barbershops &&
-      //     setFilteredBarbershops([...barbershops].sort((a, b) => b.name.localeCompare(a.name)));
-      //   break;
-      // case "upload":
-      //   barbershops &&
-      //     setFilteredBarbershops([...barbershops].sort((a, b) => b.name.localeCompare(a.name)));
-      //   break;
     }
   }, [orderType]);
 
   useEffect(() => {
     barbershops &&
-      // setFilteredBarbershops(
-      //   [...barbershops]
-      //     .sort((a, b) => a.name.localeCompare(b.name))
-      //     .filter(data => {
-      //       if (data.barberList) {
-      //         if (barber === 1) {
-      //           return data.barberList.length === barber;
-      //         } else if (barber === 2) {
-      //           return data.barberList.length >= barber;
-      //         } else {
-      //           return true;
-      //         }
-      //       }
-      //     })
-      //     .filter(data => {
-      //       if (data.price) return price >= data.price;
-      //     })
-      // );
       dispatch({
         type: "SET_FILTERED_BARBERSHOPS",
         payload: [...barbershops]
@@ -127,12 +100,6 @@ export const MainTab = () => {
             </li>
           </ul>
         </div>
-        {/* <select className={styles["tab-select"]} onChange={e => setOrderType(e.target.value)}>
-          <option value="name-asc">이름 오름차순</option>
-          <option value="name-desc">이름 내림차순</option>
-          <option value="upload-asc">업로드 오름차순</option>
-          <option value="upload-desc">업로드 내림차순</option>
-        </select> */}
       </div>
       {filteredBarbershops?.map((data: any, index: number) => {
         return (

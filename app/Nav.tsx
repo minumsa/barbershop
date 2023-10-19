@@ -53,7 +53,6 @@ export const Nav = () => {
           router.push("/");
         }}
       >
-        {/* <FontAwesomeIcon icon={faScissors} /> */}
         <div>
           {!isMobile && (
             <div

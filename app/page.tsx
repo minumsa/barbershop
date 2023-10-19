@@ -81,10 +81,7 @@ export default function Page() {
       <FilterWindow />
       <div className={`${styles["container"]}`}>
         {/* TODO: 현재 위치 기능 추가 */}
-        {/* TODO: 로딩 중 데이터 처리 */}
-        {/* TODO: 홈페이지 아이콘 수정 */}
-        {/* TODO: MainTab 너비 더 크게 */}
-        {/* TODO: 바버샵 데이터에 업로드, 개점일 변수 추가 */}
+        {/* TODO: 바버샵 데이터 - 업로드, 개점일 변수 추가 */}
         <Nav />
         <Content />
       </div>

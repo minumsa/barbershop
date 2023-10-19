@@ -64,7 +64,6 @@ export const SubTab = () => {
               style={{
                 width: "100%",
                 height: "auto",
-                // borderRadius: "10px"
               }}
             />
           </div>
