@@ -11,6 +11,7 @@
     "updateTmpData": "mocha --config ./testData/.tmpData.mocharc.json"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.431.0",
     "@fortawesome/fontawesome-free": "^6.4.2",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
