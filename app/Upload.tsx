@@ -1,6 +1,6 @@
 import { SetStateAction, useEffect, useState } from "react";
 import styles from "./page.module.css";
-import { fetchDataforEdit, EditData, uploadData } from "./lib/api";
+import { fetchDataforEdit, EditData, uploadData, uploadImage } from "./lib/api";
 import { BarberShop } from "./lib/data";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -16,6 +16,7 @@ interface UploadProps {
 }
 
 export const Upload = ({ id }: UploadProps) => {
+  const [file, setFile] = useState<any>();
   const [name, setName] = useState<string | undefined>("");
   const [barberListToStr, setBarberListToStr] = useState<string>();
   const [location, setLocation] = useState<Location>({ description: "", lat: 0, lng: 0 });
@@ -34,6 +35,9 @@ export const Upload = ({ id }: UploadProps) => {
   const router = useRouter();
   const pathName = decodeURIComponent(usePathname());
   const isUpload = pathName.includes("upload");
+  const [uploadId, setUploadId] = useState<string>("");
+  console.log("isUpload", isUpload);
+
   const newBarbershopData: BarberShop = {
     name: name,
     barberList: barberListToStr?.split(", "),
@@ -77,12 +81,22 @@ export const Upload = ({ id }: UploadProps) => {
     setContact(barbershops?.contact);
   }, [barbershops]);
 
-  const handleUpload = () => {
-    uploadData(newBarbershopData, password);
+  const handleUpload = async () => {
+    try {
+      const dataResponse = await uploadData(newBarbershopData, password);
+      const id = dataResponse.id; // `uploadData`의 결과에서 id를 추출
+
+      setUploadId(id);
+
+      // 이제 `uploadImage` 함수 실행
+      await uploadImage(file, id, password);
+    } catch (error) {
+      console.error("Error: ", error);
+    }
   };
 
   const handleEdit = () => {
-    EditData(newBarbershopData, id, password);
+    EditData(newBarbershopData, file, id, password);
   };
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -124,40 +138,52 @@ export const Upload = ({ id }: UploadProps) => {
         >
           <div>{isUpload ? "업로드" : "수정"} 페이지</div>
         </div>
-        <UploadItem
-          title={"바버샵 이름"}
-          value={name ?? ""}
-          onChange={(e: NormalEvent) => {
-            setName(e.target.value);
-          }}
-        />
-        <UploadItem
-          title={"바버 이름"}
-          value={barberListToStr ?? ""}
-          onChange={(e: NormalEvent) => {
-            setBarberListToStr(e.target.value);
-          }}
-        />
-        <UploadItem
-          title={"주소"}
-          value={location?.description ?? ""}
-          onChange={(e: ObjectEvent) => {
-            setLocation(prevLocation => ({
-              ...prevLocation,
-              description: e.target.value,
-            }));
-          }}
-        />
-        <UploadItem
-          title={"위도(lat)"}
-          value={location?.lat}
-          onChange={(e: ObjectEvent) => {
-            setLocation(prevLocation => ({
-              ...prevLocation,
-              lat: Number(e.target.value),
-            }));
-          }}
-        />
+        <div className={styles["upload-item"]}>
+          <div className={styles["upload-title"]}>바버샵 이름</div>
+          <input
+            className={styles["upload-input"]}
+            value={name ?? ""}
+            onChange={(e: NormalEvent) => {
+              setName(e.target.value);
+            }}
+          />
+        </div>
+        <div className={styles["upload-item"]}>
+          <div className={styles["upload-title"]}>바버 이름</div>
+          <input
+            className={styles["upload-input"]}
+            value={barberListToStr ?? ""}
+            onChange={(e: NormalEvent) => {
+              setBarberListToStr(e.target.value);
+            }}
+          />
+        </div>
+        <div className={styles["upload-item"]}>
+          <div className={styles["upload-title"]}>주소</div>
+          <input
+            className={styles["upload-input"]}
+            value={location?.description ?? ""}
+            onChange={(e: ObjectEvent) => {
+              setLocation(prevLocation => ({
+                ...prevLocation,
+                description: e.target.value,
+              }));
+            }}
+          />
+        </div>
+        <div className={styles["upload-item"]}>
+          <div className={styles["upload-title"]}>위도(lat)</div>
+          <input
+            className={styles["upload-input"]}
+            value={location?.lat}
+            onChange={(e: ObjectEvent) => {
+              setLocation(prevLocation => ({
+                ...prevLocation,
+                lat: Number(e.target.value),
+              }));
+            }}
+          />
+        </div>
         <div className={styles["upload-item"]}>
           <div className={styles["upload-title"]}>경도(lng)</div>
           <input
@@ -222,12 +248,12 @@ export const Upload = ({ id }: UploadProps) => {
           />
         </div>
         <div className={styles["upload-item"]}>
-          <div className={styles["upload-title"]}>이미지 링크</div>
+          <div className={styles["upload-title"]}>이미지</div>
           <input
+            type="file"
             className={styles["upload-input"]}
-            value={imgUrl ?? ""}
             onChange={e => {
-              setImgUrl(e.target.value);
+              setFile(e.target.files![0]);
             }}
           />
         </div>
@@ -277,7 +303,7 @@ export const Upload = ({ id }: UploadProps) => {
           style={{ padding: "5px 20px", marginTop: "30px" }}
           onClick={() => {
             isUpload ? handleUpload() : handleEdit();
-            router.push("/admin");
+            // router.push("/admin");
           }}
         >
           {isUpload ? "제출하기" : "수정하기"}
