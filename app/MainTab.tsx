@@ -39,6 +39,8 @@ export const MainTab = () => {
   }, [orderType]);
 
   useEffect(() => {
+    console.log(barbershops);
+
     barbershops &&
       dispatch({
         type: "SET_FILTERED_BARBERSHOPS",

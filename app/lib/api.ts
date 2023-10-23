@@ -84,16 +84,43 @@ export async function uploadData(barbershopData: BarberShop, password: string) {
       } else if (!response.ok) {
         throw new Error("데이터 업로드에 실패했습니다.");
       } else {
-        alert("데이터가 성공적으로 저장되었습니다.");
+        alert("데이터가 성공적으로 업로드되었습니다.");
       }
 
       const data = await response.json();
       console.log(data.message);
+      return data;
     } catch (error) {
       console.error("Error: ", error);
     }
   }
 }
+
+export const uploadImage = async (file: File, id: string, password: string) => {
+  if (file !== null) {
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      formData.append("password", password);
+      const response = await fetch(`/api/barbershop/${id}/image`, {
+        method: "PUT",
+        body: formData,
+      });
+
+      if (response.status === 401) {
+        alert("관리자 비밀번호가 틀렸습니다.");
+      } else if (response.status === 404) {
+        alert("존재하지 않는 데이터입니다.");
+      } else if (!response.ok) {
+        throw new Error("데이터 수정에 실패했습니다.");
+      } else {
+        alert("이미지가 성공적으로 업로드되었습니다.");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
 
 export const deleteData = async (id: string, password: string) => {
   try {
@@ -119,7 +146,12 @@ export const deleteData = async (id: string, password: string) => {
   }
 };
 
-export const EditData = async (data: Partial<BarberShop>, id: string, password: string) => {
+export const EditData = async (
+  data: Partial<BarberShop>,
+  file: any,
+  id: string,
+  password: string
+) => {
   if (data !== null) {
     try {
       const response = await fetch(`/api/barbershop/${id}`, {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 
 export const UploadImage = async (file: File, id: string, password: string) => {
   if (file !== null) {
@@ -37,15 +37,16 @@ export default function Page() {
       alert("no file");
       return;
     }
-    const id = "650d454b013cb30a2a3e5108"; // 개발 DB 의 클래씨 바버샵의 id.
+    const id = "650d454b013cb30a2a3e5108"; // 개발 DB 의 클래씨 바버샵의 id
     await UploadImage(file, id, password);
   };
+
   return (
     <>
-      <input type="file" onChange={(e) => setFile(e.target.files![0])} />
-      <br/>
-      password: 
-      <br/>
+      <input type="file" onChange={e => setFile(e.target.files![0])} />
+      <br />
+      password:
+      <br />
       <input type="password" onChange={e => setPassword(e.target.value)} />
       <button onClick={uploadImage}>Upload</button>
     </>
