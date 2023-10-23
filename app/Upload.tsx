@@ -3,7 +3,6 @@ import styles from "./page.module.css";
 import { fetchDataforEdit, EditData, uploadData, uploadImage } from "./lib/api";
 import { BarberShop } from "./lib/data";
 import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
 
 type Location = {
   description: string;
@@ -32,10 +31,8 @@ export const Upload = ({ id }: UploadProps) => {
   const [notice, setNotice] = useState<string | undefined>("");
   const [password, setPassword] = useState<string>("");
   const [barbershops, setBarbershops] = useState<BarberShop>();
-  const router = useRouter();
   const pathName = decodeURIComponent(usePathname());
   const isUpload = pathName.includes("upload");
-  const [uploadId, setUploadId] = useState<string>("");
   console.log("isUpload", isUpload);
 
   const newBarbershopData: BarberShop = {
@@ -84,19 +81,21 @@ export const Upload = ({ id }: UploadProps) => {
   const handleUpload = async () => {
     try {
       const dataResponse = await uploadData(newBarbershopData, password);
-      const id = dataResponse.id; // `uploadData`의 결과에서 id를 추출
+      const id = dataResponse.id;
 
-      setUploadId(id);
-
-      // 이제 `uploadImage` 함수 실행
       await uploadImage(file, id, password);
     } catch (error) {
       console.error("Error: ", error);
     }
   };
 
-  const handleEdit = () => {
-    EditData(newBarbershopData, file, id, password);
+  const handleEdit = async () => {
+    try {
+      await EditData(newBarbershopData, id, password);
+      await uploadImage(file, id, password);
+    } catch (error) {
+      console.error("Error: ", error);
+    }
   };
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -303,7 +302,6 @@ export const Upload = ({ id }: UploadProps) => {
           style={{ padding: "5px 20px", marginTop: "30px" }}
           onClick={() => {
             isUpload ? handleUpload() : handleEdit();
-            // router.push("/admin");
           }}
         >
           {isUpload ? "제출하기" : "수정하기"}

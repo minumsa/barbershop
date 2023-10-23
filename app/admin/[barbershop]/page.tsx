@@ -2,7 +2,6 @@
 
 import { Upload } from "@/app/Upload";
 import styles from "@/app/page.module.css";
-import { useRouter } from "next/navigation";
 
 export default function Page({ params }: any) {
   const id = params.barbershop;

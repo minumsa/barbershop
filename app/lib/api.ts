@@ -146,12 +146,7 @@ export const deleteData = async (id: string, password: string) => {
   }
 };
 
-export const EditData = async (
-  data: Partial<BarberShop>,
-  file: any,
-  id: string,
-  password: string
-) => {
+export const EditData = async (data: Partial<BarberShop>, id: string, password: string) => {
   if (data !== null) {
     try {
       const response = await fetch(`/api/barbershop/${id}`, {
