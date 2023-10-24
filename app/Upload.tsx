@@ -91,7 +91,7 @@ export const Upload = ({ id }: UploadProps) => {
   const handleEdit = async () => {
     try {
       await editData(newBarbershopData, id, password);
-      await uploadImage(file, id, password);
+      if (file) await uploadImage(file, id, password);
     } catch (error) {
       console.error("Error: ", error);
     }
