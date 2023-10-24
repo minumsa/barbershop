@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "./page.module.css";
 import React, { useState } from "react";
 import { deleteData } from "./lib/api";
@@ -47,7 +46,7 @@ export const SubTab = () => {
         </div>
         <div className={styles["subtab-image-container"]}>
           <div className={styles["image-container"]}>
-            <Image
+            <img
               src={selectedBarbershop.imgUrl}
               alt="test"
               width={0}
