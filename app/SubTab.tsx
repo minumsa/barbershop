@@ -56,6 +56,7 @@ export const SubTab = () => {
                 width: "100%",
                 height: "auto",
               }}
+              loading="lazy"
             />
           </div>
         </div>
