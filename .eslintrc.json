@@ -1,3 +1,7 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  // next.js에서 img 태그 쓸 수 있게 하기
+  "rules": {
+    "@next/next/no-img-element": "off"
+  }
 }
