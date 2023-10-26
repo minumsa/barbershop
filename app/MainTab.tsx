@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { MainTabLoadingContents } from "./MainTabLoadingContents";
+import { LoadingItems } from "./LoadingItems";
 
 interface MainTabProps {
   barbershops: BarberShop[];
@@ -10,17 +10,19 @@ interface MainTabProps {
   price: number;
   filteredBarbershops: BarberShop[];
   keyword: string;
+  isMobile: boolean;
 }
 
 export const MainTab = () => {
   const [orderType, setOrderType] = useState<string>("name");
-  const { barbershops, barber, price, filteredBarbershops, keyword } = useSelector(
+  const { barbershops, barber, price, filteredBarbershops, keyword, isMobile } = useSelector(
     (state: MainTabProps) => ({
       barbershops: state.barbershops,
       barber: state.barber,
       price: state.price,
       filteredBarbershops: state.filteredBarbershops,
       keyword: state.keyword,
+      isMobile: state.isMobile,
     }),
     shallowEqual
   );
@@ -64,9 +66,9 @@ export const MainTab = () => {
 
   return (
     <div className={styles["tab"]}>
-      <div className={styles["tab-title"]}>바버샵 리스트</div>
+      {!isMobile && <div className={styles["tab-title"]}>바버샵 리스트</div>}
       <div className={styles["tab-filter"]}>
-        <div style={{ display: "flex" }}>
+        <div className={styles["tab-result-data"]}>
           {keyword.length > 1 && (
             <div className={styles["filter-box-title"]}>
               <span className={styles["filter-box-content"]}> {keyword}</span>
@@ -121,13 +123,19 @@ export const MainTab = () => {
                 <div className={styles["list-name"]}>
                   <div className={styles["list-name-text"]}>{`${data.name}`}</div>
                 </div>
-                <div className={styles["list-location"]}>{data.location.description}</div>
+                <div className={styles["list-location"]}>
+                  {isMobile
+                    ? data.location.description.split(" ").map((text: string, index: number) => {
+                        return index < 5 && `${text} `;
+                      })
+                    : data.location.description}
+                </div>
               </div>
             </div>
           );
         })
       ) : (
-        <MainTabLoadingContents />
+        <LoadingItems />
       )}
     </div>
   );

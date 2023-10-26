@@ -6,6 +6,7 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 interface SubTabProps {
   selectedBarbershop: any | null;
+  isMobile: boolean;
 }
 
 export const SubTab = () => {
@@ -13,9 +14,10 @@ export const SubTab = () => {
   const pathName = usePathname();
   const isAdmin = pathName.includes("admin");
   const [password, setPassword] = useState<string>("");
-  const { selectedBarbershop } = useSelector(
+  const { selectedBarbershop, isMobile } = useSelector(
     (state: SubTabProps) => ({
       selectedBarbershop: state.selectedBarbershop,
+      isMobile: state.isMobile,
     }),
     shallowEqual
   );
@@ -36,12 +38,24 @@ export const SubTab = () => {
     );
   };
 
+  // TODO: 모바일에서 컴포넌트 이동 시 스크롤 맨 위로 (메인탭 스크롤 상태가 유지되고 있음..)
+
   return (
     selectedBarbershop && (
       <div className={styles["tab"]}>
         <div className={styles["subtab-title-container"]}>
           <div className={styles["tab-title"]}>
             <div className={styles["tab-title-name"]}>{selectedBarbershop.name}</div>
+            {isMobile && (
+              <div
+                className={styles["close"]}
+                onClick={() => {
+                  dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: null });
+                }}
+              >
+                ×
+              </div>
+            )}
           </div>
         </div>
         <div className={styles["subtab-image-container"]}>

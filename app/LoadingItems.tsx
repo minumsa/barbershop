@@ -1,7 +1,7 @@
 import styles from "./page.module.css";
 
-export const MainTabLoadingContents = () => {
-  const LoadingContents = () => {
+export const LoadingItems = () => {
+  const LoadingItem = () => {
     return (
       <div className={styles["list-container"]}>
         <div
@@ -37,13 +37,13 @@ export const MainTabLoadingContents = () => {
 
   return (
     <div>
-      <LoadingContents />
-      <LoadingContents />
-      <LoadingContents />
-      <LoadingContents />
-      <LoadingContents />
-      <LoadingContents />
-      <LoadingContents />
+      <LoadingItem />
+      <LoadingItem />
+      <LoadingItem />
+      <LoadingItem />
+      <LoadingItem />
+      <LoadingItem />
+      <LoadingItem />
     </div>
   );
 };

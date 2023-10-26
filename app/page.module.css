@@ -423,7 +423,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .list-name {
@@ -485,7 +485,7 @@
   display: flex;
   justify-content: center;
   font-size: 1rem;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .subtab-button {
@@ -672,7 +672,49 @@
   border-bottom: 1px solid #000;
 }
 
+.tab-result-data {
+  display: flex;
+}
+
 @media (max-width: 499px) {
+  .container {
+    font-size: 0.9rem;
+  }
+
+  .map-container {
+    min-height: 400px;
+    height: 400px;
+  }
+
+  .tab-container {
+    max-width: calc(100% - 41px);
+    min-width: calc(100% - 41px);
+    width: calc(100% - 41px);
+    height: 100%;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1), 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+  }
+
+  .tab {
+    width: 100%;
+  }
+
+  .tab-filter {
+    width: 100%;
+    padding: 0;
+  }
+
+  .tab-ul {
+    padding: 0;
+  }
+
+  .tab-flexbox {
+    width: 100%;
+    flex-direction: column;
+  }
+
   .nav-container {
     padding: 0 20px;
   }
@@ -687,7 +729,7 @@
   }
 
   .content-container {
-    overflow: scroll;
+    overflow: hidden;
   }
 
   .subtab-flexbox {
@@ -695,11 +737,51 @@
   }
 
   .tab-title {
-    padding: 10px 20px 0 20px;
-    font-size: 1rem;
+    margin-bottom: 5px;
+  }
+
+  .tab-button {
+    font-size: 0.9rem;
   }
 
   .subtab-button {
     margin-bottom: 50px;
+  }
+
+  .filter-content {
+    width: 280px;
+    font-size: 0.9rem;
+  }
+
+  .tab-result-data {
+    display: none;
+  }
+
+  .list-container {
+    width: 100%;
+  }
+
+  .list-name {
+    font-size: 0.9rem;
+  }
+
+  .subtab-flexbox {
+    padding: 0;
+    font-size: 0.9rem;
+  }
+
+  .subtab-title {
+    min-width: 70px;
+    height: 27px;
+  }
+
+  .subtab-button {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+    padding: 7px 25px;
+  }
+
+  .close {
+    font-size: 2.2rem;
   }
 }
