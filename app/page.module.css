@@ -761,6 +761,10 @@
     width: 100%;
   }
 
+  .list-container:last-child {
+    padding-bottom: 0;
+  }
+
   .list-name {
     font-size: 0.9rem;
   }

@@ -35,7 +35,17 @@ export const Content = () => {
       {isMobile ? (
         <>
           <div className={styles["tab-flexbox"]}>
-            <div className={styles["map-container"]}>
+            <div
+              className={styles["map-container"]}
+              style={
+                selectedBarbershop
+                  ? {
+                      height: 0,
+                      minHeight: 0,
+                    }
+                  : undefined
+              }
+            >
               <Map />
             </div>
             <div className={styles["tab-container"]}>
