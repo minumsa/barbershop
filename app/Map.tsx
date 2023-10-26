@@ -8,27 +8,30 @@ interface MapProps {
   filteredBarbershops: BarberShop[];
   isMobile: boolean;
   setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop | null | undefined>>;
+  selectedBarbershop: BarberShop | null | undefined;
 }
 
 export const Map = () => {
-  const { isMobile, filteredBarbershops } = useSelector(
+  const { isMobile, filteredBarbershops, selectedBarbershop } = useSelector(
     (state: MapProps) => ({
       isMobile: state.isMobile,
       filteredBarbershops: state.filteredBarbershops,
+      selectedBarbershop: state.selectedBarbershop,
     }),
     shallowEqual
   );
 
   const mapElement = useRef(null);
   const dispatch = useDispatch();
-  const [activeMarkerId, setActiveMarkerId] = useState<string>();
-  const [showInfoWindow, setShowInfoWindow] = useState<boolean>(false);
 
   useEffect(() => {
+    console.log("selectedBarbershop", selectedBarbershop);
     const { naver } = window as any;
     if (!mapElement.current || !naver) return;
 
-    const barbershop = filteredBarbershops
+    const barbershop = selectedBarbershop
+      ? new naver.maps.LatLng(selectedBarbershop.location.lat, selectedBarbershop.location.lng)
+      : filteredBarbershops
       ? new naver.maps.LatLng(
           filteredBarbershops[0]?.location.lat,
           filteredBarbershops[0]?.location.lng
@@ -154,20 +157,10 @@ export const Map = () => {
             dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: data });
           } else {
             if (infoWindow.getMap()) {
-              infoWindow.close();
             } else {
-              setShowInfoWindow(true);
               infoWindow.open(map, barbershopMarker);
             }
           }
-        });
-
-        naver.maps.Event.addListener(barbershopMarker, "mouseover", function () {
-          if (showInfoWindow === false) setActiveMarkerId(data.id);
-        });
-
-        naver.maps.Event.addListener(barbershopMarker, "mouseout", function () {
-          if (showInfoWindow === false) setActiveMarkerId(undefined);
         });
 
         const tmp = infoWindow.contentElement as HTMLElement;
@@ -179,12 +172,10 @@ export const Map = () => {
         tmp
           .getElementsByClassName(styles["filter-button"])[0]
           .addEventListener("click", function () {
-            setActiveMarkerId(undefined);
-            setShowInfoWindow(false);
             infoWindow.close();
           });
       }, []);
-  }, [filteredBarbershops]);
+  }, [filteredBarbershops, selectedBarbershop]);
 
   return <div ref={mapElement} className={styles["map-container"]} />;
 };
