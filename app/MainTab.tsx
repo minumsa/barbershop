@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { MainTabLoadingContents } from "./MainTabLoadingContents";
 
 interface MainTabProps {
   barbershops: BarberShop[];
@@ -101,28 +102,33 @@ export const MainTab = () => {
           </ul>
         </div>
       </div>
-      {filteredBarbershops?.map((data: any, index: number) => {
-        return (
-          <div
-            className={styles["list-container"]}
-            key={index}
-            onClick={() => {
-              dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: data });
-            }}
-          >
+
+      {filteredBarbershops.length > 0 ? (
+        filteredBarbershops.map((data: any, index: number) => {
+          return (
             <div
-              className={styles["barbershop-image-container"]}
-              style={{ backgroundImage: `url("${data.imgUrl}")` }}
-            ></div>
-            <div className={styles["list-information"]}>
-              <div className={styles["list-name"]}>
-                <div className={styles["list-name-text"]}>{`${data.name}`}</div>
+              className={styles["list-container"]}
+              key={index}
+              onClick={() => {
+                dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: data });
+              }}
+            >
+              <div
+                className={styles["barbershop-image-container"]}
+                style={{ backgroundImage: `url("${data.imgUrl}")` }}
+              ></div>
+              <div className={styles["list-information"]}>
+                <div className={styles["list-name"]}>
+                  <div className={styles["list-name-text"]}>{`${data.name}`}</div>
+                </div>
+                <div className={styles["list-location"]}>{data.location.description}</div>
               </div>
-              <div className={styles["list-location"]}>{data.location.description}</div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })
+      ) : (
+        <MainTabLoadingContents />
+      )}
     </div>
   );
 };

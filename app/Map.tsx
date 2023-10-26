@@ -25,7 +25,6 @@ export const Map = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("selectedBarbershop", selectedBarbershop);
     const { naver } = window as any;
     if (!mapElement.current || !naver) return;
 
