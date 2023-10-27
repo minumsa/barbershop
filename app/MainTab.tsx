@@ -41,6 +41,8 @@ export const MainTab = () => {
     }
   }, [orderType]);
 
+  console.log(filteredBarbershops);
+
   useEffect(() => {
     barbershops &&
       dispatch({
@@ -104,7 +106,6 @@ export const MainTab = () => {
           </ul>
         </div>
       </div>
-
       {filteredBarbershops.length > 0 ? (
         filteredBarbershops.map((data: any, index: number) => {
           return (
@@ -134,8 +135,21 @@ export const MainTab = () => {
             </div>
           );
         })
-      ) : filteredBarbershops.length === 0 ? (
-        <div>검색 결과가 없습니다</div>
+      ) : keyword && filteredBarbershops.length === 0 ? (
+        <div className={`${styles["list-container"]} ${styles["list-no-data"]}`}>
+          <div>
+            {isMobile ? (
+              <div>
+                <span style={{ fontWeight: 500 }}>{keyword}</span>
+                <span>에 대한 검색 결과가 없습니다</span>
+              </div>
+            ) : (
+              <div>
+                <span>검색 결과가 없습니다</span>
+              </div>
+            )}
+          </div>
+        </div>
       ) : (
         <LoadingItems />
       )}

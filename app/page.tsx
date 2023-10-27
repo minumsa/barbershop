@@ -9,6 +9,7 @@ import { fetchData } from "./lib/api";
 import { legacy_createStore as createStore } from "redux";
 import { Provider } from "react-redux";
 import { Nav } from "./Nav";
+import NoSSR from "./lib/NoSSR";
 
 export default function Page() {
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
@@ -78,14 +79,16 @@ export default function Page() {
 
   return (
     // TODO: NOSSR로 감싸기
-    <Provider store={store}>
-      <FilterWindow />
-      <div className={`${styles["container"]}`}>
-        {/* TODO: 현재 위치 기능 추가 */}
-        {/* TODO: 바버샵 데이터 - 업로드, 개점일 변수 추가 */}
-        <Nav />
-        <Content />
-      </div>
-    </Provider>
+    <NoSSR>
+      <Provider store={store}>
+        <FilterWindow />
+        <div className={`${styles["container"]}`}>
+          {/* TODO: 현재 위치 기능 추가 */}
+          {/* TODO: 바버샵 데이터 - 업로드, 개점일 변수 추가 */}
+          <Nav />
+          <Content />
+        </div>
+      </Provider>
+    </NoSSR>
   );
 }
