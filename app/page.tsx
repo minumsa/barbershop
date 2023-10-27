@@ -77,6 +77,7 @@ export default function Page() {
   const store = createStore(reducer);
 
   return (
+    // TODO: NOSSR로 감싸기
     <Provider store={store}>
       <FilterWindow />
       <div className={`${styles["container"]}`}>

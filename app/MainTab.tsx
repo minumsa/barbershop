@@ -134,6 +134,8 @@ export const MainTab = () => {
             </div>
           );
         })
+      ) : filteredBarbershops.length === 0 ? (
+        <div>검색 결과가 없습니다</div>
       ) : (
         <LoadingItems />
       )}
