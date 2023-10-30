@@ -128,7 +128,6 @@
 .filter-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 35px;
 }
 
 .filter-content {
@@ -141,7 +140,7 @@
   background-color: #fff;
   border: 1px solid #000;
   z-index: 10000;
-  padding: 25px 25px 0 25px;
+  padding: 25px;
 }
 
 .filter-icon {
@@ -200,7 +199,7 @@
 
 .filter-box-content {
   --clr-bg: transparent;
-  --clr-underline: #9999;
+  --clr-underline: #e6e6e6;
   --clr-pos-from: 55%;
   --clr-pos-to: 85%;
   transition: all 0.1s ease-in;
@@ -384,7 +383,7 @@
 .tab-title-name {
   height: 24px;
   --clr-bg: transparent;
-  --clr-underline: #9999;
+  --clr-underline: #e6e6e6;
   /* --clr-underline: #01ff01; */
   --clr-pos-from: 55%;
   --clr-pos-to: 85%;
@@ -461,6 +460,13 @@
 .list-location {
   padding-bottom: 5px;
   color: #666;
+}
+
+.list-location-loading {
+  background-color: #e6e6e6;
+  width: 230px;
+  height: 20px;
+  border-radius: 5px;
 }
 
 .list-description {
@@ -713,6 +719,10 @@
 
 .mobile-tab-flexbox {
   display: none;
+}
+
+.filter-item {
+  margin-bottom: 25px;
 }
 
 @media (max-width: 499px) {
