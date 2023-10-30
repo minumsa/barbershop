@@ -859,4 +859,12 @@
   .mobile {
     display: flex;
   }
+
+  .is-inner {
+    font-size: 0.9rem;
+  }
+
+  .overlay-detail {
+    font-size: 0.9rem;
+  }
 }

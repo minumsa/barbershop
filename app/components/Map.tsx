@@ -6,15 +6,13 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 interface MapProps {
   filteredBarbershops: BarberShop[];
-  isMobile: boolean;
   setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop | null | undefined>>;
   selectedBarbershop: BarberShop | null | undefined;
 }
 
 export const Map = () => {
-  const { isMobile, filteredBarbershops, selectedBarbershop } = useSelector(
+  const { filteredBarbershops, selectedBarbershop } = useSelector(
     (state: MapProps) => ({
-      isMobile: state.isMobile,
       filteredBarbershops: state.filteredBarbershops,
       selectedBarbershop: state.selectedBarbershop,
     }),
@@ -42,7 +40,7 @@ export const Map = () => {
       zoom: 17,
       zoomControl: true,
       zoomControlOptions: {
-        position: isMobile ? naver.maps.Position.RIGHT_TOP : naver.maps.Position.RIGHT_BOTTOM,
+        position: naver.maps.Position.RIGHT_BOTTOM,
       },
     };
     const map = new naver.maps.Map(mapElement.current, mapOptions);
@@ -151,14 +149,7 @@ export const Map = () => {
         });
 
         naver.maps.Event.addListener(barbershopMarker, "click", function () {
-          if (isMobile) {
-            dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: data });
-          } else {
-            if (infoWindow.getMap()) {
-            } else {
-              infoWindow.open(map, barbershopMarker);
-            }
-          }
+          infoWindow.open(map, barbershopMarker);
         });
 
         const tmp = infoWindow.contentElement as HTMLElement;
