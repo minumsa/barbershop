@@ -74,7 +74,7 @@
   display: flex;
   width: 70%;
   max-width: 500px;
-  height: 37.5px;
+  height: 45px;
   border: 1px solid #000;
   border-radius: 100px;
   font-size: 1rem;
@@ -88,6 +88,7 @@
   box-sizing: border-box;
   flex-grow: 1;
   font-size: 1rem;
+  font-weight: 550;
   border: none;
   font-family: "Montserrat", "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
     system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
@@ -110,6 +111,7 @@
   width: fit-content;
   cursor: pointer;
   padding-right: 10px;
+  font-weight: 500;
 }
 
 .category {
@@ -370,7 +372,6 @@
 
 .tab-title {
   margin-bottom: 10px;
-  /* padding-left: 10px; */
   display: flex;
   width: 100%;
   height: 50px;
@@ -384,7 +385,6 @@
   height: 24px;
   --clr-bg: transparent;
   --clr-underline: #e6e6e6;
-  /* --clr-underline: #01ff01; */
   --clr-pos-from: 55%;
   --clr-pos-to: 85%;
   transition: all 0.1s ease-in;
@@ -394,7 +394,6 @@
     var(--clr-underline) var(--clr-pos-from) var(--clr-pos-to),
     var(--clr-bg) var(--clr-pos-to) 100%
   );
-  /* border-bottom: 1px solid #000 */
 }
 
 .list-container {
@@ -544,7 +543,6 @@
   display: flex;
   line-height: 190%;
   font-size: 1.05rem;
-  /* margin-bottom: 2px; */
   border-bottom: 1px solid #e9e8eb;
 }
 
@@ -659,8 +657,9 @@
   height: auto;
 }
 
-.subtab-input {
-  width: 100px;
+.subtab-password-input {
+  width: 120px;
+  height: 30px;
   border: 1px solid #000;
   font-size: 1rem;
   font-family: "Montserrat", "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
@@ -670,7 +669,6 @@
 
 .paragraph {
   text-indent: 10%;
-  /* white-space: pre-wrap; */
 }
 
 .password-container {
@@ -679,10 +677,11 @@
   justify-content: center;
   align-items: center;
   font-size: 1rem;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .password {
+  display: flex;
   margin: 10px;
 }
 

@@ -1,5 +1,5 @@
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import styles from "./page.module.css";
+import styles from "../page.module.css";
 
 interface FilterWindowProps {
   price: number;

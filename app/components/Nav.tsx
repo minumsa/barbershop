@@ -51,10 +51,6 @@ export const Nav = () => {
         }}
       >
         <div>Barbershop</div>
-        {/* <div style={{ display: "flex" }}>
-          <div className={styles["title-circle"]}>d</div>
-          <div>MR</div>
-        </div> */}
       </div>
       <div className={styles["search-container"]}>
         <div className={styles["search"]}>
@@ -63,7 +59,7 @@ export const Nav = () => {
           </div>
           <input
             className={styles["search-input"]}
-            placeholder="지역을 입력해주세요"
+            placeholder="지역 키워드를 입력해주세요"
             value={currentKeyword}
             onChange={e => {
               setCurrentKeyword(e.target.value);

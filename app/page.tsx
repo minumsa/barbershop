@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FilterWindow } from "./FilterWindow";
+import { FilterWindow } from "./components/FilterWindow";
 import { Content } from "./components/Content";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
@@ -69,8 +69,6 @@ export default function Page() {
   const store = createStore(reducer);
 
   return (
-    // TODO: NOSSR로 감싸기
-
     <Provider store={store}>
       <FilterWindow />
       <div className={`${styles["container"]}`}>

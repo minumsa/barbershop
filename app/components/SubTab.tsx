@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { deleteData } from "../lib/api";
 import { usePathname, useRouter } from "next/navigation";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faKey } from "@fortawesome/free-solid-svg-icons";
 
 interface SubTabProps {
   selectedBarbershop: any | null;
@@ -157,9 +159,14 @@ export const SubTab = () => {
           </div>
           {isAdmin && (
             <div className={styles["password-container"]}>
-              <div className={styles["password"]}>관리자 비밀번호</div>
+              <div className={styles["password"]}>
+                <div style={{ marginRight: "5px" }}>
+                  <FontAwesomeIcon icon={faKey} />
+                </div>
+                <div>관리자 비밀번호</div>
+              </div>
               <input
-                className={styles["subtab-input"]}
+                className={styles["subtab-password-input"]}
                 onChange={e => setPassword(e.target.value)}
               />
             </div>
