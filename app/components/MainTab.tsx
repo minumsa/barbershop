@@ -10,19 +10,17 @@ interface MainTabProps {
   price: number;
   filteredBarbershops: BarberShop[];
   keyword: string;
-  isMobile: boolean;
 }
 
 export const MainTab = () => {
   const [orderType, setOrderType] = useState<string>("name");
-  const { barbershops, barber, price, filteredBarbershops, keyword, isMobile } = useSelector(
+  const { barbershops, barber, price, filteredBarbershops, keyword } = useSelector(
     (state: MainTabProps) => ({
       barbershops: state.barbershops,
       barber: state.barber,
       price: state.price,
       filteredBarbershops: state.filteredBarbershops,
       keyword: state.keyword,
-      isMobile: state.isMobile,
     }),
     shallowEqual
   );
@@ -40,8 +38,6 @@ export const MainTab = () => {
         break;
     }
   }, [orderType]);
-
-  console.log(filteredBarbershops);
 
   useEffect(() => {
     barbershops &&
@@ -68,7 +64,7 @@ export const MainTab = () => {
 
   return (
     <div className={styles["tab"]}>
-      {!isMobile && <div className={styles["tab-title"]}>바버샵 리스트</div>}
+      <div className={`${styles["tab-title"]} ${styles["pc"]}`}>바버샵 리스트</div>
       <div className={styles["tab-filter"]}>
         <div className={styles["tab-result-data"]}>
           {/* 검색 시 표시할 문구 */}
@@ -125,31 +121,18 @@ export const MainTab = () => {
                 <div className={styles["list-name"]}>
                   <div className={styles["list-name-text"]}>{`${data.name}`}</div>
                 </div>
-                <div className={styles["list-location"]}>
-                  {isMobile
-                    ? data.location.description.split(" ").map((text: string, index: number) => {
-                        return index < 5 && `${text} `;
-                      })
-                    : data.location.description}
-                </div>
+                <div className={styles["list-location"]}>{data.location.description}</div>
               </div>
             </div>
           );
         })
       ) : keyword && filteredBarbershops.length === 0 ? (
         <div className={`${styles["list-container"]} ${styles["list-no-data"]}`}>
-          <div>
-            {isMobile ? (
-              <div>
-                <span style={{ fontWeight: 500 }}>{keyword}</span>
-                <span>에 대한 검색 결과가 없습니다</span>
-              </div>
-            ) : (
-              <div>
-                <span>검색 결과가 없습니다</span>
-              </div>
-            )}
+          <div className={styles["mobile-keyword-result"]}>
+            <div style={{ fontWeight: 550 }}>{keyword}</div>
+            <div>에 대한</div>
           </div>
+          <div>검색 결과가 없습니다</div>
         </div>
       ) : (
         <LoadingItems />

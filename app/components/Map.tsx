@@ -112,10 +112,9 @@ export const Map = () => {
 
     interface BarbershopIconProps {
       name: string;
-      id: string;
     }
 
-    const BarbershopIcon = ({ name, id }: BarbershopIconProps) => {
+    const BarbershopIcon = ({ name }: BarbershopIconProps) => {
       return (
         <div className={styles["pin-container"]}>
           <div className={styles["pin-circle"]}></div>

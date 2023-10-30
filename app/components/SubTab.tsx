@@ -6,7 +6,6 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 interface SubTabProps {
   selectedBarbershop: any | null;
-  isMobile: boolean;
 }
 
 export const SubTab = () => {
@@ -14,10 +13,9 @@ export const SubTab = () => {
   const pathName = usePathname();
   const isAdmin = pathName.includes("admin");
   const [password, setPassword] = useState<string>("");
-  const { selectedBarbershop, isMobile } = useSelector(
+  const { selectedBarbershop } = useSelector(
     (state: SubTabProps) => ({
       selectedBarbershop: state.selectedBarbershop,
-      isMobile: state.isMobile,
     }),
     shallowEqual
   );
@@ -46,16 +44,14 @@ export const SubTab = () => {
         <div className={styles["subtab-title-container"]}>
           <div className={styles["tab-title"]}>
             <div className={styles["tab-title-name"]}>{selectedBarbershop.name}</div>
-            {isMobile && (
-              <div
-                className={styles["close"]}
-                onClick={() => {
-                  dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: null });
-                }}
-              >
-                ×
-              </div>
-            )}
+            <div
+              className={styles["close-mobile"]}
+              onClick={() => {
+                dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: null });
+              }}
+            >
+              ×
+            </div>
           </div>
         </div>
         <div className={styles["subtab-image-container"]}>

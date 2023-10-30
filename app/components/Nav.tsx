@@ -8,17 +8,14 @@ import { useState } from "react";
 
 interface Nav {
   keyword: string;
-  isMobile: boolean;
   showFilterWindow: boolean;
 }
 
 export const Nav = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { keyword, isMobile, showFilterWindow } = useSelector(
+  const { showFilterWindow } = useSelector(
     (state: Nav) => ({
-      keyword: state.keyword,
-      isMobile: state.isMobile,
       showFilterWindow: state.showFilterWindow,
     }),
     shallowEqual
