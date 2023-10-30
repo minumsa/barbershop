@@ -50,9 +50,11 @@ export const Nav = () => {
           router.push("/");
         }}
       >
-        <div>Barber</div>
-        <div className={styles["title-circle"]}></div>
-        <div>MR</div>
+        <div>Barbershop</div>
+        {/* <div style={{ display: "flex" }}>
+          <div className={styles["title-circle"]}>d</div>
+          <div>MR</div>
+        </div> */}
       </div>
       <div className={styles["search-container"]}>
         <div className={styles["search"]}>

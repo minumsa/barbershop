@@ -9,18 +9,13 @@ import { fetchData } from "./lib/api";
 import { legacy_createStore as createStore } from "redux";
 import { Provider } from "react-redux";
 import { Nav } from "./components/Nav";
-import NoSSR from "./lib/NoSSR";
 
 export default function Page() {
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
   const [keyword, setKeyword] = useState<string>("");
-  // TODO: 모바일 상태를 체크하는 방식이 이게 최선일까? 더 좋은 방식이 있을 것 같다
-  const [isMobile, setIsMobile] = useState<boolean>(false);
   const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 500);
-
     async function loadAllData() {
       setBarbershops(await fetchData());
     }
@@ -36,7 +31,6 @@ export default function Page() {
         price: 50000,
         barber: 3,
         showFilterWindow: false,
-        isMobile: isMobile,
         selectedBarbershop: selectedBarbershop,
         keyword: keyword,
         filteredBarbershops: [],
@@ -58,9 +52,6 @@ export default function Page() {
       case "SET_SHOW_FILTER_WINDOW":
         newState.showFilterWindow = action.payload;
         return newState;
-      case "SET_IS_MOBILE":
-        newState.isMobile = action.payload;
-        return newState;
       case "SET_SELECTED_BARBERSHOP":
         newState.selectedBarbershop = action.payload;
         return newState;
@@ -79,16 +70,15 @@ export default function Page() {
 
   return (
     // TODO: NOSSR로 감싸기
-    <NoSSR>
-      <Provider store={store}>
-        <FilterWindow />
-        <div className={`${styles["container"]}`}>
-          {/* TODO: 현재 위치 기능 추가 */}
-          {/* TODO: 바버샵 데이터 - 업로드, 개점일 변수 추가 */}
-          <Nav />
-          <Content />
-        </div>
-      </Provider>
-    </NoSSR>
+
+    <Provider store={store}>
+      <FilterWindow />
+      <div className={`${styles["container"]}`}>
+        {/* TODO: 현재 위치 기능 추가 */}
+        {/* TODO: 바버샵 데이터 - 업로드, 개점일 변수 추가 */}
+        <Nav />
+        <Content />
+      </div>
+    </Provider>
   );
 }

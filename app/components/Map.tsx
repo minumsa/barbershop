@@ -166,5 +166,5 @@ export const Map = () => {
       }, []);
   }, [filteredBarbershops, selectedBarbershop]);
 
-  return <div ref={mapElement} className={styles["map-container"]} />;
+  return <div ref={mapElement} style={{ width: "100%", height: "100%" }} />;
 };
