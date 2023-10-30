@@ -1,7 +1,7 @@
 import { SetStateAction, useEffect, useState } from "react";
-import styles from "./page.module.css";
-import { fetchDataforEdit, editData, uploadData, uploadImage } from "./lib/api";
-import { BarberShop } from "./lib/data";
+import styles from "../page.module.css";
+import { fetchDataforEdit, editData, uploadData, uploadImage } from "../lib/api";
+import { BarberShop } from "../lib/data";
 import { usePathname, useRouter } from "next/navigation";
 
 type Location = {

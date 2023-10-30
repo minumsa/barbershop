@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { FilterWindow } from "./FilterWindow";
-import { Content } from "./Content";
+import { Content } from "./components/Content";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
 import { fetchData } from "./lib/api";
 import { legacy_createStore as createStore } from "redux";
 import { Provider } from "react-redux";
-import { Nav } from "./Nav";
+import { Nav } from "./components/Nav";
 import NoSSR from "./lib/NoSSR";
 
 export default function Page() {

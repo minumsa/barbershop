@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import styles from "../page.module.css";
 import { FilterWindow } from "../FilterWindow";
-import { Content } from "../Content";
+import { Content } from "../components/Content";
 import { BarberShop } from "../model/BarberShop";
 import { fetchData } from "../lib/api";
 import { Provider } from "react-redux";
-import { Nav } from "../Nav";
+import { Nav } from "../components/Nav";
 import { legacy_createStore as createStore } from "redux";
 
 export default function Page() {

@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "./page.module.css";
+import styles from "../page.module.css";
 import { faMagnifyingGlass, faPlus, faSliders } from "@fortawesome/free-solid-svg-icons";
 import { usePathname, useRouter } from "next/navigation";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { searchData } from "./lib/api";
+import { searchData } from "../lib/api";
 import { useState } from "react";
 
 interface Nav {
@@ -53,21 +53,9 @@ export const Nav = () => {
           router.push("/");
         }}
       >
-        <div>
-          {!isMobile && (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                alignContent: "center",
-              }}
-            >
-              <div>Barber</div>
-              <div className={styles["title-circle"]}></div>
-              <div>MR</div>
-            </div>
-          )}
-        </div>
+        <div>Barber</div>
+        <div className={styles["title-circle"]}></div>
+        <div>MR</div>
       </div>
       <div className={styles["search-container"]}>
         <div className={styles["search"]}>

@@ -1,6 +1,6 @@
-import styles from "./page.module.css";
+import styles from "../page.module.css";
 import React, { useState } from "react";
-import { deleteData } from "./lib/api";
+import { deleteData } from "../lib/api";
 import { usePathname, useRouter } from "next/navigation";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 

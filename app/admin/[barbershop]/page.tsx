@@ -1,6 +1,6 @@
 "use client";
 
-import { Upload } from "@/app/Upload";
+import { Upload } from "@/app/components/Upload";
 import styles from "@/app/page.module.css";
 
 export default function Page({ params }: any) {

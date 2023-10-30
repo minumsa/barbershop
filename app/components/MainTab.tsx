@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import styles from "./page.module.css";
-import { BarberShop } from "./model/BarberShop";
+import styles from "../page.module.css";
+import { BarberShop } from "../model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { LoadingItems } from "./LoadingItems";
 
@@ -71,6 +71,7 @@ export const MainTab = () => {
       {!isMobile && <div className={styles["tab-title"]}>바버샵 리스트</div>}
       <div className={styles["tab-filter"]}>
         <div className={styles["tab-result-data"]}>
+          {/* 검색 시 표시할 문구 */}
           {keyword.length > 1 && (
             <div className={styles["filter-box-title"]}>
               <span className={styles["filter-box-content"]}> {keyword}</span>
@@ -83,7 +84,7 @@ export const MainTab = () => {
           }개`}</div>
           <div>의 검색 결과</div>
         </div>
-        {/* TODO: 나중에 바버샵 변수에 업로드일, 개점일 추가 */}
+        {/* 바버샵 데이터 정렬 */}
         <div className={styles["tab-order"]}>
           <ul className={styles["tab-ul"]}>
             <li className={styles["tab-li"]}>

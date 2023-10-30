@@ -1,12 +1,10 @@
 import { Map } from "./Map";
 import { MainTab } from "./MainTab";
 import { SubTab } from "./SubTab";
-import styles from "./page.module.css";
-import { BarberShop } from "./model/BarberShop";
-import React, { useEffect } from "react";
+import styles from "../page.module.css";
+import { BarberShop } from "../model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Grid } from "./Grid";
-import { useRouter } from "next/navigation";
 
 interface ContentProps {
   price: number;
@@ -28,7 +26,6 @@ export const Content = () => {
     shallowEqual
   );
   const dispatch = useDispatch();
-  const router = useRouter();
 
   return (
     <div className={styles["content-container"]}>
