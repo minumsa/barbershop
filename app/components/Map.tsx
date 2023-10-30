@@ -127,7 +127,7 @@ export const Map = () => {
           position: new naver.maps.LatLng(data.location.lat, data.location.lng),
           map: map,
           icon: {
-            content: renderToString(<BarbershopIcon name={data.name} id={data.id} />),
+            content: renderToString(<BarbershopIcon name={data.name} />),
             size: new naver.maps.Size(50, 50),
             origin: new naver.maps.Point(0, 0),
             anchor: new naver.maps.Point(45, 10),
