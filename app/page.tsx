@@ -74,7 +74,7 @@ export default function Page() {
       <div className={styles["container"]}>
         {/* TODO: 현재 위치 기능 추가 */}
         {/* TODO: 바버샵 데이터 - 업로드, 개점일 변수 추가 */}
-        <Nav />
+        <NavBar />
         <Content />
       </div>
     </Provider>

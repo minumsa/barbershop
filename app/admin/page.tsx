@@ -72,7 +72,7 @@ export default function Page() {
     <Provider store={store}>
       <FilterWindow />
       <div className={styles["container"]}>
-        <Nav />
+        <NavBar />
         <Content />
       </div>
     </Provider>
