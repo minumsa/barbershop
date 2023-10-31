@@ -6,16 +6,16 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { searchData } from "../lib/api";
 import { useState } from "react";
 
-interface Nav {
+interface NavBar {
   keyword: string;
   showFilterWindow: boolean;
 }
 
-export const Nav = () => {
+export const NavBar = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { showFilterWindow } = useSelector(
-    (state: Nav) => ({
+    (state: NavBar) => ({
       showFilterWindow: state.showFilterWindow,
     }),
     shallowEqual

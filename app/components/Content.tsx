@@ -25,7 +25,9 @@ export const Content = () => {
     shallowEqual
   );
   const dispatch = useDispatch();
+  const isLoading = filteredBarbershops.length === 0;
 
+  // 메인 탭, 서브 탭 전환 시 스크롤 맨 위로 이동
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [selectedBarbershop]);
@@ -45,7 +47,7 @@ export const Content = () => {
               : undefined
           }
         >
-          {filteredBarbershops.length === 0 ? <Grid /> : <Map />}
+          {isLoading ? <Grid /> : <Map />}
         </div>
         <div className={styles["tab-container"]}>
           {selectedBarbershop ? <SubTab /> : <MainTab />}
@@ -84,7 +86,7 @@ export const Content = () => {
             </div>
           </div>
         </div>
-        {filteredBarbershops.length === 0 ? <Grid /> : <Map />}
+        {isLoading ? <Grid /> : <Map />}
       </div>
     </div>
   );

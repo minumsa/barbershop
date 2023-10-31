@@ -8,7 +8,7 @@ import { BarberShop } from "./model/BarberShop";
 import { fetchData } from "./lib/api";
 import { legacy_createStore as createStore } from "redux";
 import { Provider } from "react-redux";
-import { Nav } from "./components/Nav";
+import { NavBar } from "./components/NavBar";
 
 export default function Page() {
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
@@ -16,11 +16,11 @@ export default function Page() {
   const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
 
   useEffect(() => {
-    async function loadAllData() {
+    async function loadData() {
       setBarbershops(await fetchData());
     }
 
-    loadAllData();
+    loadData();
   }, []);
 
   // TODO: currentState, action 타입 지정하기
@@ -71,7 +71,7 @@ export default function Page() {
   return (
     <Provider store={store}>
       <FilterWindow />
-      <div className={`${styles["container"]}`}>
+      <div className={styles["container"]}>
         {/* TODO: 현재 위치 기능 추가 */}
         {/* TODO: 바버샵 데이터 - 업로드, 개점일 변수 추가 */}
         <Nav />

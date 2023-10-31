@@ -7,7 +7,7 @@ import { Content } from "../components/Content";
 import { BarberShop } from "../model/BarberShop";
 import { fetchData } from "../lib/api";
 import { Provider } from "react-redux";
-import { Nav } from "../components/Nav";
+import { NavBar } from "../components/NavBar";
 import { legacy_createStore as createStore } from "redux";
 
 export default function Page() {
@@ -71,7 +71,7 @@ export default function Page() {
   return (
     <Provider store={store}>
       <FilterWindow />
-      <div className={`${styles["container"]}`}>
+      <div className={styles["container"]}>
         <Nav />
         <Content />
       </div>

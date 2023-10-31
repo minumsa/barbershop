@@ -13,7 +13,7 @@ interface SubTabProps {
 export const SubTab = () => {
   const router = useRouter();
   const pathName = usePathname();
-  const isAdmin = pathName.includes("admin");
+  const isAdminPage = pathName.includes("admin");
   const [password, setPassword] = useState<string>("");
   const { selectedBarbershop } = useSelector(
     (state: SubTabProps) => ({
@@ -29,7 +29,7 @@ export const SubTab = () => {
     data: string | React.ReactNode;
   }
 
-  const ItemBlock = ({ title, data }: ItemBlockProps) => {
+  const SubTabItemBlock = ({ title, data }: ItemBlockProps) => {
     return (
       <div className={styles["subtab-flexbox"]}>
         <div className={styles["subtab-title"]}>{title}</div>
@@ -60,8 +60,6 @@ export const SubTab = () => {
             <img
               src={selectedBarbershop.imgUrl}
               alt="test"
-              width={0}
-              height={0}
               sizes="100vw"
               style={{
                 width: "100%",
@@ -72,13 +70,13 @@ export const SubTab = () => {
           </div>
         </div>
         <div className={styles["subtab-information-container"]}>
-          <ItemBlock
+          <SubTabItemBlock
             title={"소개"}
             data={selectedBarbershop.description.split("  ").map((text: string, index: number) => {
               return <p key={index}>{text}</p>;
             })}
           />
-          <ItemBlock
+          <SubTabItemBlock
             title={"바버"}
             data={`${selectedBarbershop.barberList
               .map((barber: string, index: number) => {
@@ -98,9 +96,12 @@ export const SubTab = () => {
               </a>
             </div>
           </div>
-          <ItemBlock title={"시술비"} data={`${selectedBarbershop.price.toLocaleString()}원`} />
-          <ItemBlock title={"운영시간"} data={selectedBarbershop.operatingTime} />
-          <ItemBlock
+          <SubTabItemBlock
+            title={"시술비"}
+            data={`${selectedBarbershop.price.toLocaleString()}원`}
+          />
+          <SubTabItemBlock title={"운영시간"} data={selectedBarbershop.operatingTime} />
+          <SubTabItemBlock
             title={"휴무일"}
             data={
               selectedBarbershop.closedDays === "" || !selectedBarbershop.closedDays
@@ -108,7 +109,7 @@ export const SubTab = () => {
                 : selectedBarbershop.closedDays
             }
           />
-          <ItemBlock title={"연락처"} data={selectedBarbershop.contact} />
+          <SubTabItemBlock title={"연락처"} data={selectedBarbershop.contact} />
           <div className={styles["subtab-flexbox"]}>
             <div className={styles["subtab-title"]}>웹사이트</div>
             <div className={`${styles["subtab-information"]} ${styles["barbershop-url"]}`}>
@@ -122,7 +123,43 @@ export const SubTab = () => {
             </div>
           </div>
           <div className={styles["subtab-button-container"]}>
-            {!isAdmin && (
+            {isAdminPage ? (
+              <div>
+                <div className={styles["flex-row-center"]}>
+                  <div
+                    className={`${styles["button"]} ${styles["subtab-button"]}`}
+                    onClick={() => {
+                      router.push(`/admin/${selectedBarbershop.id}`);
+                    }}
+                  >
+                    <div>수정</div>
+                  </div>
+                  <div className={`${styles["button"]} ${styles["subtab-button"]}`}>
+                    <div
+                      onClick={async () => {
+                        deleteData(selectedBarbershop.id, password);
+                        dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: null });
+                        router.push("/admin");
+                      }}
+                    >
+                      삭제
+                    </div>
+                  </div>
+                </div>
+                <div className={styles["password-container"]}>
+                  <div className={styles["password"]}>
+                    <div style={{ marginRight: "5px" }}>
+                      <FontAwesomeIcon icon={faKey} />
+                    </div>
+                    <div>관리자 비밀번호</div>
+                  </div>
+                  <input
+                    className={styles["subtab-password-input"]}
+                    onChange={e => setPassword(e.target.value)}
+                  />
+                </div>
+              </div>
+            ) : (
               <div
                 className={`${styles["button"]} ${styles["subtab-button"]}`}
                 onClick={() => {
@@ -132,44 +169,7 @@ export const SubTab = () => {
                 <div>예약</div>
               </div>
             )}
-            {isAdmin && (
-              <React.Fragment>
-                <div
-                  className={`${styles["button"]} ${styles["subtab-button"]}`}
-                  onClick={() => {
-                    router.push(`/admin/${selectedBarbershop.id}`);
-                  }}
-                >
-                  <div>수정</div>
-                </div>
-                <div className={`${styles["button"]} ${styles["subtab-button"]}`}>
-                  <div
-                    onClick={async () => {
-                      deleteData(selectedBarbershop.id, password);
-                      dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: null });
-                      router.push("/admin");
-                    }}
-                  >
-                    삭제
-                  </div>
-                </div>
-              </React.Fragment>
-            )}
           </div>
-          {isAdmin && (
-            <div className={styles["password-container"]}>
-              <div className={styles["password"]}>
-                <div style={{ marginRight: "5px" }}>
-                  <FontAwesomeIcon icon={faKey} />
-                </div>
-                <div>관리자 비밀번호</div>
-              </div>
-              <input
-                className={styles["subtab-password-input"]}
-                onChange={e => setPassword(e.target.value)}
-              />
-            </div>
-          )}
         </div>
       </div>
     )
