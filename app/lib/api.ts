@@ -42,7 +42,7 @@ export async function searchData(keyword: string) {
   }
 }
 
-export async function fetchDataforEdit(id: string) {
+export async function fetchForEdit(id: string) {
   try {
     const response = await fetch(`/api/barbershop/${id}`, {
       method: "GET",

@@ -1,6 +1,6 @@
 import { SetStateAction, useEffect, useState } from "react";
 import styles from "../page.module.css";
-import { fetchDataforEdit, editData, uploadData, uploadImage } from "../lib/api";
+import { fetchForEdit, editData, uploadData, uploadImage } from "../lib/api";
 import { BarberShop } from "../lib/data";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -20,7 +20,7 @@ export const Upload = ({ id }: UploadProps) => {
   const [barberListToStr, setBarberListToStr] = useState<string>();
   const [location, setLocation] = useState<Location>({ description: "", lat: 0, lng: 0 });
   const [operatingTime, setOperatingTime] = useState<string | undefined>("");
-  const [closedDays, setClosedDays] = useState<string | undefined>("");
+  const [nonOperatingDates, setNonOperatingDates] = useState<string | undefined>("");
   const [contact, setContact] = useState<string | undefined>("");
   const [description, setDescription] = useState<string | undefined>("");
   const [price, setPrice] = useState<number>(0);
@@ -32,7 +32,7 @@ export const Upload = ({ id }: UploadProps) => {
   const [password, setPassword] = useState<string>("");
   const [barbershops, setBarbershops] = useState<BarberShop>();
   const pathName = decodeURIComponent(usePathname());
-  const isUpload = pathName.includes("upload");
+  const isUploadPage = pathName.includes("upload");
   const router = useRouter();
 
   const newBarbershopData: BarberShop = {
@@ -40,7 +40,7 @@ export const Upload = ({ id }: UploadProps) => {
     barberList: barberListToStr?.split(", "),
     location: location,
     operatingTime: operatingTime,
-    closedDays: closedDays,
+    closedDays: nonOperatingDates,
     contact: contact,
     description: description,
     price: price,
@@ -53,10 +53,10 @@ export const Upload = ({ id }: UploadProps) => {
 
   useEffect(() => {
     async function loadData() {
-      setBarbershops(await fetchDataforEdit(id));
+      setBarbershops(await fetchForEdit(id));
     }
 
-    if (id !== "upload") loadData();
+    if (!isUploadPage) loadData();
   }, []);
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export const Upload = ({ id }: UploadProps) => {
       lng: barbershops?.location.lng ?? 0,
     });
     setOperatingTime(barbershops?.operatingTime);
-    setClosedDays(barbershops?.closedDays);
+    setNonOperatingDates(barbershops?.closedDays);
     setDescription(barbershops?.description);
     setPrice(barbershops?.price ?? 0);
     setImgUrl(barbershops?.imgUrl);
@@ -78,6 +78,8 @@ export const Upload = ({ id }: UploadProps) => {
     setContact(barbershops?.contact);
   }, [barbershops]);
 
+  // 먼저 데이터를 업로드(uploadData)하고 나서 이미지를 업로드(uploadImage)함
+  // 이미지의 경우 cdn을 통해 따로 path를 만드는 방식을 택했기 때문
   const handleUpload = async () => {
     try {
       const dataResponse = await uploadData(newBarbershopData, password);
@@ -88,6 +90,7 @@ export const Upload = ({ id }: UploadProps) => {
     }
   };
 
+  // 이미지 API(uploadImage)는 수정 방식(PUT)이므로 업로드, 수정 시 모두 이를 사용
   const handleEdit = async () => {
     try {
       await editData(newBarbershopData, id, password);
@@ -99,7 +102,7 @@ export const Upload = ({ id }: UploadProps) => {
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      isUpload ? handleUpload() : handleEdit();
+      isUploadPage ? handleUpload() : handleEdit();
     }
   };
 
@@ -134,7 +137,7 @@ export const Upload = ({ id }: UploadProps) => {
           className={styles["upload-item"]}
           style={{ justifyContent: "center", padding: "30px 0 50px 0" }}
         >
-          <div>{isUpload ? "업로드" : "수정"} 페이지</div>
+          <div>{isUploadPage ? "업로드" : "수정"} 페이지</div>
         </div>
         <div className={styles["upload-item"]}>
           <div className={styles["upload-title"]}>바버샵 이름</div>
@@ -209,9 +212,9 @@ export const Upload = ({ id }: UploadProps) => {
           <div className={styles["upload-title"]}>휴무일</div>
           <input
             className={styles["upload-input"]}
-            value={closedDays ?? ""}
+            value={nonOperatingDates ?? ""}
             onChange={e => {
-              setClosedDays(e.target.value);
+              setNonOperatingDates(e.target.value);
             }}
           />
         </div>
@@ -300,11 +303,11 @@ export const Upload = ({ id }: UploadProps) => {
           className={styles["button"]}
           style={{ padding: "5px 20px", marginTop: "30px" }}
           onClick={async () => {
-            isUpload ? await handleUpload() : await handleEdit();
+            isUploadPage ? await handleUpload() : await handleEdit();
             router.push("/admin");
           }}
         >
-          {isUpload ? "제출하기" : "수정하기"}
+          {isUploadPage ? "제출하기" : "수정하기"}
         </div>
       </div>
     </div>

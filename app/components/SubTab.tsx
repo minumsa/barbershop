@@ -39,7 +39,6 @@ export const SubTab = () => {
   };
 
   // TODO: 모바일에서 컴포넌트 이동 시 스크롤 맨 위로 (메인탭 스크롤 상태가 유지되고 있음..)
-
   return (
     selectedBarbershop && (
       <div className={styles["tab"]}>

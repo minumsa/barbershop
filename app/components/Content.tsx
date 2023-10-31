@@ -5,6 +5,7 @@ import styles from "../page.module.css";
 import { BarberShop } from "../model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Grid } from "./Grid";
+import { useEffect } from "react";
 
 interface ContentProps {
   price: number;
@@ -24,6 +25,10 @@ export const Content = () => {
     shallowEqual
   );
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [selectedBarbershop]);
 
   return (
     <div className={styles["content-container"]}>
