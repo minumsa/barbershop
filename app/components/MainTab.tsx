@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import styles from "./page.module.css";
-import { BarberShop } from "./model/BarberShop";
+import styles from "../page.module.css";
+import { BarberShop } from "../model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { LoadingItems } from "./LoadingItems";
 
 interface MainTabProps {
   barbershops: BarberShop[];
@@ -63,9 +64,10 @@ export const MainTab = () => {
 
   return (
     <div className={styles["tab"]}>
-      <div className={styles["tab-title"]}>바버샵 리스트</div>
+      <div className={`${styles["tab-title"]} ${styles["pc"]}`}>바버샵 리스트</div>
       <div className={styles["tab-filter"]}>
-        <div style={{ display: "flex" }}>
+        <div className={styles["tab-result-data"]}>
+          {/* 검색 시 표시할 문구 */}
           {keyword.length > 1 && (
             <div className={styles["filter-box-title"]}>
               <span className={styles["filter-box-content"]}> {keyword}</span>
@@ -78,7 +80,7 @@ export const MainTab = () => {
           }개`}</div>
           <div>의 검색 결과</div>
         </div>
-        {/* TODO: 나중에 바버샵 변수에 업로드일, 개점일 추가 */}
+        {/* 바버샵 데이터 정렬 */}
         <div className={styles["tab-order"]}>
           <ul className={styles["tab-ul"]}>
             <li className={styles["tab-li"]}>
@@ -101,28 +103,40 @@ export const MainTab = () => {
           </ul>
         </div>
       </div>
-      {filteredBarbershops?.map((data: any, index: number) => {
-        return (
-          <div
-            className={styles["list-container"]}
-            key={index}
-            onClick={() => {
-              dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: data });
-            }}
-          >
+      {filteredBarbershops.length > 0 ? (
+        filteredBarbershops.map((data: any, index: number) => {
+          return (
             <div
-              className={styles["barbershop-image-container"]}
-              style={{ backgroundImage: `url("${data.imgUrl}")` }}
-            ></div>
-            <div className={styles["list-information"]}>
-              <div className={styles["list-name"]}>
-                <div className={styles["list-name-text"]}>{`${data.name}`}</div>
+              className={styles["list-container"]}
+              key={index}
+              onClick={() => {
+                dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: data });
+              }}
+            >
+              <div
+                className={styles["barbershop-image-container"]}
+                style={{ backgroundImage: `url("${data.imgUrl}")` }}
+              ></div>
+              <div className={styles["list-information"]}>
+                <div className={styles["list-name"]}>
+                  <div className={styles["list-name-text"]}>{`${data.name}`}</div>
+                </div>
+                <div className={styles["list-location"]}>{data.location.description}</div>
               </div>
-              <div className={styles["list-location"]}>{data.location.description}</div>
             </div>
+          );
+        })
+      ) : keyword && filteredBarbershops.length === 0 ? (
+        <div className={`${styles["list-container"]} ${styles["list-no-data"]}`}>
+          <div className={styles["mobile-keyword-result"]}>
+            <div style={{ fontWeight: 550 }}>{keyword}</div>
+            <div>에 대한</div>
           </div>
-        );
-      })}
+          <div>검색 결과가 없습니다</div>
+        </div>
+      ) : (
+        <LoadingItems />
+      )}
     </div>
   );
 };

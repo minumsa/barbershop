@@ -1,34 +1,34 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { renderToString } from "react-dom/server";
-import styles from "./page.module.css";
-import { BarberShop } from "./model/BarberShop";
+import styles from "../page.module.css";
+import { BarberShop } from "../model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 interface MapProps {
   filteredBarbershops: BarberShop[];
-  isMobile: boolean;
   setSelectedBarbershop: React.Dispatch<React.SetStateAction<BarberShop | null | undefined>>;
+  selectedBarbershop: BarberShop | null | undefined;
 }
 
 export const Map = () => {
-  const { isMobile, filteredBarbershops } = useSelector(
+  const { filteredBarbershops, selectedBarbershop } = useSelector(
     (state: MapProps) => ({
-      isMobile: state.isMobile,
       filteredBarbershops: state.filteredBarbershops,
+      selectedBarbershop: state.selectedBarbershop,
     }),
     shallowEqual
   );
 
   const mapElement = useRef(null);
   const dispatch = useDispatch();
-  const [activeMarkerId, setActiveMarkerId] = useState<string>();
-  const [showInfoWindow, setShowInfoWindow] = useState<boolean>(false);
 
   useEffect(() => {
     const { naver } = window as any;
     if (!mapElement.current || !naver) return;
 
-    const barbershop = filteredBarbershops
+    const barbershop = selectedBarbershop
+      ? new naver.maps.LatLng(selectedBarbershop.location.lat, selectedBarbershop.location.lng)
+      : filteredBarbershops
       ? new naver.maps.LatLng(
           filteredBarbershops[0]?.location.lat,
           filteredBarbershops[0]?.location.lng
@@ -40,7 +40,7 @@ export const Map = () => {
       zoom: 17,
       zoomControl: true,
       zoomControlOptions: {
-        position: isMobile ? naver.maps.Position.RIGHT_TOP : naver.maps.Position.RIGHT_BOTTOM,
+        position: naver.maps.Position.RIGHT_BOTTOM,
       },
     };
     const map = new naver.maps.Map(mapElement.current, mapOptions);
@@ -110,10 +110,9 @@ export const Map = () => {
 
     interface BarbershopIconProps {
       name: string;
-      id: string;
     }
 
-    const BarbershopIcon = ({ name, id }: BarbershopIconProps) => {
+    const BarbershopIcon = ({ name }: BarbershopIconProps) => {
       return (
         <div className={styles["pin-container"]}>
           <div className={styles["pin-circle"]}></div>
@@ -128,7 +127,7 @@ export const Map = () => {
           position: new naver.maps.LatLng(data.location.lat, data.location.lng),
           map: map,
           icon: {
-            content: renderToString(<BarbershopIcon name={data.name} id={data.id} />),
+            content: renderToString(<BarbershopIcon name={data.name} />),
             size: new naver.maps.Size(50, 50),
             origin: new naver.maps.Point(0, 0),
             anchor: new naver.maps.Point(45, 10),
@@ -150,24 +149,7 @@ export const Map = () => {
         });
 
         naver.maps.Event.addListener(barbershopMarker, "click", function () {
-          if (isMobile) {
-            dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: data });
-          } else {
-            if (infoWindow.getMap()) {
-              infoWindow.close();
-            } else {
-              setShowInfoWindow(true);
-              infoWindow.open(map, barbershopMarker);
-            }
-          }
-        });
-
-        naver.maps.Event.addListener(barbershopMarker, "mouseover", function () {
-          if (showInfoWindow === false) setActiveMarkerId(data.id);
-        });
-
-        naver.maps.Event.addListener(barbershopMarker, "mouseout", function () {
-          if (showInfoWindow === false) setActiveMarkerId(undefined);
+          infoWindow.open(map, barbershopMarker);
         });
 
         const tmp = infoWindow.contentElement as HTMLElement;
@@ -179,12 +161,10 @@ export const Map = () => {
         tmp
           .getElementsByClassName(styles["filter-button"])[0]
           .addEventListener("click", function () {
-            setActiveMarkerId(undefined);
-            setShowInfoWindow(false);
             infoWindow.close();
           });
       }, []);
-  }, [filteredBarbershops]);
+  }, [filteredBarbershops, selectedBarbershop]);
 
-  return <div ref={mapElement} className={styles["map-container"]} />;
+  return <div ref={mapElement} style={{ width: "100%", height: "100%" }} />;
 };

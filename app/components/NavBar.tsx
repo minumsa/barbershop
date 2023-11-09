@@ -1,24 +1,21 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "./page.module.css";
+import styles from "../page.module.css";
 import { faMagnifyingGlass, faPlus, faSliders } from "@fortawesome/free-solid-svg-icons";
 import { usePathname, useRouter } from "next/navigation";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { searchData } from "./lib/api";
+import { searchData } from "../lib/api";
 import { useState } from "react";
 
-interface Nav {
+interface NavBar {
   keyword: string;
-  isMobile: boolean;
   showFilterWindow: boolean;
 }
 
-export const Nav = () => {
+export const NavBar = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { keyword, isMobile, showFilterWindow } = useSelector(
-    (state: Nav) => ({
-      keyword: state.keyword,
-      isMobile: state.isMobile,
+  const { showFilterWindow } = useSelector(
+    (state: NavBar) => ({
       showFilterWindow: state.showFilterWindow,
     }),
     shallowEqual
@@ -53,21 +50,7 @@ export const Nav = () => {
           router.push("/");
         }}
       >
-        <div>
-          {!isMobile && (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                alignContent: "center",
-              }}
-            >
-              <div>Barber</div>
-              <div className={styles["title-circle"]}></div>
-              <div>MR</div>
-            </div>
-          )}
-        </div>
+        <div>Barbershop</div>
       </div>
       <div className={styles["search-container"]}>
         <div className={styles["search"]}>
@@ -76,7 +59,7 @@ export const Nav = () => {
           </div>
           <input
             className={styles["search-input"]}
-            placeholder="지역을 입력해주세요"
+            placeholder="지역 키워드를 입력해주세요"
             value={currentKeyword}
             onChange={e => {
               setCurrentKeyword(e.target.value);
