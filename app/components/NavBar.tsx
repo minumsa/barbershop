@@ -59,7 +59,7 @@ export const NavBar = () => {
           </div>
           <input
             className={styles["search-input"]}
-            placeholder="지역 키워드를 입력해주세요"
+            placeholder="키워드를 입력해주세요"
             value={currentKeyword}
             onChange={e => {
               setCurrentKeyword(e.target.value);
