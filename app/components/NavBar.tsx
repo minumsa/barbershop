@@ -43,14 +43,15 @@ export const NavBar = () => {
 
   return (
     <div className={styles["nav-container"]}>
-      <div
-        className={styles["title"]}
-        onClick={() => {
-          dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: null });
-          router.push("/");
-        }}
-      >
-        <div>Barbershop</div>
+      <div className={styles["title"]}>
+        <div
+          onClick={() => {
+            dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: null });
+            router.push("/");
+          }}
+        >
+          Barbershop
+        </div>
       </div>
       <div className={styles["search-container"]}>
         <div className={styles["search"]}>

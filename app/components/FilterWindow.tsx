@@ -29,14 +29,14 @@ export const FilterWindow = () => {
       className={styles["filter-content"]}
       style={showFilterWindow ? { position: "fixed" } : { display: "none" }}
     >
-      <button
+      <div
         className={styles["filter-button"]}
         onClick={() => {
           dispatch({ type: "SET_SHOW_FILTER_WINDOW", payload: false });
         }}
       >
         ×
-      </button>
+      </div>
       <div className={styles["filter-container"]}>
         <div className={styles["filter-close"]}>
           <div className={styles["string-center-border"]}>지도 옵션</div>
