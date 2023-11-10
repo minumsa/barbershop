@@ -45,7 +45,7 @@
 
 .nav-container {
   display: flex;
-  min-height: 70px;
+  min-height: 60px;
   border-bottom: 1px solid #000;
   padding: 0 30px;
 }
@@ -72,7 +72,7 @@
 .search {
   position: relative;
   display: flex;
-  width: 70%;
+  width: 100%;
   max-width: 500px;
   height: 45px;
   /* border: 1px solid #000; */
@@ -128,7 +128,7 @@
 .content-container {
   display: flex;
   width: 100%;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 50px);
 }
 
 .filter-container {
@@ -182,7 +182,7 @@
   font-weight: 400;
   display: flex;
   position: absolute;
-  top: 70px;
+  top: 60px;
   right: 0;
   width: fit-content;
   height: fit-content;
@@ -733,7 +733,23 @@
   justify-content: center;
 }
 
-@media (max-width: 499px) {
+@media (max-width: 1200px) {
+  .title {
+    width: fit-content;
+  }
+
+  .category {
+    width: fit-content;
+  }
+}
+
+@media (max-width: 750px) {
+  .search {
+    width: 90%;
+  }
+}
+
+@media (max-width: 550px) {
   .container {
     font-size: 0.9rem;
   }
