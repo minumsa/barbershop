@@ -43,14 +43,15 @@ export const NavBar = () => {
 
   return (
     <div className={styles["nav-container"]}>
-      <div
-        className={styles["title"]}
-        onClick={() => {
-          dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: null });
-          router.push("/");
-        }}
-      >
-        <div>Barbershop</div>
+      <div className={styles["title"]}>
+        <div
+          onClick={() => {
+            dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: null });
+            router.push("/");
+          }}
+        >
+          Barbershop
+        </div>
       </div>
       <div className={styles["search-container"]}>
         <div className={styles["search"]}>
@@ -59,7 +60,7 @@ export const NavBar = () => {
           </div>
           <input
             className={styles["search-input"]}
-            placeholder="지역 키워드를 입력해주세요"
+            placeholder="키워드를 입력해주세요"
             value={currentKeyword}
             onChange={e => {
               setCurrentKeyword(e.target.value);

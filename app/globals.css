@@ -60,9 +60,8 @@ p:last-of-type {
 input[type="range"] {
   width: 100%;
   margin: 0;
-  background-color: #2497e3;
 }
-
+/* 
 input[type="range"]::-webkit-slider-runnable-track {
   background: #999;
   height: 0.5rem;
@@ -76,4 +75,4 @@ input[type="range"]::-webkit-slider-thumb {
   background-color: #000;
   height: 2rem;
   width: 1rem;
-}
+} */
