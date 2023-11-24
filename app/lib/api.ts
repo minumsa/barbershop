@@ -9,7 +9,7 @@ interface fetchDataProps {
 
 export async function fetchData({ itemsPerPage, currentPage, barber, price }: fetchDataProps) {
   try {
-    const queryString = `?itemsPerPage=${itemsPerPage}&currentPage=${currentPage}&currentPage=${currentPage}&currentPage=${currentPage}`;
+    const queryString = `?itemsPerPage=${itemsPerPage}&currentPage=${currentPage}&barber=${barber}&price=${price}`;
     const url = `/api/barbershop${queryString}`;
 
     const response = await fetch(url, {

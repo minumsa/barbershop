@@ -80,7 +80,7 @@ export const FilterWindow = ({ price, setPrice, barber, setBarber }: FilterWindo
         <div className={styles["filter-item"]}>
           <div style={{ display: "flex" }}>
             <div style={{ width: "80px" }}>바버 인원</div>
-            <div>{barber === 1 ? "1인" : barber === 2 ? "2인 이상" : "전체 선택"}</div>
+            <div>{barber === 1 ? "1인" : barber === 2 ? "2인 이하" : "전체 선택"}</div>
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ paddingTop: "10px" }}>

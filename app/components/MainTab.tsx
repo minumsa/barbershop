@@ -8,16 +8,19 @@ import { useInView } from "react-intersection-observer";
 interface MainTabProps {
   barbershops: BarberShop[];
   keyword: string;
-  currentPage: number;
 }
 
-export const MainTab = () => {
+interface MainTab {
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export const MainTab = ({ currentPage, setCurrentPage }: MainTab) => {
   const [orderType, setOrderType] = useState<string>("name");
-  const { barbershops, keyword, currentPage } = useSelector(
+  const { barbershops, keyword } = useSelector(
     (state: MainTabProps) => ({
       barbershops: state.barbershops,
       keyword: state.keyword,
-      currentPage: state.currentPage,
     }),
     shallowEqual
   );
@@ -42,12 +45,7 @@ export const MainTab = () => {
   }, [orderType]);
 
   useEffect(() => {
-    if (inView) {
-      dispatch({
-        type: "SET_CURRENT_PAGE",
-        payload: currentPage + 1,
-      });
-    }
+    if (inView) setCurrentPage(prevPage => prevPage + 1);
   }, [inView]);
 
   return (
