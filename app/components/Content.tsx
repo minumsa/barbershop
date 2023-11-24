@@ -89,7 +89,7 @@ export const Content = ({ currentPage, setCurrentPage }: Content) => {
           <div className={styles["filter-box"]}>
             <div className={styles["filter-box-title"]}>{`시술비 :`}</div>
             <div className={styles["filter-box-content"]}>
-              {price === 50000 ? "전체 선택" : `${price.toLocaleString()}원 이상,`}
+              {price === 50000 ? "전체 선택" : `${price.toLocaleString()}원 이하,`}
             </div>
           </div>
           <div className={styles["filter-box"]}>

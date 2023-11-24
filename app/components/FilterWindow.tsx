@@ -44,7 +44,7 @@ export const FilterWindow = ({
         <div className={styles["filter-item"]}>
           <div style={{ display: "flex", marginTop: "10px" }}>
             <div style={{ width: "80px", height: "22px" }}>시술비</div>
-            <div>{price === 50000 ? "전체 선택" : `${price.toLocaleString()}원 이상`}</div>
+            <div>{price === 50000 ? "전체 선택" : `${price.toLocaleString()}원 이하`}</div>
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ paddingTop: "10px" }}>

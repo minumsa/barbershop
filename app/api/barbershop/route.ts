@@ -63,16 +63,16 @@ export async function GET(request: Request) {
       }
     } else {
       if (barber === 1) {
-        data = await BarberShopModel.find(query)
+        data = await BarberShopModel.find({ barberList: { $exists: true, $size: 1 } })
           .sort({ name: 1 })
-          .find({ barber: 1 })
           .find({ price: { $lte: price } })
           .skip(startIndex)
           .limit(itemsPerPage);
       } else if (barber === 2) {
-        data = await BarberShopModel.find(query)
+        data = await BarberShopModel.find({
+          $expr: { $gte: [{ $size: { $ifNull: ["$barberList", []] } }, 2] },
+        })
           .sort({ name: 1 })
-          .find({ barber: { $lte: 2 } })
           .find({ price: { $lte: price } })
           .skip(startIndex)
           .limit(itemsPerPage);
