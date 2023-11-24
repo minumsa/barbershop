@@ -42,6 +42,7 @@ export async function GET(request: Request) {
       if (barber == 1) {
         data = await BarberShopModel.find(query)
           .sort({ name: 1 })
+          .find({ barber: 1 })
           .skip(startIndex)
           .limit(itemsPerPage);
         // console.log("barber 1");

@@ -41,10 +41,12 @@ export default function Page() {
   }, [currentPage]);
 
   useEffect(() => {
+    setCurrentPage(0);
+
     async function loadData() {
       const data = await fetchData({
         itemsPerPage: itemsPerPage,
-        currentPage: currentPage,
+        currentPage: 0,
         barber: barber,
         price: price,
       });
