@@ -9,12 +9,13 @@ import { fetchData } from "./lib/api";
 import { legacy_createStore as createStore } from "redux";
 import { Provider, shallowEqual, useSelector } from "react-redux";
 import { NavBar } from "./components/NavBar";
+import { barberType, priceType } from "./lib/data";
 
 export default function Page() {
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
   const [keyword, setKeyword] = useState<string>("");
-  const [barber, setBarber] = useState<number>(3);
-  const [price, setPrice] = useState<number>(50000);
+  const [barber, setBarber] = useState<barberType>(3);
+  const [price, setPrice] = useState<priceType>(50000);
   const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
@@ -22,7 +23,14 @@ export default function Page() {
 
   useEffect(() => {
     async function loadData() {
-      setBarbershops(await fetchData({ itemsPerPage: itemsPerPage, currentPage: currentPage }));
+      setBarbershops(
+        await fetchData({
+          itemsPerPage: itemsPerPage,
+          currentPage: currentPage,
+          barber: barber,
+          price: price,
+        })
+      );
     }
 
     loadData();

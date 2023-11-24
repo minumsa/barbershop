@@ -1,15 +1,16 @@
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import styles from "../page.module.css";
+import { barberType, priceType } from "../lib/data";
 
 interface FilterWindowReduxProps {
   showFilterWindow: boolean;
 }
 
 interface FilterWindowProps {
-  price: number;
-  setPrice: React.Dispatch<React.SetStateAction<number>>;
-  barber: number;
-  setBarber: React.Dispatch<React.SetStateAction<number>>;
+  price: priceType;
+  setPrice: React.Dispatch<React.SetStateAction<priceType>>;
+  barber: barberType;
+  setBarber: React.Dispatch<React.SetStateAction<barberType>>;
 }
 
 export const FilterWindow = ({ price, setPrice, barber, setBarber }: FilterWindowProps) => {
