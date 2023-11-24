@@ -1,4 +1,3 @@
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import styles from "../page.module.css";
 import { barberType, priceType } from "../lib/data";
 
@@ -19,13 +18,12 @@ export const FilterWindow = ({
   showFilterWindow,
   setShowFilterWindow,
 }: FilterWindowProps) => {
-  const dispatch = useDispatch();
-
   const filterReset = () => {
     setPrice(50000);
     setBarber(3);
   };
 
+  //FIXME: barber, price 바뀌면 fetchData 실행되게
   return (
     <div
       className={styles["filter-content"]}

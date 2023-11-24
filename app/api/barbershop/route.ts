@@ -12,55 +12,59 @@ export async function GET(request: Request) {
   const price = Number(url.searchParams.get("price")); // 50000
   const startIndex = itemsPerPage * currentPage;
 
-  const searchParams = (() => {
-    const tmp = new URL(request.url).searchParams;
-    const data: any = {};
-    tmp.forEach((value, key) => {
-      data[key] = value;
-    });
-    return data as GetRequest;
-  })();
+  // const searchParams = (() => {
+  //   const tmp = new URL(request.url).searchParams;
+  //   const data: any = {};
+  //   tmp.forEach((value, key) => {
+  //     data[key] = value;
+  //   });
+  //   return data as GetRequest;
+  // })();
 
   let query = {};
-  if (searchParams.priceRangeMin != null || searchParams.priceRangeMax != null) {
-    query = {
-      ...query,
-      price: {
-        $gte: searchParams.priceRangeMin ?? -1,
-        $lte: searchParams.priceRangeMax ?? Number.MAX_VALUE,
-      },
-    };
-  }
+  // if (searchParams.priceRangeMin != null || searchParams.priceRangeMax != null) {
+  //   query = {
+  //     ...query,
+  //     price: {
+  //       $gte: searchParams.priceRangeMin ?? -1,
+  //       $lte: searchParams.priceRangeMax ?? Number.MAX_VALUE,
+  //     },
+  //   };
+  // }
 
   try {
     await connectMongoDB();
 
     let data = undefined;
 
-    if (price === 50000) {
+    if (price == 50000) {
       // 바버 1인만
-      if (barber === 1) {
+      if (barber == 1) {
         data = await BarberShopModel.find(query)
           .sort({ name: 1 })
-          .find({ barber: 1 })
           .skip(startIndex)
           .limit(itemsPerPage);
+        // console.log("barber 1");
+        // console.log("barber 1 data: ", data);
         // 바버 2인 이하
-      } else if (barber === 2) {
+      } else if (barber == 2) {
         data = await BarberShopModel.find(query)
           .sort({ name: 1 })
           .find({ barber: { $lte: 2 } })
           .skip(startIndex)
           .limit(itemsPerPage);
+        // console.log("barber 2");
+        // console.log("barber 2 data: ", data);
         // 바버 전체 선택
-      } else if (barber === 3) {
+      } else if (barber == 3) {
         data = await BarberShopModel.find(query)
           .sort({ name: 1 })
           .skip(startIndex)
           .limit(itemsPerPage);
+        // console.log("barber 3");
+        // console.log("barber 3 data: ", data);
       }
     } else {
-      // 바버 1인만
       if (barber === 1) {
         data = await BarberShopModel.find(query)
           .sort({ name: 1 })
@@ -68,7 +72,6 @@ export async function GET(request: Request) {
           .find({ price: { $lte: price } })
           .skip(startIndex)
           .limit(itemsPerPage);
-        // 바버 2인 이하
       } else if (barber === 2) {
         data = await BarberShopModel.find(query)
           .sort({ name: 1 })
@@ -76,7 +79,6 @@ export async function GET(request: Request) {
           .find({ price: { $lte: price } })
           .skip(startIndex)
           .limit(itemsPerPage);
-        // 바버 전체 선택
       } else if (barber === 3) {
         data = await BarberShopModel.find(query)
           .sort({ name: 1 })
@@ -86,17 +88,17 @@ export async function GET(request: Request) {
       }
     }
 
-    if (searchParams.barberCntRangeMin != null || searchParams.barberCntRangeMax != null) {
-      data = data?.filter(v => {
-        const cnt = v.barberList?.length ?? 0;
-        return (
-          cnt <= (searchParams.barberCntRangeMax ?? Number.MAX_VALUE) &&
-          cnt >= (searchParams.barberCntRangeMin ?? -1)
-        );
-      });
-    }
+    // if (searchParams.barberCntRangeMin != null || searchParams.barberCntRangeMax != null) {
+    //   data = data?.filter(v => {
+    //     const cnt = v.barberList?.length ?? 0;
+    //     return (
+    //       cnt <= (searchParams.barberCntRangeMax ?? Number.MAX_VALUE) &&
+    //       cnt >= (searchParams.barberCntRangeMin ?? -1)
+    //     );
+    //   });
+    // }
 
-    const result = NextResponse.json(data?.map(data => data.toJSON()));
+    const result = NextResponse.json(data);
 
     return result;
   } catch (error) {
