@@ -89,13 +89,13 @@ export const Content = ({ currentPage, setCurrentPage }: Content) => {
           <div className={styles["filter-box"]}>
             <div className={styles["filter-box-title"]}>{`시술비 :`}</div>
             <div className={styles["filter-box-content"]}>
-              {price === 50000 ? "전체 선택" : `${price.toLocaleString()}원 이하,`}
+              {price === 50000 ? "전체 선택" : `${price.toLocaleString()}원 이상,`}
             </div>
           </div>
           <div className={styles["filter-box"]}>
             <div className={styles["filter-box-title"]}>{`바버 인원 :`}</div>
             <div className={styles["filter-box-content"]}>
-              {barber === 3 ? "전체 선택" : barber === 2 ? "2인 이하" : `${barber}인`}
+              {barber === 3 ? "전체 선택" : barber === 2 ? "2인 이상" : `${barber}인`}
             </div>
           </div>
         </div>

@@ -58,6 +58,8 @@ export default function Page() {
     loadData();
   }, [barber, price]);
 
+  console.log(barbershops);
+
   // TODO: currentState, action 타입 지정하기
   const reducer = (currentState: any, action: any) => {
     if (currentState === undefined) {

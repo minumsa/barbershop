@@ -40,22 +40,18 @@ export async function GET(request: Request) {
     if (price == 50000) {
       // 바버 1인만
       if (barber == 1) {
-        data = await BarberShopModel.find(query)
+        data = await BarberShopModel.find({ barberList: { $exists: true, $size: 1 } })
           .sort({ name: 1 })
-          .find({ barber: 1 })
           .skip(startIndex)
           .limit(itemsPerPage);
-        // console.log("barber 1");
-        // console.log("barber 1 data: ", data);
-        // 바버 2인 이하
+        // 바버 2인 이상
       } else if (barber == 2) {
-        data = await BarberShopModel.find(query)
+        data = await BarberShopModel.find({
+          $expr: { $gte: [{ $size: { $ifNull: ["$barberList", []] } }, 2] },
+        })
           .sort({ name: 1 })
-          .find({ barber: { $lte: 2 } })
           .skip(startIndex)
           .limit(itemsPerPage);
-        // console.log("barber 2");
-        // console.log("barber 2 data: ", data);
         // 바버 전체 선택
       } else if (barber == 3) {
         data = await BarberShopModel.find(query)
