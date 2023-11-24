@@ -87,7 +87,14 @@ export default function Page() {
 
   return (
     <Provider store={store}>
-      <FilterWindow price={price} setPrice={setPrice} barber={barber} setBarber={setBarber} />
+      <FilterWindow
+        price={price}
+        setPrice={setPrice}
+        barber={barber}
+        setBarber={setBarber}
+        showFilterWindow={showFilterWindow}
+        setShowFilterWindow={setShowFilterWindow}
+      />
       <div className={styles["container"]}>
         <NavBar showFilterWindow={showFilterWindow} setShowFilterWindow={setShowFilterWindow} />
         <Content currentPage={currentPage} setCurrentPage={setCurrentPage} />
