@@ -3,6 +3,7 @@ import styles from "../page.module.css";
 import { BarberShop } from "../model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { LoadingItems } from "./LoadingItems";
+import { useInView } from "react-intersection-observer";
 
 interface MainTabProps {
   barbershops: BarberShop[];
@@ -25,6 +26,11 @@ export const MainTab = () => {
     shallowEqual
   );
 
+  const { ref, inView } = useInView({
+    threshold: 0,
+    triggerOnce: false,
+  });
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -38,6 +44,15 @@ export const MainTab = () => {
         break;
     }
   }, [orderType]);
+
+  useEffect(() => {
+    if (inView) {
+      dispatch({
+        type: "SET_CURRENT_PAGE",
+        payload: (prevPage: number) => prevPage + 1,
+      });
+    }
+  }, [inView]);
 
   useEffect(() => {
     barbershops &&

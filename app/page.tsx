@@ -14,6 +14,7 @@ export default function Page() {
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
   const [keyword, setKeyword] = useState<string>("");
   const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
     async function loadData() {
@@ -34,6 +35,7 @@ export default function Page() {
         selectedBarbershop: selectedBarbershop,
         keyword: keyword,
         filteredBarbershops: [],
+        currentPage: 1,
       };
     }
 
@@ -60,6 +62,9 @@ export default function Page() {
         return newState;
       case "SET_FILTERED_BARBERSHOPS":
         newState.filteredBarbershops = action.payload;
+        return newState;
+      case "SET_CURRENT_PAGE":
+        newState.currentPage = action.payload;
         return newState;
       default:
         return currentState;
