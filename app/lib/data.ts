@@ -21,3 +21,9 @@ export interface BarberShop {
   locationUrl?: string;
   notice?: string;
 }
+
+// export type barberType = 1 | 2 | 3;
+// export type priceType = 30000 | 35000 | 40000 | 45000 | 50000;
+
+export type barberType = number;
+export type priceType = number;

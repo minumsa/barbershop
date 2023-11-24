@@ -9,23 +9,32 @@ import { fetchData } from "./lib/api";
 import { legacy_createStore as createStore } from "redux";
 import { Provider, shallowEqual, useSelector } from "react-redux";
 import { NavBar } from "./components/NavBar";
+import { barberType, priceType } from "./lib/data";
 
 export default function Page() {
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
   const [keyword, setKeyword] = useState<string>("");
-  const [barber, setBarber] = useState<number>(3);
-  const [price, setPrice] = useState<number>(50000);
+  const [barber, setBarber] = useState<barberType>(3);
+  const [price, setPrice] = useState<priceType>(50000);
   const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+  const [showFilterWindow, setShowFilterWindow] = useState(false);
 
   useEffect(() => {
     async function loadData() {
-      setBarbershops(await fetchData({ itemsPerPage: itemsPerPage, currentPage: currentPage }));
+      setBarbershops(
+        await fetchData({
+          itemsPerPage: itemsPerPage,
+          currentPage: currentPage,
+          barber: barber,
+          price: price,
+        })
+      );
     }
 
     loadData();
-  }, [currentPage]);
+  }, [itemsPerPage, currentPage, barber, price]);
 
   // TODO: currentState, action 타입 지정하기
   const reducer = (currentState: any, action: any) => {
@@ -34,10 +43,9 @@ export default function Page() {
         barbershops: barbershops,
         price: price,
         barber: barber,
-        showFilterWindow: false,
+        showFilterWindow: showFilterWindow,
         selectedBarbershop: selectedBarbershop,
         keyword: keyword,
-        filteredBarbershops: [],
         currentPage: currentPage,
         itemsPerPage: itemsPerPage,
       };
@@ -64,9 +72,6 @@ export default function Page() {
       case "SET_KEYWORD":
         newState.keyword = action.payload;
         return newState;
-      case "SET_FILTERED_BARBERSHOPS":
-        newState.filteredBarbershops = action.payload;
-        return newState;
       case "SET_CURRENT_PAGE":
         newState.currentPage = action.payload;
         return newState;
@@ -82,12 +87,12 @@ export default function Page() {
 
   return (
     <Provider store={store}>
-      <FilterWindow />
+      <FilterWindow price={price} setPrice={setPrice} barber={barber} setBarber={setBarber} />
       <div className={styles["container"]}>
         {/* TODO: 현재 위치 기능 추가 */}
         {/* TODO: 바버샵 데이터 - 업로드, 개점일 변수 추가 */}
-        <NavBar />
-        <Content />
+        <NavBar showFilterWindow={showFilterWindow} setShowFilterWindow={setShowFilterWindow} />
+        <Content currentPage={currentPage} setCurrentPage={setCurrentPage} />
       </div>
     </Provider>
   );

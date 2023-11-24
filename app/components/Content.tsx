@@ -11,21 +11,26 @@ interface ContentProps {
   price: number;
   barber: number;
   selectedBarbershop: BarberShop | null | undefined;
-  filteredBarbershops: BarberShop[];
+  barbershops: BarberShop[];
 }
 
-export const Content = () => {
-  const { price, barber, selectedBarbershop, filteredBarbershops } = useSelector(
+interface Content {
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export const Content = ({ currentPage, setCurrentPage }: Content) => {
+  const { price, barber, selectedBarbershop, barbershops } = useSelector(
     (state: ContentProps) => ({
       price: state.price,
       barber: state.barber,
       selectedBarbershop: state.selectedBarbershop,
-      filteredBarbershops: state.filteredBarbershops,
+      barbershops: state.barbershops,
     }),
     shallowEqual
   );
   const dispatch = useDispatch();
-  const isLoading = filteredBarbershops.length === 0;
+  const isLoading = barbershops.length === 0;
 
   // 메인 탭, 서브 탭 전환 시 스크롤 맨 위로 이동
   useEffect(() => {
@@ -50,13 +55,21 @@ export const Content = () => {
           {isLoading ? <Grid /> : <Map />}
         </div>
         <div className={styles["tab-container"]}>
-          {selectedBarbershop ? <SubTab /> : <MainTab />}
+          {selectedBarbershop ? (
+            <SubTab />
+          ) : (
+            <MainTab currentPage={currentPage} setCurrentPage={setCurrentPage} />
+          )}
         </div>
       </div>
       {/* PC 화면일 때 표시할 부분 */}
       <div className={styles["tab-flexbox"]}>
         <div className={styles["tab-container"]}>
-          {selectedBarbershop ? <SubTab /> : <MainTab />}
+          {selectedBarbershop ? (
+            <SubTab />
+          ) : (
+            <MainTab currentPage={currentPage} setCurrentPage={setCurrentPage} />
+          )}
         </div>
         {selectedBarbershop && (
           <div
@@ -82,7 +95,7 @@ export const Content = () => {
           <div className={styles["filter-box"]}>
             <div className={styles["filter-box-title"]}>{`바버 인원 :`}</div>
             <div className={styles["filter-box-content"]}>
-              {barber === 3 ? "전체 선택" : barber === 2 ? "2인 이상" : `${barber}인`}
+              {barber === 3 ? "전체 선택" : barber === 2 ? "2인 이하" : `${barber}인`}
             </div>
           </div>
         </div>

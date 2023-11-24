@@ -1,13 +1,15 @@
-import { BarberShop } from "./data";
+import { BarberShop, barberType, priceType } from "./data";
 
 interface fetchDataProps {
   itemsPerPage: number;
   currentPage: number;
+  barber: barberType;
+  price: priceType;
 }
 
-export async function fetchData({ itemsPerPage, currentPage }: fetchDataProps) {
+export async function fetchData({ itemsPerPage, currentPage, barber, price }: fetchDataProps) {
   try {
-    const queryString = `?itemsPerPage=${itemsPerPage}&currentPage=${currentPage}`;
+    const queryString = `?itemsPerPage=${itemsPerPage}&currentPage=${currentPage}&barber=${barber}&price=${price}`;
     const url = `/api/barbershop${queryString}`;
 
     const response = await fetch(url, {

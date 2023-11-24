@@ -7,23 +7,20 @@ import { useInView } from "react-intersection-observer";
 
 interface MainTabProps {
   barbershops: BarberShop[];
-  barber: number;
-  price: number;
-  filteredBarbershops: BarberShop[];
   keyword: string;
-  currentPage: number;
 }
 
-export const MainTab = () => {
+interface MainTab {
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export const MainTab = ({ currentPage, setCurrentPage }: MainTab) => {
   const [orderType, setOrderType] = useState<string>("name");
-  const { barbershops, barber, price, filteredBarbershops, keyword, currentPage } = useSelector(
+  const { barbershops, keyword } = useSelector(
     (state: MainTabProps) => ({
       barbershops: state.barbershops,
-      barber: state.barber,
-      price: state.price,
-      filteredBarbershops: state.filteredBarbershops,
       keyword: state.keyword,
-      currentPage: state.currentPage,
     }),
     shallowEqual
   );
@@ -40,7 +37,7 @@ export const MainTab = () => {
       case "name":
         barbershops &&
           dispatch({
-            type: "SET_FILTERED_BARBERSHOPS",
+            type: "SET_BARBERSHOPS",
             payload: [...barbershops].sort((a, b) => a.name.localeCompare(b.name)),
           });
         break;
@@ -48,36 +45,8 @@ export const MainTab = () => {
   }, [orderType]);
 
   useEffect(() => {
-    if (inView) {
-      dispatch({
-        type: "SET_CURRENT_PAGE",
-        payload: currentPage + 1,
-      });
-    }
+    if (inView) setCurrentPage(prevPage => prevPage + 1);
   }, [inView]);
-
-  useEffect(() => {
-    barbershops &&
-      dispatch({
-        type: "SET_FILTERED_BARBERSHOPS",
-        payload: [...barbershops]
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .filter(data => {
-            if (data.barberList) {
-              if (barber === 1) {
-                return data.barberList.length === barber;
-              } else if (barber === 2) {
-                return data.barberList.length >= barber;
-              } else {
-                return true;
-              }
-            }
-          })
-          .filter(data => {
-            if (data.price) return price >= data.price;
-          }),
-      });
-  }, [barber, price, barbershops]);
 
   return (
     <div className={styles["tab"]}>
@@ -93,7 +62,7 @@ export const MainTab = () => {
           )}
           <div className={styles["filter-box-title"]}>총</div>
           <div className={styles["filter-box-content"]}>{`${
-            filteredBarbershops?.length ? filteredBarbershops?.length : 0
+            barbershops?.length ? barbershops?.length : 0
           }개`}</div>
           <div>의 검색 결과</div>
         </div>
@@ -125,12 +94,13 @@ export const MainTab = () => {
         </div>
       </div>
       <div className={styles["tab-bottom"]}>
-        {filteredBarbershops.length > 0 ? (
-          filteredBarbershops.map((data: any, index: number) => {
+        {barbershops.length > 0 ? (
+          barbershops.map((data: any, index: number) => {
             // 뒤에서 세 번째 데이터에 도달하면 무한 스크롤을 실행하기 위한 변수
-            const isThirdLastData = index === filteredBarbershops.length - 3;
+            const isSecondLastData = index === barbershops.length - 2;
             return (
               <div
+                ref={isSecondLastData ? ref : undefined}
                 className={styles["list-container"]}
                 key={index}
                 onClick={() => {
@@ -138,7 +108,6 @@ export const MainTab = () => {
                 }}
               >
                 <div
-                  ref={isThirdLastData ? ref : undefined}
                   className={styles["barbershop-image-container"]}
                   style={{ backgroundImage: `url("${data.imgUrl}")` }}
                 ></div>
@@ -151,7 +120,7 @@ export const MainTab = () => {
               </div>
             );
           })
-        ) : keyword && filteredBarbershops.length === 0 ? (
+        ) : keyword && barbershops.length === 0 ? (
           <div className={`${styles["list-container"]} ${styles["list-no-data"]}`}>
             <div className={styles["mobile-keyword-result"]}>
               <div style={{ fontWeight: 550 }}>{keyword}</div>

@@ -426,10 +426,6 @@
   cursor: pointer;
 }
 
-.list-container:last-child {
-  padding-bottom: 50px;
-}
-
 .barbershop-image-container {
   display: flex;
   position: relative;

@@ -8,6 +8,8 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const itemsPerPage = Number(url.searchParams.get("itemsPerPage")); // 10
   const currentPage = Number(url.searchParams.get("currentPage")); // 0부터 시작
+  const barber = Number(url.searchParams.get("barber")); // 3
+  const price = Number(url.searchParams.get("price")); // 50000
   const startIndex = itemsPerPage * currentPage;
 
   const searchParams = (() => {
@@ -32,9 +34,60 @@ export async function GET(request: Request) {
 
   try {
     await connectMongoDB();
-    let dataArr = await BarberShopModel.find(query).skip(startIndex).limit(itemsPerPage);
+
+    let data = undefined;
+
+    if (price === 50000) {
+      // 바버 1인만
+      if (barber === 1) {
+        data = await BarberShopModel.find(query)
+          .sort({ name: 1 })
+          .find({ barber: 1 })
+          .skip(startIndex)
+          .limit(itemsPerPage);
+        // 바버 2인 이하
+      } else if (barber === 2) {
+        data = await BarberShopModel.find(query)
+          .sort({ name: 1 })
+          .find({ barber: { $lte: 2 } })
+          .skip(startIndex)
+          .limit(itemsPerPage);
+        // 바버 전체 선택
+      } else if (barber === 3) {
+        data = await BarberShopModel.find(query)
+          .sort({ name: 1 })
+          .skip(startIndex)
+          .limit(itemsPerPage);
+      }
+    } else {
+      // 바버 1인만
+      if (barber === 1) {
+        data = await BarberShopModel.find(query)
+          .sort({ name: 1 })
+          .find({ barber: 1 })
+          .find({ price: { $lte: price } })
+          .skip(startIndex)
+          .limit(itemsPerPage);
+        // 바버 2인 이하
+      } else if (barber === 2) {
+        data = await BarberShopModel.find(query)
+          .sort({ name: 1 })
+          .find({ barber: { $lte: 2 } })
+          .find({ price: { $lte: price } })
+          .skip(startIndex)
+          .limit(itemsPerPage);
+        // 바버 전체 선택
+      } else if (barber === 3) {
+        data = await BarberShopModel.find(query)
+          .sort({ name: 1 })
+          .find({ price: { $lte: price } })
+          .skip(startIndex)
+          .limit(itemsPerPage);
+      }
+    }
+
     if (searchParams.barberCntRangeMin != null || searchParams.barberCntRangeMax != null) {
-      dataArr = dataArr.filter(v => {
+      data = data?.filter(v => {
         const cnt = v.barberList?.length ?? 0;
         return (
           cnt <= (searchParams.barberCntRangeMax ?? Number.MAX_VALUE) &&
@@ -43,7 +96,7 @@ export async function GET(request: Request) {
       });
     }
 
-    const result = NextResponse.json(dataArr.map(data => data.toJSON()));
+    const result = NextResponse.json(data?.map(data => data.toJSON()));
 
     return result;
   } catch (error) {
