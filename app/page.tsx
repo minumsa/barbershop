@@ -16,15 +16,16 @@ export default function Page() {
   const [barber, setBarber] = useState<number>(3);
   const [price, setPrice] = useState<number>(50000);
   const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
 
   useEffect(() => {
     async function loadData() {
-      setBarbershops(await fetchData());
+      setBarbershops(await fetchData({ itemsPerPage: itemsPerPage, currentPage: currentPage }));
     }
 
     loadData();
-  }, []);
+  }, [currentPage]);
 
   // TODO: currentState, action 타입 지정하기
   const reducer = (currentState: any, action: any) => {
@@ -38,6 +39,7 @@ export default function Page() {
         keyword: keyword,
         filteredBarbershops: [],
         currentPage: currentPage,
+        itemsPerPage: itemsPerPage,
       };
     }
 
@@ -67,6 +69,9 @@ export default function Page() {
         return newState;
       case "SET_CURRENT_PAGE":
         newState.currentPage = action.payload;
+        return newState;
+      case "SET_ITEMS_PER_PAGE":
+        newState.itemsPerPage = action.payload;
         return newState;
       default:
         return currentState;

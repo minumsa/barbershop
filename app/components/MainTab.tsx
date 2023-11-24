@@ -28,8 +28,6 @@ export const MainTab = () => {
     shallowEqual
   );
 
-  console.log(currentPage, "currentPage");
-
   const { ref, inView } = useInView({
     threshold: 0,
     triggerOnce: false,
@@ -129,6 +127,8 @@ export const MainTab = () => {
       <div className={styles["tab-bottom"]}>
         {filteredBarbershops.length > 0 ? (
           filteredBarbershops.map((data: any, index: number) => {
+            // 뒤에서 세 번째 데이터에 도달하면 무한 스크롤을 실행하기 위한 변수
+            const isThirdLastData = index === filteredBarbershops.length - 3;
             return (
               <div
                 className={styles["list-container"]}
@@ -138,6 +138,7 @@ export const MainTab = () => {
                 }}
               >
                 <div
+                  ref={isThirdLastData ? ref : undefined}
                   className={styles["barbershop-image-container"]}
                   style={{ backgroundImage: `url("${data.imgUrl}")` }}
                 ></div>

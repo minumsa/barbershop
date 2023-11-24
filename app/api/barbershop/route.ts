@@ -5,6 +5,11 @@ import connectMongoDB from "../db/mongodb";
 import { handleError } from "../errors";
 
 export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const itemsPerPage = Number(url.searchParams.get("itemsPerPage")); // 10
+  const currentPage = Number(url.searchParams.get("currentPage")); // 0부터 시작
+  const startIndex = itemsPerPage * currentPage;
+
   const searchParams = (() => {
     const tmp = new URL(request.url).searchParams;
     const data: any = {};
@@ -27,7 +32,7 @@ export async function GET(request: Request) {
 
   try {
     await connectMongoDB();
-    let dataArr = await BarberShopModel.find(query);
+    let dataArr = await BarberShopModel.find(query).skip(startIndex).limit(itemsPerPage);
     if (searchParams.barberCntRangeMin != null || searchParams.barberCntRangeMax != null) {
       dataArr = dataArr.filter(v => {
         const cnt = v.barberList?.length ?? 0;
@@ -37,7 +42,10 @@ export async function GET(request: Request) {
         );
       });
     }
-    return NextResponse.json(dataArr.map(data => data.toJSON()));
+
+    const result = NextResponse.json(dataArr.map(data => data.toJSON()));
+
+    return result;
   } catch (error) {
     return handleError(error);
   }
