@@ -2,25 +2,23 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import styles from "../page.module.css";
 import { barberType, priceType } from "../lib/data";
 
-interface FilterWindowReduxProps {
-  showFilterWindow: boolean;
-}
-
 interface FilterWindowProps {
   price: priceType;
   setPrice: React.Dispatch<React.SetStateAction<priceType>>;
   barber: barberType;
   setBarber: React.Dispatch<React.SetStateAction<barberType>>;
+  showFilterWindow: boolean;
+  setShowFilterWindow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const FilterWindow = ({ price, setPrice, barber, setBarber }: FilterWindowProps) => {
-  const { showFilterWindow } = useSelector(
-    (state: FilterWindowReduxProps) => ({
-      showFilterWindow: state.showFilterWindow,
-    }),
-    shallowEqual
-  );
-
+export const FilterWindow = ({
+  price,
+  setPrice,
+  barber,
+  setBarber,
+  showFilterWindow,
+  setShowFilterWindow,
+}: FilterWindowProps) => {
   const dispatch = useDispatch();
 
   const filterReset = () => {
@@ -36,7 +34,7 @@ export const FilterWindow = ({ price, setPrice, barber, setBarber }: FilterWindo
       <div
         className={styles["filter-button"]}
         onClick={() => {
-          dispatch({ type: "SET_SHOW_FILTER_WINDOW", payload: false });
+          setShowFilterWindow(false);
         }}
       >
         ×
