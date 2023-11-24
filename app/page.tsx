@@ -38,7 +38,23 @@ export default function Page() {
     }
 
     loadData();
-  }, [itemsPerPage, currentPage, barber, price]);
+  }, [currentPage]);
+
+  useEffect(() => {
+    async function loadData() {
+      const data = await fetchData({
+        itemsPerPage: itemsPerPage,
+        currentPage: currentPage,
+        barber: barber,
+        price: price,
+      });
+
+      // barber나 price가 바뀌면 아예 모든 데이터 지우고 다시 가져오기
+      setBarbershops(data);
+    }
+
+    loadData();
+  }, [barber, price]);
 
   // TODO: currentState, action 타입 지정하기
   const reducer = (currentState: any, action: any) => {
