@@ -23,14 +23,18 @@ export default function Page() {
 
   useEffect(() => {
     async function loadData() {
-      setBarbershops(
-        await fetchData({
-          itemsPerPage: itemsPerPage,
-          currentPage: currentPage,
-          barber: barber,
-          price: price,
-        })
-      );
+      const data = await fetchData({
+        itemsPerPage: itemsPerPage,
+        currentPage: currentPage,
+        barber: barber,
+        price: price,
+      });
+
+      if (barbershops.length > 1) {
+        setBarbershops(prevBarbershops => [...prevBarbershops, ...data]);
+      } else {
+        setBarbershops(data);
+      }
     }
 
     loadData();
