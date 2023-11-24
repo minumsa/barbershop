@@ -37,7 +37,6 @@ export default function Page() {
         showFilterWindow: false,
         selectedBarbershop: selectedBarbershop,
         keyword: keyword,
-        filteredBarbershops: [],
         currentPage: currentPage,
         itemsPerPage: itemsPerPage,
       };
@@ -63,9 +62,6 @@ export default function Page() {
         return newState;
       case "SET_KEYWORD":
         newState.keyword = action.payload;
-        return newState;
-      case "SET_FILTERED_BARBERSHOPS":
-        newState.filteredBarbershops = action.payload;
         return newState;
       case "SET_CURRENT_PAGE":
         newState.currentPage = action.payload;

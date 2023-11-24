@@ -11,21 +11,21 @@ interface ContentProps {
   price: number;
   barber: number;
   selectedBarbershop: BarberShop | null | undefined;
-  filteredBarbershops: BarberShop[];
+  barbershops: BarberShop[];
 }
 
 export const Content = () => {
-  const { price, barber, selectedBarbershop, filteredBarbershops } = useSelector(
+  const { price, barber, selectedBarbershop, barbershops } = useSelector(
     (state: ContentProps) => ({
       price: state.price,
       barber: state.barber,
       selectedBarbershop: state.selectedBarbershop,
-      filteredBarbershops: state.filteredBarbershops,
+      barbershops: state.barbershops,
     }),
     shallowEqual
   );
   const dispatch = useDispatch();
-  const isLoading = filteredBarbershops.length === 0;
+  const isLoading = barbershops.length === 0;
 
   // 메인 탭, 서브 탭 전환 시 스크롤 맨 위로 이동
   useEffect(() => {

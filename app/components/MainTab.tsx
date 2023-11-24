@@ -9,19 +9,17 @@ interface MainTabProps {
   barbershops: BarberShop[];
   barber: number;
   price: number;
-  filteredBarbershops: BarberShop[];
   keyword: string;
   currentPage: number;
 }
 
 export const MainTab = () => {
   const [orderType, setOrderType] = useState<string>("name");
-  const { barbershops, barber, price, filteredBarbershops, keyword, currentPage } = useSelector(
+  const { barbershops, barber, price, keyword, currentPage } = useSelector(
     (state: MainTabProps) => ({
       barbershops: state.barbershops,
       barber: state.barber,
       price: state.price,
-      filteredBarbershops: state.filteredBarbershops,
       keyword: state.keyword,
       currentPage: state.currentPage,
     }),
@@ -93,7 +91,7 @@ export const MainTab = () => {
           )}
           <div className={styles["filter-box-title"]}>총</div>
           <div className={styles["filter-box-content"]}>{`${
-            filteredBarbershops?.length ? filteredBarbershops?.length : 0
+            barbershops?.length ? barbershops?.length : 0
           }개`}</div>
           <div>의 검색 결과</div>
         </div>
@@ -125,10 +123,10 @@ export const MainTab = () => {
         </div>
       </div>
       <div className={styles["tab-bottom"]}>
-        {filteredBarbershops.length > 0 ? (
-          filteredBarbershops.map((data: any, index: number) => {
+        {barbershops.length > 0 ? (
+          barbershops.map((data: any, index: number) => {
             // 뒤에서 세 번째 데이터에 도달하면 무한 스크롤을 실행하기 위한 변수
-            const isSecondLastData = index === filteredBarbershops.length - 2;
+            const isSecondLastData = index === barbershops.length - 2;
             return (
               <div
                 ref={isSecondLastData ? ref : undefined}
@@ -151,7 +149,7 @@ export const MainTab = () => {
               </div>
             );
           })
-        ) : keyword && filteredBarbershops.length === 0 ? (
+        ) : keyword && barbershops.length === 0 ? (
           <div className={`${styles["list-container"]} ${styles["list-no-data"]}`}>
             <div className={styles["mobile-keyword-result"]}>
               <div style={{ fontWeight: 550 }}>{keyword}</div>
