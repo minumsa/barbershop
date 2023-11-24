@@ -11,20 +11,24 @@ interface MainTabProps {
   price: number;
   filteredBarbershops: BarberShop[];
   keyword: string;
+  currentPage: number;
 }
 
 export const MainTab = () => {
   const [orderType, setOrderType] = useState<string>("name");
-  const { barbershops, barber, price, filteredBarbershops, keyword } = useSelector(
+  const { barbershops, barber, price, filteredBarbershops, keyword, currentPage } = useSelector(
     (state: MainTabProps) => ({
       barbershops: state.barbershops,
       barber: state.barber,
       price: state.price,
       filteredBarbershops: state.filteredBarbershops,
       keyword: state.keyword,
+      currentPage: state.currentPage,
     }),
     shallowEqual
   );
+
+  console.log(currentPage, "currentPage");
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -49,7 +53,7 @@ export const MainTab = () => {
     if (inView) {
       dispatch({
         type: "SET_CURRENT_PAGE",
-        payload: (prevPage: number) => prevPage + 1,
+        payload: currentPage + 1,
       });
     }
   }, [inView]);
@@ -103,6 +107,10 @@ export const MainTab = () => {
                 className={styles["tab-button"]}
                 onClick={() => {
                   setOrderType("name");
+                  dispatch({
+                    type: "SET_CURRENT_PAGE",
+                    payload: currentPage + 1,
+                  });
                 }}
                 style={orderType === "name" ? { color: "#000" } : { color: "#666" }}
               >

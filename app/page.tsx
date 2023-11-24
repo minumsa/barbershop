@@ -7,14 +7,16 @@ import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
 import { fetchData } from "./lib/api";
 import { legacy_createStore as createStore } from "redux";
-import { Provider } from "react-redux";
+import { Provider, shallowEqual, useSelector } from "react-redux";
 import { NavBar } from "./components/NavBar";
 
 export default function Page() {
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
   const [keyword, setKeyword] = useState<string>("");
+  const [barber, setBarber] = useState<number>(3);
+  const [price, setPrice] = useState<number>(50000);
   const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     async function loadData() {
@@ -29,13 +31,13 @@ export default function Page() {
     if (currentState === undefined) {
       return {
         barbershops: barbershops,
-        price: 50000,
-        barber: 3,
+        price: price,
+        barber: barber,
         showFilterWindow: false,
         selectedBarbershop: selectedBarbershop,
         keyword: keyword,
         filteredBarbershops: [],
-        currentPage: 1,
+        currentPage: currentPage,
       };
     }
 
