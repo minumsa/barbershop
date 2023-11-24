@@ -7,33 +7,39 @@ import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
 import { fetchData } from "./lib/api";
 import { legacy_createStore as createStore } from "redux";
-import { Provider } from "react-redux";
+import { Provider, shallowEqual, useSelector } from "react-redux";
 import { NavBar } from "./components/NavBar";
 
 export default function Page() {
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
   const [keyword, setKeyword] = useState<string>("");
+  const [barber, setBarber] = useState<number>(3);
+  const [price, setPrice] = useState<number>(50000);
   const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
 
   useEffect(() => {
     async function loadData() {
-      setBarbershops(await fetchData());
+      setBarbershops(await fetchData({ itemsPerPage: itemsPerPage, currentPage: currentPage }));
     }
 
     loadData();
-  }, []);
+  }, [currentPage]);
 
   // TODO: currentState, action 타입 지정하기
   const reducer = (currentState: any, action: any) => {
     if (currentState === undefined) {
       return {
         barbershops: barbershops,
-        price: 50000,
-        barber: 3,
+        price: price,
+        barber: barber,
         showFilterWindow: false,
         selectedBarbershop: selectedBarbershop,
         keyword: keyword,
         filteredBarbershops: [],
+        currentPage: currentPage,
+        itemsPerPage: itemsPerPage,
       };
     }
 
@@ -60,6 +66,12 @@ export default function Page() {
         return newState;
       case "SET_FILTERED_BARBERSHOPS":
         newState.filteredBarbershops = action.payload;
+        return newState;
+      case "SET_CURRENT_PAGE":
+        newState.currentPage = action.payload;
+        return newState;
+      case "SET_ITEMS_PER_PAGE":
+        newState.itemsPerPage = action.payload;
         return newState;
       default:
         return currentState;

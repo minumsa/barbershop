@@ -1,8 +1,16 @@
 import { BarberShop } from "./data";
 
-export async function fetchData() {
+interface fetchDataProps {
+  itemsPerPage: number;
+  currentPage: number;
+}
+
+export async function fetchData({ itemsPerPage, currentPage }: fetchDataProps) {
   try {
-    const response = await fetch("/api/barbershop", {
+    const queryString = `?itemsPerPage=${itemsPerPage}&currentPage=${currentPage}`;
+    const url = `/api/barbershop${queryString}`;
+
+    const response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

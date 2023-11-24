@@ -3,6 +3,7 @@ import styles from "../page.module.css";
 import { BarberShop } from "../model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { LoadingItems } from "./LoadingItems";
+import { useInView } from "react-intersection-observer";
 
 interface MainTabProps {
   barbershops: BarberShop[];
@@ -10,20 +11,27 @@ interface MainTabProps {
   price: number;
   filteredBarbershops: BarberShop[];
   keyword: string;
+  currentPage: number;
 }
 
 export const MainTab = () => {
   const [orderType, setOrderType] = useState<string>("name");
-  const { barbershops, barber, price, filteredBarbershops, keyword } = useSelector(
+  const { barbershops, barber, price, filteredBarbershops, keyword, currentPage } = useSelector(
     (state: MainTabProps) => ({
       barbershops: state.barbershops,
       barber: state.barber,
       price: state.price,
       filteredBarbershops: state.filteredBarbershops,
       keyword: state.keyword,
+      currentPage: state.currentPage,
     }),
     shallowEqual
   );
+
+  const { ref, inView } = useInView({
+    threshold: 0,
+    triggerOnce: false,
+  });
 
   const dispatch = useDispatch();
 
@@ -38,6 +46,15 @@ export const MainTab = () => {
         break;
     }
   }, [orderType]);
+
+  useEffect(() => {
+    if (inView) {
+      dispatch({
+        type: "SET_CURRENT_PAGE",
+        payload: currentPage + 1,
+      });
+    }
+  }, [inView]);
 
   useEffect(() => {
     barbershops &&
@@ -88,6 +105,10 @@ export const MainTab = () => {
                 className={styles["tab-button"]}
                 onClick={() => {
                   setOrderType("name");
+                  dispatch({
+                    type: "SET_CURRENT_PAGE",
+                    payload: currentPage + 1,
+                  });
                 }}
                 style={orderType === "name" ? { color: "#000" } : { color: "#666" }}
               >
@@ -106,6 +127,8 @@ export const MainTab = () => {
       <div className={styles["tab-bottom"]}>
         {filteredBarbershops.length > 0 ? (
           filteredBarbershops.map((data: any, index: number) => {
+            // 뒤에서 세 번째 데이터에 도달하면 무한 스크롤을 실행하기 위한 변수
+            const isThirdLastData = index === filteredBarbershops.length - 3;
             return (
               <div
                 className={styles["list-container"]}
@@ -115,6 +138,7 @@ export const MainTab = () => {
                 }}
               >
                 <div
+                  ref={isThirdLastData ? ref : undefined}
                   className={styles["barbershop-image-container"]}
                   style={{ backgroundImage: `url("${data.imgUrl}")` }}
                 ></div>
