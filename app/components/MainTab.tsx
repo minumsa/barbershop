@@ -7,19 +7,15 @@ import { useInView } from "react-intersection-observer";
 
 interface MainTabProps {
   barbershops: BarberShop[];
-  barber: number;
-  price: number;
   keyword: string;
   currentPage: number;
 }
 
 export const MainTab = () => {
   const [orderType, setOrderType] = useState<string>("name");
-  const { barbershops, barber, price, keyword, currentPage } = useSelector(
+  const { barbershops, keyword, currentPage } = useSelector(
     (state: MainTabProps) => ({
       barbershops: state.barbershops,
-      barber: state.barber,
-      price: state.price,
       keyword: state.keyword,
       currentPage: state.currentPage,
     }),
@@ -38,7 +34,7 @@ export const MainTab = () => {
       case "name":
         barbershops &&
           dispatch({
-            type: "SET_FILTERED_BARBERSHOPS",
+            type: "SET_BARBERSHOPS",
             payload: [...barbershops].sort((a, b) => a.name.localeCompare(b.name)),
           });
         break;
@@ -53,29 +49,6 @@ export const MainTab = () => {
       });
     }
   }, [inView]);
-
-  useEffect(() => {
-    barbershops &&
-      dispatch({
-        type: "SET_FILTERED_BARBERSHOPS",
-        payload: [...barbershops]
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .filter(data => {
-            if (data.barberList) {
-              if (barber === 1) {
-                return data.barberList.length === barber;
-              } else if (barber === 2) {
-                return data.barberList.length >= barber;
-              } else {
-                return true;
-              }
-            }
-          })
-          .filter(data => {
-            if (data.price) return price >= data.price;
-          }),
-      });
-  }, [barber, price, barbershops]);
 
   return (
     <div className={styles["tab"]}>

@@ -1,17 +1,20 @@
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import styles from "../page.module.css";
 
-interface FilterWindowProps {
-  price: number;
-  barber: number;
+interface FilterWindowReduxProps {
   showFilterWindow: boolean;
 }
 
-export const FilterWindow = () => {
-  const { price, barber, showFilterWindow } = useSelector(
-    (state: FilterWindowProps) => ({
-      price: state.price,
-      barber: state.barber,
+interface FilterWindowProps {
+  price: number;
+  setPrice: React.Dispatch<React.SetStateAction<number>>;
+  barber: number;
+  setBarber: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export const FilterWindow = ({ price, setPrice, barber, setBarber }: FilterWindowProps) => {
+  const { showFilterWindow } = useSelector(
+    (state: FilterWindowReduxProps) => ({
       showFilterWindow: state.showFilterWindow,
     }),
     shallowEqual
@@ -20,8 +23,8 @@ export const FilterWindow = () => {
   const dispatch = useDispatch();
 
   const filterReset = () => {
-    dispatch({ type: "SET_PRICE", payload: 50000 });
-    dispatch({ type: "SET_BARBER", payload: 3 });
+    setPrice(50000);
+    setBarber(3);
   };
 
   return (
@@ -60,7 +63,7 @@ export const FilterWindow = () => {
                 value={price}
                 onChange={e => {
                   const newPrice = Number(e.target.value);
-                  dispatch({ type: "SET_PRICE", payload: newPrice });
+                  setPrice(newPrice);
                 }}
               />
               <datalist id="price-markers">
@@ -92,7 +95,7 @@ export const FilterWindow = () => {
                 list="barber-markers"
                 onChange={e => {
                   const newBarber = Number(e.target.value);
-                  dispatch({ type: "SET_BARBER", payload: newBarber });
+                  setBarber(newBarber);
                 }}
               />
               <datalist id="barber-markers">

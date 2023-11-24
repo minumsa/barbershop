@@ -2,24 +2,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "../page.module.css";
 import { faMagnifyingGlass, faPlus, faSliders } from "@fortawesome/free-solid-svg-icons";
 import { usePathname, useRouter } from "next/navigation";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { searchData } from "../lib/api";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 interface NavBar {
-  keyword: string;
   showFilterWindow: boolean;
+  setShowFilterWindow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const NavBar = () => {
+export const NavBar = ({ showFilterWindow, setShowFilterWindow }: NavBar) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { showFilterWindow } = useSelector(
-    (state: NavBar) => ({
-      showFilterWindow: state.showFilterWindow,
-    }),
-    shallowEqual
-  );
   const [currentKeyword, setCurrentKeyword] = useState<string>("");
 
   const pathName = usePathname();
@@ -95,7 +89,7 @@ export const NavBar = () => {
         <div
           className={styles["filter-icon"]}
           onClick={() => {
-            dispatch({ type: "SET_SHOW_FILTER_WINDOW", payload: !showFilterWindow });
+            setShowFilterWindow(true);
           }}
         >
           <FontAwesomeIcon icon={faSliders} />

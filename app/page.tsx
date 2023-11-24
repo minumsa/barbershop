@@ -18,6 +18,7 @@ export default function Page() {
   const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+  const [showFilterWindow, setShowFilterWindow] = useState(false);
 
   useEffect(() => {
     async function loadData() {
@@ -25,7 +26,7 @@ export default function Page() {
     }
 
     loadData();
-  }, [currentPage]);
+  }, [itemsPerPage, currentPage, barber, price]);
 
   // TODO: currentState, action 타입 지정하기
   const reducer = (currentState: any, action: any) => {
@@ -34,7 +35,7 @@ export default function Page() {
         barbershops: barbershops,
         price: price,
         barber: barber,
-        showFilterWindow: false,
+        showFilterWindow: showFilterWindow,
         selectedBarbershop: selectedBarbershop,
         keyword: keyword,
         currentPage: currentPage,
@@ -78,11 +79,11 @@ export default function Page() {
 
   return (
     <Provider store={store}>
-      <FilterWindow />
+      <FilterWindow price={price} setPrice={setPrice} barber={barber} setBarber={setBarber} />
       <div className={styles["container"]}>
         {/* TODO: 현재 위치 기능 추가 */}
         {/* TODO: 바버샵 데이터 - 업로드, 개점일 변수 추가 */}
-        <NavBar />
+        <NavBar showFilterWindow={showFilterWindow} setShowFilterWindow={setShowFilterWindow} />
         <Content />
       </div>
     </Provider>
