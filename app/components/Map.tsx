@@ -80,7 +80,7 @@ export const Map = () => {
     }: BarbershopProps) => {
       return (
         <div className={styles["is-inner"]}>
-          <button className={styles["filter-button"]}>×</button>
+          <div className={styles["filter-button"]}>×</div>
           <div className={styles["flexbox-row-center"]} style={{ marginBottom: "5px" }}>
             <div className={styles["string-center-border"]}>{name}</div>
           </div>

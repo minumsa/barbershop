@@ -103,40 +103,42 @@ export const MainTab = () => {
           </ul>
         </div>
       </div>
-      {filteredBarbershops.length > 0 ? (
-        filteredBarbershops.map((data: any, index: number) => {
-          return (
-            <div
-              className={styles["list-container"]}
-              key={index}
-              onClick={() => {
-                dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: data });
-              }}
-            >
+      <div className={styles["tab-bottom"]}>
+        {filteredBarbershops.length > 0 ? (
+          filteredBarbershops.map((data: any, index: number) => {
+            return (
               <div
-                className={styles["barbershop-image-container"]}
-                style={{ backgroundImage: `url("${data.imgUrl}")` }}
-              ></div>
-              <div className={styles["list-information"]}>
-                <div className={styles["list-name"]}>
-                  <div className={styles["list-name-text"]}>{`${data.name}`}</div>
+                className={styles["list-container"]}
+                key={index}
+                onClick={() => {
+                  dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: data });
+                }}
+              >
+                <div
+                  className={styles["barbershop-image-container"]}
+                  style={{ backgroundImage: `url("${data.imgUrl}")` }}
+                ></div>
+                <div className={styles["list-information"]}>
+                  <div className={styles["list-name"]}>
+                    <div className={styles["list-name-text"]}>{`${data.name}`}</div>
+                  </div>
+                  <div className={styles["list-location"]}>{data.location.description}</div>
                 </div>
-                <div className={styles["list-location"]}>{data.location.description}</div>
               </div>
+            );
+          })
+        ) : keyword && filteredBarbershops.length === 0 ? (
+          <div className={`${styles["list-container"]} ${styles["list-no-data"]}`}>
+            <div className={styles["mobile-keyword-result"]}>
+              <div style={{ fontWeight: 550 }}>{keyword}</div>
+              <div>에 대한</div>
             </div>
-          );
-        })
-      ) : keyword && filteredBarbershops.length === 0 ? (
-        <div className={`${styles["list-container"]} ${styles["list-no-data"]}`}>
-          <div className={styles["mobile-keyword-result"]}>
-            <div style={{ fontWeight: 550 }}>{keyword}</div>
-            <div>에 대한</div>
+            <div>검색 결과가 없습니다</div>
           </div>
-          <div>검색 결과가 없습니다</div>
-        </div>
-      ) : (
-        <LoadingItems />
-      )}
+        ) : (
+          <LoadingItems />
+        )}
+      </div>
     </div>
   );
 };
