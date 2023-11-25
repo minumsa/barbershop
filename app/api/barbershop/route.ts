@@ -15,6 +15,8 @@ export async function GET(request: Request) {
   try {
     await connectMongoDB();
 
+    const totalDataCount = await BarberShopModel.find(query).count();
+
     let data = undefined;
 
     if (price === 50000) {
@@ -60,7 +62,7 @@ export async function GET(request: Request) {
       }
     }
 
-    const result = NextResponse.json(data);
+    const result = NextResponse.json({ data, totalDataCount });
     return result;
   } catch (error) {
     return handleError(error);

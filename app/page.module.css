@@ -465,6 +465,7 @@
   width: 100%;
   height: fit-content;
   cursor: pointer;
+  font-size: 0.95rem;
 }
 
 .barbershop-image-container {
@@ -849,6 +850,11 @@
     padding: 0;
   }
 
+  .filter-box-content {
+    --clr-pos-from: 38%;
+    --clr-pos-to: 72%;
+  }
+
   .nav-container {
     min-height: 50px;
     padding: 0 10px;
@@ -868,6 +874,11 @@
     overflow: hidden;
   }
 
+  .subtab-title-container {
+    height: 50px;
+    align-items: center;
+  }
+
   .subtab-flexbox {
     padding: 0 15px;
   }
@@ -876,6 +887,12 @@
     height: fit-content;
     padding: 5px 10px;
     font-size: 0.9rem;
+  }
+
+  .tab-title-name {
+    --clr-pos-from: 38%;
+    --clr-pos-to: 70%;
+    padding-top: 3px;
   }
 
   .tab-button {
@@ -897,7 +914,7 @@
   }
 
   .list-container {
-    width: fit-content;
+    width: calc(100% - 20px);
     padding: 10px;
   }
 
@@ -906,6 +923,7 @@
   }
 
   .list-name {
+    padding-bottom: 1px;
     font-size: 0.9rem;
   }
 
@@ -927,8 +945,8 @@
 
   .close-mobile {
     display: block;
-    font-size: 2.2rem;
-    font-weight: 250;
+    font-size: 1.3rem;
+    font-weight: 400;
     cursor: pointer;
   }
 

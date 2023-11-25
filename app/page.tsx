@@ -20,20 +20,23 @@ export default function Page() {
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
   const [showFilterWindow, setShowFilterWindow] = useState(false);
+  const [totalDataCount, setTotalDataCount] = useState<number>(0);
 
   useEffect(() => {
     async function loadData() {
-      const data = await fetchData({
+      const result = await fetchData({
         itemsPerPage: itemsPerPage,
         currentPage: currentPage,
         barber: barber,
         price: price,
       });
 
+      setTotalDataCount(result?.totalDataCount);
+
       if (currentPage > 0 && barbershops.length > 1) {
-        setBarbershops(prevBarbershops => [...prevBarbershops, ...data]);
+        setBarbershops(prevBarbershops => [...prevBarbershops, ...result?.data]);
       } else {
-        setBarbershops(data);
+        setBarbershops(result?.data);
       }
     }
 
@@ -44,7 +47,7 @@ export default function Page() {
     setCurrentPage(0);
 
     async function loadData() {
-      const data = await fetchData({
+      const result = await fetchData({
         itemsPerPage: itemsPerPage,
         currentPage: 0,
         barber: barber,
@@ -52,7 +55,7 @@ export default function Page() {
       });
 
       // barber나 price가 바뀌면 아예 모든 데이터 지우고 다시 가져오기
-      setBarbershops(data);
+      setBarbershops(result?.data);
     }
 
     loadData();
@@ -124,8 +127,14 @@ export default function Page() {
           showFilterWindow={showFilterWindow}
           setShowFilterWindow={setShowFilterWindow}
           setKeyword={setKeyword}
+          setBarbershops={setBarbershops}
         />
-        <Content currentPage={currentPage} setCurrentPage={setCurrentPage} keyword={keyword} />
+        <Content
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          keyword={keyword}
+          totalDataCount={totalDataCount}
+        />
       </div>
     </Provider>
   );

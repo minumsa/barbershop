@@ -4,19 +4,23 @@ import { faMagnifyingGlass, faPlus, faSliders } from "@fortawesome/free-solid-sv
 import { usePathname, useRouter } from "next/navigation";
 import { searchData } from "../lib/api";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { BarberShop } from "../model/BarberShop";
 
 interface NavBar {
   showFilterWindow: boolean;
   setShowFilterWindow: React.Dispatch<React.SetStateAction<boolean>>;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
+  setBarbershops: React.Dispatch<React.SetStateAction<BarberShop[]>>;
 }
 
-export const NavBar = ({ showFilterWindow, setShowFilterWindow, setKeyword }: NavBar) => {
+export const NavBar = ({
+  showFilterWindow,
+  setShowFilterWindow,
+  setKeyword,
+  setBarbershops,
+}: NavBar) => {
   const router = useRouter();
-  const dispatch = useDispatch();
   const [currentKeyword, setCurrentKeyword] = useState<string>("");
-
   const pathName = usePathname();
   const isAdmin = pathName.includes("admin");
 
@@ -24,7 +28,7 @@ export const NavBar = ({ showFilterWindow, setShowFilterWindow, setKeyword }: Na
     try {
       const barbershops = await searchData(currentKeyword);
       setKeyword(currentKeyword);
-      dispatch({ type: "SET_BARBERSHOPS", payload: barbershops });
+      setBarbershops(barbershops);
     } catch (error) {
       console.error("Error in handleSearch:", error);
     }
@@ -41,7 +45,7 @@ export const NavBar = ({ showFilterWindow, setShowFilterWindow, setKeyword }: Na
       <div className={styles["title"]}>
         <div
           onClick={() => {
-            dispatch({ type: "SET_SELECTED_BARBERSHOP", payload: null });
+            setBarbershops([]);
             router.push("/");
           }}
         >

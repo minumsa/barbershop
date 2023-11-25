@@ -13,9 +13,10 @@ interface MainTab {
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   keyword: string;
+  totalDataCount: number;
 }
 
-export const MainTab = ({ currentPage, setCurrentPage, keyword }: MainTab) => {
+export const MainTab = ({ currentPage, setCurrentPage, keyword, totalDataCount }: MainTab) => {
   const [orderType, setOrderType] = useState<string>("name");
   const { barbershops } = useSelector(
     (state: MainTabProps) => ({
@@ -60,7 +61,7 @@ export const MainTab = ({ currentPage, setCurrentPage, keyword }: MainTab) => {
             </div>
           )}
           <div className={styles["filter-box-content"]}>{`${
-            barbershops?.length ? barbershops?.length : 0
+            keyword ? barbershops.length : totalDataCount
           }개`}</div>
           <div>{`의${keyword ? " 검색" : ""} 결과`}</div>
         </div>
@@ -121,7 +122,15 @@ export const MainTab = ({ currentPage, setCurrentPage, keyword }: MainTab) => {
         ) : keyword && barbershops.length === 0 ? (
           <div className={`${styles["list-container"]} ${styles["list-no-data"]}`}>
             <div className={styles["mobile-keyword-result"]}>
-              <div style={{ fontWeight: 550 }}>{keyword}</div>
+              {/* TODO: 나중에 블로그에 정리: 문자열에 영어 포함되는지 체크 */}
+              <span
+                style={{
+                  fontWeight: 500,
+                  paddingTop: keyword.match(/[a-zA-Z]/) !== null ? "2.5px" : undefined,
+                }}
+              >
+                {keyword}
+              </span>
               <div>에 대한</div>
             </div>
             <div>검색 결과가 없습니다</div>
