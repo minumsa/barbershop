@@ -30,7 +30,7 @@ export default function Page() {
         price: price,
       });
 
-      if (barbershops.length > 1) {
+      if (currentPage > 0 && barbershops.length > 1) {
         setBarbershops(prevBarbershops => [...prevBarbershops, ...data]);
       } else {
         setBarbershops(data);
