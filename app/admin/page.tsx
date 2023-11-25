@@ -20,21 +20,46 @@ export default function Page() {
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
   const [showFilterWindow, setShowFilterWindow] = useState(false);
+  const [totalDataCount, setTotalDataCount] = useState<number>(0);
 
   useEffect(() => {
     async function loadData() {
-      setBarbershops(
-        await fetchData({
-          itemsPerPage: itemsPerPage,
-          currentPage: currentPage,
-          barber: barber,
-          price: price,
-        })
-      );
+      const result = await fetchData({
+        itemsPerPage: itemsPerPage,
+        currentPage: currentPage,
+        barber: barber,
+        price: price,
+      });
+
+      setTotalDataCount(result?.totalDataCount);
+
+      if (currentPage > 0 && barbershops.length > 1) {
+        setBarbershops(prevBarbershops => [...prevBarbershops, ...result?.data]);
+      } else {
+        setBarbershops(result?.data);
+      }
     }
 
     loadData();
-  }, [itemsPerPage, currentPage, barber, price]);
+  }, [currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(0);
+
+    async function loadData() {
+      const result = await fetchData({
+        itemsPerPage: itemsPerPage,
+        currentPage: 0,
+        barber: barber,
+        price: price,
+      });
+
+      // barber나 price가 바뀌면 아예 모든 데이터 지우고 다시 가져오기
+      setBarbershops(result?.data);
+    }
+
+    loadData();
+  }, [barber, price]);
 
   // TODO: currentState, action 타입 지정하기
   const reducer = (currentState: any, action: any) => {
@@ -96,8 +121,20 @@ export default function Page() {
         setShowFilterWindow={setShowFilterWindow}
       />
       <div className={styles["container"]}>
-        <NavBar showFilterWindow={showFilterWindow} setShowFilterWindow={setShowFilterWindow} />
-        <Content currentPage={currentPage} setCurrentPage={setCurrentPage} />
+        {/* TODO: 현재 위치 기능 추가 */}
+        {/* TODO: 바버샵 데이터 - 업로드, 개점일 변수 추가 */}
+        <NavBar
+          showFilterWindow={showFilterWindow}
+          setShowFilterWindow={setShowFilterWindow}
+          setKeyword={setKeyword}
+          setBarbershops={setBarbershops}
+        />
+        <Content
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          keyword={keyword}
+          totalDataCount={totalDataCount}
+        />
       </div>
     </Provider>
   );

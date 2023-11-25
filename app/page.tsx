@@ -11,6 +11,7 @@ import { Provider, shallowEqual, useSelector } from "react-redux";
 import { NavBar } from "./components/NavBar";
 import { barberType, priceType } from "./lib/data";
 
+// TODO: /admin의 page.tsx와 중복되는 부분 많으니 나중에 리팩토링
 export default function Page() {
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
   const [keyword, setKeyword] = useState<string>("");
@@ -20,20 +21,23 @@ export default function Page() {
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
   const [showFilterWindow, setShowFilterWindow] = useState(false);
+  const [totalDataCount, setTotalDataCount] = useState<number>(0);
 
   useEffect(() => {
     async function loadData() {
-      const data = await fetchData({
+      const result = await fetchData({
         itemsPerPage: itemsPerPage,
         currentPage: currentPage,
         barber: barber,
         price: price,
       });
 
-      if (barbershops.length > 1) {
-        setBarbershops(prevBarbershops => [...prevBarbershops, ...data]);
+      setTotalDataCount(result?.totalDataCount);
+
+      if (currentPage > 0 && barbershops.length > 1) {
+        setBarbershops(prevBarbershops => [...prevBarbershops, ...result?.data]);
       } else {
-        setBarbershops(data);
+        setBarbershops(result?.data);
       }
     }
 
@@ -44,7 +48,7 @@ export default function Page() {
     setCurrentPage(0);
 
     async function loadData() {
-      const data = await fetchData({
+      const result = await fetchData({
         itemsPerPage: itemsPerPage,
         currentPage: 0,
         barber: barber,
@@ -52,13 +56,11 @@ export default function Page() {
       });
 
       // barber나 price가 바뀌면 아예 모든 데이터 지우고 다시 가져오기
-      setBarbershops(data);
+      setBarbershops(result?.data);
     }
 
     loadData();
   }, [barber, price]);
-
-  console.log(barbershops);
 
   // TODO: currentState, action 타입 지정하기
   const reducer = (currentState: any, action: any) => {
@@ -122,8 +124,18 @@ export default function Page() {
       <div className={styles["container"]}>
         {/* TODO: 현재 위치 기능 추가 */}
         {/* TODO: 바버샵 데이터 - 업로드, 개점일 변수 추가 */}
-        <NavBar showFilterWindow={showFilterWindow} setShowFilterWindow={setShowFilterWindow} />
-        <Content currentPage={currentPage} setCurrentPage={setCurrentPage} />
+        <NavBar
+          showFilterWindow={showFilterWindow}
+          setShowFilterWindow={setShowFilterWindow}
+          setKeyword={setKeyword}
+          setBarbershops={setBarbershops}
+        />
+        <Content
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          keyword={keyword}
+          totalDataCount={totalDataCount}
+        />
       </div>
     </Provider>
   );

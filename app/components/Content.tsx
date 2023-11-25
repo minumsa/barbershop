@@ -17,9 +17,11 @@ interface ContentProps {
 interface Content {
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  keyword: string;
+  totalDataCount: number;
 }
 
-export const Content = ({ currentPage, setCurrentPage }: Content) => {
+export const Content = ({ currentPage, setCurrentPage, keyword, totalDataCount }: Content) => {
   const { price, barber, selectedBarbershop, barbershops } = useSelector(
     (state: ContentProps) => ({
       price: state.price,
@@ -58,7 +60,12 @@ export const Content = ({ currentPage, setCurrentPage }: Content) => {
           {selectedBarbershop ? (
             <SubTab />
           ) : (
-            <MainTab currentPage={currentPage} setCurrentPage={setCurrentPage} />
+            <MainTab
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              keyword={keyword}
+              totalDataCount={totalDataCount}
+            />
           )}
         </div>
       </div>
@@ -68,7 +75,12 @@ export const Content = ({ currentPage, setCurrentPage }: Content) => {
           {selectedBarbershop ? (
             <SubTab />
           ) : (
-            <MainTab currentPage={currentPage} setCurrentPage={setCurrentPage} />
+            <MainTab
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              keyword={keyword}
+              totalDataCount={totalDataCount}
+            />
           )}
         </div>
         {selectedBarbershop && (

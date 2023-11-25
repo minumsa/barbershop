@@ -23,9 +23,9 @@ export async function fetchData({ itemsPerPage, currentPage, barber, price }: fe
       throw new Error("Failed to get barbershop data");
     }
 
-    let data = await response.json();
+    const { data, totalDataCount } = await response.json();
 
-    return data;
+    return { data, totalDataCount };
   } catch (error) {
     console.error(error);
   }
