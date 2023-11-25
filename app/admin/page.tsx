@@ -20,6 +20,7 @@ export default function Page() {
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
   const [showFilterWindow, setShowFilterWindow] = useState(false);
+  const [totalDataCount, setTotalDataCount] = useState<number>(0);
 
   useEffect(() => {
     async function loadData() {
@@ -29,6 +30,8 @@ export default function Page() {
         barber: barber,
         price: price,
       });
+
+      setTotalDataCount(result?.totalDataCount);
 
       if (currentPage > 0 && barbershops.length > 1) {
         setBarbershops(prevBarbershops => [...prevBarbershops, ...result?.data]);
@@ -124,8 +127,14 @@ export default function Page() {
           showFilterWindow={showFilterWindow}
           setShowFilterWindow={setShowFilterWindow}
           setKeyword={setKeyword}
+          setBarbershops={setBarbershops}
         />
-        <Content currentPage={currentPage} setCurrentPage={setCurrentPage} keyword={keyword} />
+        <Content
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          keyword={keyword}
+          totalDataCount={totalDataCount}
+        />
       </div>
     </Provider>
   );

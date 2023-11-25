@@ -11,6 +11,7 @@ import { Provider, shallowEqual, useSelector } from "react-redux";
 import { NavBar } from "./components/NavBar";
 import { barberType, priceType } from "./lib/data";
 
+// TODO: /admin의 page.tsx와 중복되는 부분 많으니 나중에 리팩토링
 export default function Page() {
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
   const [keyword, setKeyword] = useState<string>("");
