@@ -1,33 +1,29 @@
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import styles from "../page.module.css";
 import { barberType, priceType } from "../lib/data";
-
-interface FilterWindowReduxProps {
-  showFilterWindow: boolean;
-}
 
 interface FilterWindowProps {
   price: priceType;
   setPrice: React.Dispatch<React.SetStateAction<priceType>>;
   barber: barberType;
   setBarber: React.Dispatch<React.SetStateAction<barberType>>;
+  showFilterWindow: boolean;
+  setShowFilterWindow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const FilterWindow = ({ price, setPrice, barber, setBarber }: FilterWindowProps) => {
-  const { showFilterWindow } = useSelector(
-    (state: FilterWindowReduxProps) => ({
-      showFilterWindow: state.showFilterWindow,
-    }),
-    shallowEqual
-  );
-
-  const dispatch = useDispatch();
-
+export const FilterWindow = ({
+  price,
+  setPrice,
+  barber,
+  setBarber,
+  showFilterWindow,
+  setShowFilterWindow,
+}: FilterWindowProps) => {
   const filterReset = () => {
     setPrice(50000);
     setBarber(3);
   };
 
+  //FIXME: barber, price 바뀌면 fetchData 실행되게
   return (
     <div
       className={styles["filter-content"]}
@@ -36,7 +32,7 @@ export const FilterWindow = ({ price, setPrice, barber, setBarber }: FilterWindo
       <div
         className={styles["filter-button"]}
         onClick={() => {
-          dispatch({ type: "SET_SHOW_FILTER_WINDOW", payload: false });
+          setShowFilterWindow(false);
         }}
       >
         ×
@@ -80,7 +76,7 @@ export const FilterWindow = ({ price, setPrice, barber, setBarber }: FilterWindo
         <div className={styles["filter-item"]}>
           <div style={{ display: "flex" }}>
             <div style={{ width: "80px" }}>바버 인원</div>
-            <div>{barber === 1 ? "1인" : barber === 2 ? "2인 이하" : "전체 선택"}</div>
+            <div>{barber === 1 ? "1인" : barber === 2 ? "2인 이상" : "전체 선택"}</div>
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ paddingTop: "10px" }}>

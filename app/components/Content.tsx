@@ -95,7 +95,7 @@ export const Content = ({ currentPage, setCurrentPage }: Content) => {
           <div className={styles["filter-box"]}>
             <div className={styles["filter-box-title"]}>{`바버 인원 :`}</div>
             <div className={styles["filter-box-content"]}>
-              {barber === 3 ? "전체 선택" : barber === 2 ? "2인 이하" : `${barber}인`}
+              {barber === 3 ? "전체 선택" : barber === 2 ? "2인 이상" : `${barber}인`}
             </div>
           </div>
         </div>
