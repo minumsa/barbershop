@@ -717,6 +717,7 @@
 
 .tab-result-data {
   display: flex;
+  padding: 10px 0;
 }
 
 .list-no-data {
@@ -854,7 +855,8 @@
   }
 
   .tab-result-data {
-    display: none;
+    padding: 10px;
+    font-size: 0.9rem;
   }
 
   .list-container {
@@ -957,6 +959,7 @@
 
   .tab-order {
     padding: 0 10px;
+    display: none;
   }
 
   .subtab-information-container {

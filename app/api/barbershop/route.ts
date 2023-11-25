@@ -1,4 +1,3 @@
-import { GetRequest } from "@/app/model/api/barbershop/GET";
 import { NextResponse } from "next/server";
 import BarberShopModel from "../db/BarberShopModel";
 import connectMongoDB from "../db/mongodb";
@@ -11,55 +10,31 @@ export async function GET(request: Request) {
   const barber = Number(url.searchParams.get("barber")); // 3
   const price = Number(url.searchParams.get("price")); // 50000
   const startIndex = itemsPerPage * currentPage;
-
-  // const searchParams = (() => {
-  //   const tmp = new URL(request.url).searchParams;
-  //   const data: any = {};
-  //   tmp.forEach((value, key) => {
-  //     data[key] = value;
-  //   });
-  //   return data as GetRequest;
-  // })();
-
-  let query = {};
-  // if (searchParams.priceRangeMin != null || searchParams.priceRangeMax != null) {
-  //   query = {
-  //     ...query,
-  //     price: {
-  //       $gte: searchParams.priceRangeMin ?? -1,
-  //       $lte: searchParams.priceRangeMax ?? Number.MAX_VALUE,
-  //     },
-  //   };
-  // }
+  const query = {};
 
   try {
     await connectMongoDB();
 
     let data = undefined;
 
-    if (price == 50000) {
-      // 바버 1인만
-      if (barber == 1) {
+    if (price === 50000) {
+      if (barber === 1) {
         data = await BarberShopModel.find({ barberList: { $exists: true, $size: 1 } })
           .sort({ name: 1 })
           .skip(startIndex)
           .limit(itemsPerPage);
-        // 바버 2인 이상
-      } else if (barber == 2) {
+      } else if (barber === 2) {
         data = await BarberShopModel.find({
           $expr: { $gte: [{ $size: { $ifNull: ["$barberList", []] } }, 2] },
         })
           .sort({ name: 1 })
           .skip(startIndex)
           .limit(itemsPerPage);
-        // 바버 전체 선택
-      } else if (barber == 3) {
+      } else if (barber === 3) {
         data = await BarberShopModel.find(query)
           .sort({ name: 1 })
           .skip(startIndex)
           .limit(itemsPerPage);
-        // console.log("barber 3");
-        // console.log("barber 3 data: ", data);
       }
     } else {
       if (barber === 1) {
@@ -85,18 +60,7 @@ export async function GET(request: Request) {
       }
     }
 
-    // if (searchParams.barberCntRangeMin != null || searchParams.barberCntRangeMax != null) {
-    //   data = data?.filter(v => {
-    //     const cnt = v.barberList?.length ?? 0;
-    //     return (
-    //       cnt <= (searchParams.barberCntRangeMax ?? Number.MAX_VALUE) &&
-    //       cnt >= (searchParams.barberCntRangeMin ?? -1)
-    //     );
-    //   });
-    // }
-
     const result = NextResponse.json(data);
-
     return result;
   } catch (error) {
     return handleError(error);

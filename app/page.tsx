@@ -58,8 +58,6 @@ export default function Page() {
     loadData();
   }, [barber, price]);
 
-  console.log(barbershops);
-
   // TODO: currentState, action 타입 지정하기
   const reducer = (currentState: any, action: any) => {
     if (currentState === undefined) {
@@ -122,8 +120,12 @@ export default function Page() {
       <div className={styles["container"]}>
         {/* TODO: 현재 위치 기능 추가 */}
         {/* TODO: 바버샵 데이터 - 업로드, 개점일 변수 추가 */}
-        <NavBar showFilterWindow={showFilterWindow} setShowFilterWindow={setShowFilterWindow} />
-        <Content currentPage={currentPage} setCurrentPage={setCurrentPage} />
+        <NavBar
+          showFilterWindow={showFilterWindow}
+          setShowFilterWindow={setShowFilterWindow}
+          setKeyword={setKeyword}
+        />
+        <Content currentPage={currentPage} setCurrentPage={setCurrentPage} keyword={keyword} />
       </div>
     </Provider>
   );

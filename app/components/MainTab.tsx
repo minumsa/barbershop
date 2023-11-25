@@ -7,20 +7,19 @@ import { useInView } from "react-intersection-observer";
 
 interface MainTabProps {
   barbershops: BarberShop[];
-  keyword: string;
 }
 
 interface MainTab {
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  keyword: string;
 }
 
-export const MainTab = ({ currentPage, setCurrentPage }: MainTab) => {
+export const MainTab = ({ currentPage, setCurrentPage, keyword }: MainTab) => {
   const [orderType, setOrderType] = useState<string>("name");
-  const { barbershops, keyword } = useSelector(
+  const { barbershops } = useSelector(
     (state: MainTabProps) => ({
       barbershops: state.barbershops,
-      keyword: state.keyword,
     }),
     shallowEqual
   );
@@ -54,20 +53,19 @@ export const MainTab = ({ currentPage, setCurrentPage }: MainTab) => {
       <div className={styles["tab-filter"]}>
         <div className={styles["tab-result-data"]}>
           {/* 검색 시 표시할 문구 */}
-          {keyword.length > 1 && (
+          {keyword && (
             <div className={styles["filter-box-title"]}>
               <span className={styles["filter-box-content"]}> {keyword}</span>
               <span>에 대한</span>
             </div>
           )}
-          <div className={styles["filter-box-title"]}>총</div>
           <div className={styles["filter-box-content"]}>{`${
             barbershops?.length ? barbershops?.length : 0
           }개`}</div>
-          <div>의 검색 결과</div>
+          <div>{`의${keyword ? " 검색" : ""} 결과`}</div>
         </div>
         {/* 바버샵 데이터 정렬 */}
-        <div className={styles["tab-order"]}>
+        {/* <div className={styles["tab-order"]}>
           <ul className={styles["tab-ul"]}>
             <li className={styles["tab-li"]}>
               <button
@@ -91,7 +89,7 @@ export const MainTab = ({ currentPage, setCurrentPage }: MainTab) => {
               <button className={styles["tab-button"]}>개점일순</button>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
       <div className={styles["tab-bottom"]}>
         {barbershops.length > 0 ? (

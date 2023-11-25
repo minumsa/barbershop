@@ -9,9 +9,10 @@ import { useDispatch } from "react-redux";
 interface NavBar {
   showFilterWindow: boolean;
   setShowFilterWindow: React.Dispatch<React.SetStateAction<boolean>>;
+  setKeyword: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const NavBar = ({ showFilterWindow, setShowFilterWindow }: NavBar) => {
+export const NavBar = ({ showFilterWindow, setShowFilterWindow, setKeyword }: NavBar) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [currentKeyword, setCurrentKeyword] = useState<string>("");
@@ -22,7 +23,7 @@ export const NavBar = ({ showFilterWindow, setShowFilterWindow }: NavBar) => {
   const handleSearch = async () => {
     try {
       const barbershops = await searchData(currentKeyword);
-      dispatch({ type: "SET_KEYWORD", payload: currentKeyword });
+      setKeyword(currentKeyword);
       dispatch({ type: "SET_BARBERSHOPS", payload: barbershops });
     } catch (error) {
       console.error("Error in handleSearch:", error);
