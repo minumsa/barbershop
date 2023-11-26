@@ -66,6 +66,17 @@ export const NavBar = ({
             }}
             onKeyDown={handleSearchEnter}
           />
+          {currentKeyword && (
+            <div
+              className={styles["search-button"]}
+              style={{ right: "45px", fontSize: "1.1rem" }}
+              onClick={() => {
+                setCurrentKeyword("");
+              }}
+            >
+              <div>×</div>
+            </div>
+          )}
           <div className={styles["search-button"]}>
             <div
               onClick={() => {

@@ -157,8 +157,8 @@
   justify-content: center;
   width: fit-content;
   cursor: pointer;
-  padding-right: 10px;
   font-weight: 400;
+  right: 10px;
 }
 
 .category {
