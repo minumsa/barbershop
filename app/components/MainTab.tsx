@@ -14,9 +14,18 @@ interface MainTab {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   keyword: string;
   totalDataCount: number;
+  price: number;
+  barber: number;
 }
 
-export const MainTab = ({ currentPage, setCurrentPage, keyword, totalDataCount }: MainTab) => {
+export const MainTab = ({
+  currentPage,
+  setCurrentPage,
+  keyword,
+  totalDataCount,
+  price,
+  barber,
+}: MainTab) => {
   const [orderType, setOrderType] = useState<string>("name");
   const { barbershops } = useSelector(
     (state: MainTabProps) => ({
@@ -61,7 +70,7 @@ export const MainTab = ({ currentPage, setCurrentPage, keyword, totalDataCount }
             </div>
           )}
           <div className={styles["filter-box-content"]}>{`${
-            keyword ? barbershops.length : totalDataCount
+            keyword || price !== 50000 || barber !== 3 ? barbershops.length : totalDataCount
           }개`}</div>
           <div>{`의${keyword ? " 검색" : ""} 결과`}</div>
         </div>

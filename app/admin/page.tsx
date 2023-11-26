@@ -134,6 +134,8 @@ export default function Page() {
           setCurrentPage={setCurrentPage}
           keyword={keyword}
           totalDataCount={totalDataCount}
+          price={price}
+          barber={barber}
         />
       </div>
     </Provider>
