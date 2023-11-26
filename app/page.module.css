@@ -867,6 +867,8 @@
 
   .search-input {
     font-size: 0.9rem;
+    /* FIXME: meta 태그로 모바일 input 확대 안 먹히면 이 부분 활성화 */
+    /* font-size: 16px; */
     height: 80%;
   }
 
