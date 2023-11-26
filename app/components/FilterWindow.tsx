@@ -35,7 +35,7 @@ export const FilterWindow = ({
           setShowFilterWindow(false);
         }}
       >
-        <span style={{ paddingBottom: "2px" }}>×</span>
+        <span className={styles["x-span"]}>×</span>
       </div>
       <div className={styles["filter-container"]}>
         <div className={styles["filter-close"]}>

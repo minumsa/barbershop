@@ -787,6 +787,10 @@
   justify-content: center;
 }
 
+.x-span {
+  padding-bottom: 2px;
+}
+
 @media (max-width: 1200px) {
   .title {
     width: fit-content;
