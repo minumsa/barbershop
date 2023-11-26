@@ -787,8 +787,23 @@
   justify-content: center;
 }
 
+.x-button {
+  top: 12.2px;
+  right: 43px;
+  font-size: 1.1rem;
+}
+
 .x-span {
   padding-bottom: 2px;
+}
+
+.clear-span {
+  display: inline-block;
+  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxwYXRoIGZpbGw9IiNBMEEwQTAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEyLjIwOCAxMS40TDkuMzggOC41N2wtLjgwOS44MDkgMi44MjkgMi44MjgtMi44MjkgMi44MjguODA5LjgwOSAyLjgyOC0yLjgyOSAyLjgyOCAyLjgyOS44MDktLjgwOS0yLjgyOS0yLjgyOCAyLjgyOS0yLjgyOC0uODA5LS44MDktMi44MjggMi44Mjl6TTEyIDIwYTggOCAwIDEgMSAwLTE2IDggOCAwIDAgMSAwIDE2eiIvPgo8L3N2Zz4K)
+    no-repeat center;
+  background-size: cover;
+  width: 23px;
+  height: 23px;
 }
 
 @media (max-width: 1200px) {
@@ -1038,5 +1053,11 @@
 
   .subtab-information-container {
     padding: 0 10px;
+  }
+
+  .x-button {
+    top: 12.2px;
+    right: 43px;
+    font-size: 1.1rem;
   }
 }

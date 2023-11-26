@@ -68,13 +68,12 @@ export const NavBar = ({
           />
           {currentKeyword && (
             <div
-              className={styles["search-button"]}
-              style={{ right: "45px", fontSize: "1.1rem" }}
+              className={`${styles["search-button"]} ${styles["x-button"]}`}
               onClick={() => {
                 setCurrentKeyword("");
               }}
             >
-              <div>×</div>
+              <div className={styles["clear-span"]}></div>
             </div>
           )}
           <div className={styles["search-button"]}>
