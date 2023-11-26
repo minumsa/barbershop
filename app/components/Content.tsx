@@ -19,10 +19,19 @@ interface Content {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   keyword: string;
   totalDataCount: number;
+  price: number;
+  barber: number;
 }
 
-export const Content = ({ currentPage, setCurrentPage, keyword, totalDataCount }: Content) => {
-  const { price, barber, selectedBarbershop, barbershops } = useSelector(
+export const Content = ({
+  currentPage,
+  setCurrentPage,
+  keyword,
+  totalDataCount,
+  price,
+  barber,
+}: Content) => {
+  const { selectedBarbershop, barbershops } = useSelector(
     (state: ContentProps) => ({
       price: state.price,
       barber: state.barber,
@@ -65,6 +74,8 @@ export const Content = ({ currentPage, setCurrentPage, keyword, totalDataCount }
               setCurrentPage={setCurrentPage}
               keyword={keyword}
               totalDataCount={totalDataCount}
+              price={price}
+              barber={barber}
             />
           )}
         </div>
@@ -80,6 +91,8 @@ export const Content = ({ currentPage, setCurrentPage, keyword, totalDataCount }
               setCurrentPage={setCurrentPage}
               keyword={keyword}
               totalDataCount={totalDataCount}
+              price={price}
+              barber={barber}
             />
           )}
         </div>
