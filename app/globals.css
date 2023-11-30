@@ -72,18 +72,3 @@ input[type="range"] {
   width: 100%;
   margin: 0;
 }
-/* 
-input[type="range"]::-webkit-slider-runnable-track {
-  background: #999;
-  height: 0.5rem;
-  border-radius: 0.5rem;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  margin-top: -4px;
-  background-color: #000;
-  height: 2rem;
-  width: 1rem;
-} */

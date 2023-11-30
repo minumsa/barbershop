@@ -50,28 +50,28 @@
 /* GothicA1 */
 @font-face {
   font-family: "GothicA1";
-  src: url("/GothicA1-ExtraLight.ttf");
+  src: url("/fonts/GothicA1-ExtraLight.ttf");
   font-style: normal;
   font-weight: 300;
   unicode-range: U+AC00-D7A3;
 }
 @font-face {
   font-family: "GothicA1";
-  src: url("/GothicA1-Light.ttf");
+  src: url("/fonts/GothicA1-Light.ttf");
   font-style: normal;
   font-weight: 400;
   unicode-range: U+AC00-D7A3;
 }
 @font-face {
   font-family: "GothicA1";
-  src: url("/GothicA1-Medium.ttf");
+  src: url("/fonts/GothicA1-Medium.ttf");
   font-style: normal;
   font-weight: 500;
   unicode-range: U+AC00-D7A3;
 }
 @font-face {
   font-family: "GothicA1";
-  src: url("/GothicA1-SemiBold.ttf");
+  src: url("/fonts/GothicA1-SemiBold.ttf");
   font-style: normal;
   font-weight: 700;
   unicode-range: U+AC00-D7A3;
