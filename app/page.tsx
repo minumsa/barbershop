@@ -56,6 +56,7 @@ export default function Page() {
       });
 
       // barber나 price가 바뀌면 아예 모든 데이터 지우고 다시 가져오기
+      setTotalDataCount(result?.totalDataCount);
       setBarbershops(result?.data);
     }
 

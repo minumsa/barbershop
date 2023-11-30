@@ -5,62 +5,42 @@ import { handleError } from "../errors";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
-  const itemsPerPage = Number(url.searchParams.get("itemsPerPage")); // 10
-  const currentPage = Number(url.searchParams.get("currentPage")); // 0부터 시작
-  const barber = Number(url.searchParams.get("barber")); // 3
-  const price = Number(url.searchParams.get("price")); // 50000
+  const itemsPerPage = Number(url.searchParams.get("itemsPerPage")) || 10;
+  const currentPage = Number(url.searchParams.get("currentPage")) || 0;
+  const barber = Number(url.searchParams.get("barber")) || 3;
+  const price = Number(url.searchParams.get("price")) || 50000;
   const startIndex = itemsPerPage * currentPage;
-  const query = {};
 
   try {
     await connectMongoDB();
 
-    const totalDataCount = await BarberShopModel.find(query).count();
+    const query = {};
 
-    let data = undefined;
+    // expr: 여러 개의 표현식을 결합하여 하나의 표현식으로 만들 때 사용
+    let dataQuery: any = { $expr: {} };
+    let totalDataCountQuery: any = {};
 
-    if (price === 50000) {
-      if (barber === 1) {
-        data = await BarberShopModel.find({ barberList: { $exists: true, $size: 1 } })
-          .sort({ name: 1 })
-          .skip(startIndex)
-          .limit(itemsPerPage);
-      } else if (barber === 2) {
-        data = await BarberShopModel.find({
-          $expr: { $gte: [{ $size: { $ifNull: ["$barberList", []] } }, 2] },
-        })
-          .sort({ name: 1 })
-          .skip(startIndex)
-          .limit(itemsPerPage);
-      } else if (barber === 3) {
-        data = await BarberShopModel.find(query)
-          .sort({ name: 1 })
-          .skip(startIndex)
-          .limit(itemsPerPage);
-      }
-    } else {
-      if (barber === 1) {
-        data = await BarberShopModel.find({ barberList: { $exists: true, $size: 1 } })
-          .sort({ name: 1 })
-          .find({ price: { $lte: price } })
-          .skip(startIndex)
-          .limit(itemsPerPage);
-      } else if (barber === 2) {
-        data = await BarberShopModel.find({
-          $expr: { $gte: [{ $size: { $ifNull: ["$barberList", []] } }, 2] },
-        })
-          .sort({ name: 1 })
-          .find({ price: { $lte: price } })
-          .skip(startIndex)
-          .limit(itemsPerPage);
-      } else if (barber === 3) {
-        data = await BarberShopModel.find(query)
-          .sort({ name: 1 })
-          .find({ price: { $lte: price } })
-          .skip(startIndex)
-          .limit(itemsPerPage);
-      }
+    // lte: 주어진 값보다 작거나 같은 값을 가진 문서를 찾을 때 사용
+    if (price !== 50000) {
+      dataQuery.price = { $lte: price };
     }
+
+    // size: 배열 크기를 확인하는 연산자
+    if (barber === 1) {
+      dataQuery.barberList = { $exists: true, $size: 1 };
+      totalDataCountQuery = { barberList: { $exists: true, $size: 1 } };
+      // gte: 특정 값보다 크거나 같은 값을 가진 문서를 찾을 때 사용
+    } else if (barber === 2) {
+      dataQuery.$expr.$gte = [{ $size: { $ifNull: ["$barberList", []] } }, 2];
+      totalDataCountQuery = dataQuery;
+    }
+
+    const data = await BarberShopModel.find({ ...query, ...dataQuery })
+      .sort({ name: 1 })
+      .skip(startIndex)
+      .limit(itemsPerPage);
+
+    const totalDataCount = await BarberShopModel.find(totalDataCountQuery).count();
 
     const result = NextResponse.json({ data, totalDataCount });
     return result;
