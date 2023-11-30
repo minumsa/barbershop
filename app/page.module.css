@@ -100,7 +100,7 @@
   width: 110px;
   height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   cursor: pointer;
   font-weight: 500;
@@ -222,7 +222,7 @@
 }
 
 .filter-box-container {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 400;
   display: flex;
   position: absolute;
@@ -532,21 +532,21 @@
   line-height: 180%;
 }
 
-.is-inner {
+.info-window {
   width: fit-content;
   height: fit-content;
   padding: 15px;
   font-size: 1.05rem;
 }
 
-.overlay-detail {
+.info-window-text {
   font-size: 0.95rem;
   display: flex;
   padding: 10px 0 0 0;
   width: 100%;
 }
 
-.overlay-detail-title {
+.info-window-text-title {
   width: 80px;
 }
 
@@ -562,7 +562,7 @@
   width: fit-content;
   border: 1px solid #000;
   cursor: pointer;
-  padding: 2px 5px;
+  padding: 1px 3px;
 }
 
 .subtab-button-container {
@@ -742,9 +742,10 @@
   margin: 10px;
 }
 
-.flexbox-row-center {
+.info-window-title {
   display: flex;
   justify-content: center;
+  font-size: 0.95rem;
 }
 
 .string-center-border {
@@ -888,7 +889,7 @@
 } */
 
   .search {
-    width: 90%;
+    width: 100%;
     font-size: 0.9rem;
     transform: scale(0.9);
   }
@@ -940,6 +941,7 @@
   .filter-content {
     width: 280px;
     font-size: 0.9rem;
+    padding: 20px;
   }
 
   .tab-result-data {
@@ -1012,28 +1014,21 @@
     margin-right: 0.25rem;
   }
 
-  .list-location {
-  }
-
-  .pc {
-    display: none;
-  }
-
-  .pc-content-container {
-    display: none;
-  }
-
   .mobile {
     display: flex;
   }
 
-  .is-inner {
+  .info-window {
     padding: 10px;
+  }
+
+  .info-window-title {
     font-size: 0.9rem;
   }
 
-  .overlay-detail {
+  .info-window-text {
     font-size: 0.9rem;
+    padding: 5px 0 0 0;
   }
 
   .tab-flexbox {
@@ -1059,5 +1054,9 @@
     top: 12.2px;
     right: 43px;
     font-size: 1.1rem;
+  }
+
+  .button {
+    padding: 0 2px;
   }
 }

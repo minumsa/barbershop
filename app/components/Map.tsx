@@ -49,8 +49,8 @@ export const Map = () => {
 
     const BarbershopItem = ({ title, data }: BarbershopItemProps) => {
       return (
-        <div className={styles["overlay-detail"]}>
-          <div className={styles["overlay-detail-title"]}>{title}</div>
+        <div className={styles["info-window-text"]}>
+          <div className={styles["info-window-text-title"]}>{title}</div>
           <div>{data}</div>
         </div>
       );
@@ -76,11 +76,11 @@ export const Map = () => {
       price,
     }: BarbershopProps) => {
       return (
-        <div className={styles["is-inner"]}>
+        <div className={styles["info-window"]}>
           <div className={styles["filter-button"]}>
             <span className={styles["x-span"]}>×</span>
           </div>
-          <div className={styles["flexbox-row-center"]} style={{ marginBottom: "5px" }}>
+          <div className={styles["info-window-title"]} style={{ marginBottom: "5px" }}>
             <div className={styles["string-center-border"]}>{name}</div>
           </div>
           <BarbershopItem title={"주소"} data={location} />
@@ -96,7 +96,7 @@ export const Map = () => {
             })}
           />
           <BarbershopItem title={"시술비"} data={`${price?.toLocaleString()}원`} />
-          <div className={styles["overlay-detail"]} style={{ padding: 0 }}>
+          <div className={styles["info-window-text"]} style={{ padding: 0 }}>
             <div className={styles["more-button-container"]}>
               <div className={styles["button"]}>
                 <div>더보기</div>

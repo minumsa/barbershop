@@ -124,13 +124,11 @@ export default function Page() {
         {/* TODO: 현재 위치 기능 추가 */}
         {/* TODO: 바버샵 데이터 - 업로드, 개점일 변수 추가 */}
         <NavBar
-          showFilterWindow={showFilterWindow}
           setShowFilterWindow={setShowFilterWindow}
           setKeyword={setKeyword}
           setBarbershops={setBarbershops}
         />
         <Content
-          currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           keyword={keyword}
           totalDataCount={totalDataCount}

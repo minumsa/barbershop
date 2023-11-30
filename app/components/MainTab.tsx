@@ -10,7 +10,6 @@ interface MainTabProps {
 }
 
 interface MainTab {
-  currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   keyword: string;
   totalDataCount: number;
@@ -18,14 +17,7 @@ interface MainTab {
   barber: number;
 }
 
-export const MainTab = ({
-  currentPage,
-  setCurrentPage,
-  keyword,
-  totalDataCount,
-  price,
-  barber,
-}: MainTab) => {
+export const MainTab = ({ setCurrentPage, keyword, totalDataCount, price, barber }: MainTab) => {
   const [orderType, setOrderType] = useState<string>("name");
   const { barbershops } = useSelector(
     (state: MainTabProps) => ({
@@ -74,32 +66,6 @@ export const MainTab = ({
           }개`}</div>
           <div>{`의${keyword ? " 검색" : ""} 결과`}</div>
         </div>
-        {/* 바버샵 데이터 정렬 */}
-        {/* <div className={styles["tab-order"]}>
-          <ul className={styles["tab-ul"]}>
-            <li className={styles["tab-li"]}>
-              <button
-                className={styles["tab-button"]}
-                onClick={() => {
-                  setOrderType("name");
-                  dispatch({
-                    type: "SET_CURRENT_PAGE",
-                    payload: currentPage + 1,
-                  });
-                }}
-                style={orderType === "name" ? { color: "#000" } : { color: "#666" }}
-              >
-                이름순
-              </button>
-            </li>
-            <li className={styles["tab-li"]}>
-              <button className={styles["tab-button"]}>업로드순</button>
-            </li>
-            <li>
-              <button className={styles["tab-button"]}>개점일순</button>
-            </li>
-          </ul>
-        </div> */}
       </div>
       <div className={styles["tab-bottom"]}>
         {barbershops.length > 0 ? (
