@@ -61,9 +61,7 @@ export const MainTab = ({ setCurrentPage, keyword, totalDataCount, price, barber
               <span>에 대한</span>
             </div>
           )}
-          <div className={styles["filter-box-content"]}>{`${
-            keyword || price !== 50000 || barber !== 3 ? barbershops.length : totalDataCount
-          }개`}</div>
+          <div className={styles["filter-box-content"]}>{`${totalDataCount}개`}</div>
           <div>{`의${keyword ? " 검색" : ""} 결과`}</div>
         </div>
       </div>
