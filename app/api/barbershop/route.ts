@@ -23,6 +23,7 @@ export async function GET(request: Request) {
     // lte: 주어진 값보다 작거나 같은 값을 가진 문서를 찾을 때 사용
     if (price !== 50000) {
       dataQuery.price = { $lte: price };
+      totalDataCountQuery.price = { $lte: price };
     }
 
     // size: 배열 크기를 확인하는 연산자
