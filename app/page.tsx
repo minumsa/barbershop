@@ -7,7 +7,7 @@ import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
 import { fetchData } from "./lib/api";
 import { legacy_createStore as createStore } from "redux";
-import { Provider, shallowEqual, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import { NavBar } from "./components/NavBar";
 import { barberType, priceType } from "./lib/data";
 
@@ -56,6 +56,7 @@ export default function Page() {
       });
 
       // barber나 price가 바뀌면 아예 모든 데이터 지우고 다시 가져오기
+      setTotalDataCount(result?.totalDataCount);
       setBarbershops(result?.data);
     }
 
@@ -125,13 +126,11 @@ export default function Page() {
         {/* TODO: 현재 위치 기능 추가 */}
         {/* TODO: 바버샵 데이터 - 업로드, 개점일 변수 추가 */}
         <NavBar
-          showFilterWindow={showFilterWindow}
           setShowFilterWindow={setShowFilterWindow}
           setKeyword={setKeyword}
           setBarbershops={setBarbershops}
         />
         <Content
-          currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           keyword={keyword}
           totalDataCount={totalDataCount}

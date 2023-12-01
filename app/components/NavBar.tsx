@@ -7,18 +7,12 @@ import { useState } from "react";
 import { BarberShop } from "../model/BarberShop";
 
 interface NavBar {
-  showFilterWindow: boolean;
   setShowFilterWindow: React.Dispatch<React.SetStateAction<boolean>>;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
   setBarbershops: React.Dispatch<React.SetStateAction<BarberShop[]>>;
 }
 
-export const NavBar = ({
-  showFilterWindow,
-  setShowFilterWindow,
-  setKeyword,
-  setBarbershops,
-}: NavBar) => {
+export const NavBar = ({ setShowFilterWindow, setKeyword, setBarbershops }: NavBar) => {
   const router = useRouter();
   const [currentKeyword, setCurrentKeyword] = useState<string>("");
   const pathName = usePathname();
