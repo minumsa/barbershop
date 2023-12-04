@@ -11,28 +11,31 @@ import { Provider } from "react-redux";
 import { NavBar } from "./components/NavBar";
 import { barberType, priceType } from "./lib/data";
 
+// state 다 없애기 ---> redux store만 사용
+// TODO: 바버샵 클릭하면 바버샵 id로 path 이동
 // TODO: /admin의 page.tsx와 중복되는 부분 많으니 나중에 리팩토링
 export default function Page() {
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
   const [keyword, setKeyword] = useState<string>("");
-  const [barber, setBarber] = useState<barberType>(3);
-  const [price, setPrice] = useState<priceType>(50000);
+  const [selectedBarberCount, setBarber] = useState<barberType>(3);
+  const [selectedPrice, setPrice] = useState<priceType>(50000);
   const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
   const [showFilterWindow, setShowFilterWindow] = useState(false);
-  const [totalDataCount, setTotalDataCount] = useState<number>(0);
+  const [totalBarbershopCount, setTotalBarbershopCount] = useState<number>(0);
+  const itemsPerPage = 10;
 
+  // 무한 스크롤 발생 시 실행
   useEffect(() => {
     async function loadData() {
       const result = await fetchData({
         itemsPerPage: itemsPerPage,
         currentPage: currentPage,
-        barber: barber,
-        price: price,
+        barber: selectedBarberCount,
+        price: selectedPrice,
       });
 
-      setTotalDataCount(result?.totalDataCount);
+      setTotalBarbershopCount(result?.totalDataCount);
 
       if (currentPage > 0 && barbershops.length > 1) {
         setBarbershops(prevBarbershops => [...prevBarbershops, ...result?.data]);
@@ -42,8 +45,10 @@ export default function Page() {
     }
 
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
+  // 필터링 옵션 변경 시 실행
   useEffect(() => {
     setCurrentPage(0);
 
@@ -51,25 +56,25 @@ export default function Page() {
       const result = await fetchData({
         itemsPerPage: itemsPerPage,
         currentPage: 0,
-        barber: barber,
-        price: price,
+        barber: selectedBarberCount,
+        price: selectedPrice,
       });
 
       // barber나 price가 바뀌면 아예 모든 데이터 지우고 다시 가져오기
-      setTotalDataCount(result?.totalDataCount);
+      setTotalBarbershopCount(result?.totalDataCount);
       setBarbershops(result?.data);
     }
 
     loadData();
-  }, [barber, price]);
+  }, [selectedBarberCount, selectedPrice]);
 
   // TODO: currentState, action 타입 지정하기
   const reducer = (currentState: any, action: any) => {
     if (currentState === undefined) {
       return {
         barbershops: barbershops,
-        price: price,
-        barber: barber,
+        price: selectedPrice,
+        barber: selectedBarberCount,
         showFilterWindow: showFilterWindow,
         selectedBarbershop: selectedBarbershop,
         keyword: keyword,
@@ -115,9 +120,9 @@ export default function Page() {
   return (
     <Provider store={store}>
       <FilterWindow
-        price={price}
+        price={selectedPrice}
         setPrice={setPrice}
-        barber={barber}
+        barber={selectedBarberCount}
         setBarber={setBarber}
         showFilterWindow={showFilterWindow}
         setShowFilterWindow={setShowFilterWindow}
@@ -133,11 +138,60 @@ export default function Page() {
         <Content
           setCurrentPage={setCurrentPage}
           keyword={keyword}
-          totalDataCount={totalDataCount}
-          price={price}
-          barber={barber}
+          totalDataCount={totalBarbershopCount}
+          price={selectedPrice}
+          barber={selectedBarberCount}
         />
       </div>
     </Provider>
   );
 }
+
+// export default function Page2() {
+//   const reducer = ...;
+//   const store = createStore(reducer);
+//   return (
+//     <Provider store={store}>
+//       <PageImpl />
+//     </Provider>
+//   )
+// }
+
+// function PageImpl() {
+//   // useEffect 들은 여기에
+//   return (
+//   <FilterWindow
+//         price={selectedPrice}
+//         setPrice={setPrice}
+//         barber={selectedBarberCount}
+//         setBarber={setBarber}
+//         showFilterWindow={showFilterWindow}
+//         setShowFilterWindow={setShowFilterWindow}
+//       />
+//       <div className={styles["container"]}>
+//         {/* TODO: 현재 위치 기능 추가 */}
+//         {/* TODO: 바버샵 데이터 - 업로드, 개점일 변수 추가 */}
+//         <NavBar
+//           setShowFilterWindow={setShowFilterWindow}
+//           setKeyword={setKeyword}
+//           setBarbershops={setBarbershops}
+//         />
+//         <Content
+//           setCurrentPage={setCurrentPage}
+//           keyword={keyword}
+//           totalDataCount={totalBarbershopCount}
+//           price={selectedPrice}
+//           barber={selectedBarberCount}
+//         />
+//       </div>
+//   )
+// }
+
+// Store = state 를 가지고 있는 객체
+// useState <-> Store = 별개로 있어야 된다.
+
+// Store
+// selectedBarberCount, selectedPrice
+// { selectedBarberCount : 1, selectedPrice : 4000 }
+//
+// store.state.selectedBarberCount
