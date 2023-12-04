@@ -23,6 +23,7 @@ export const FilterWindow = ({
     setBarber(3);
   };
 
+  //FIXME: 결과 데이터 가지고 오는 동안 로딩 화면 띄우기
   //FIXME: barber, price 바뀌면 fetchData 실행되게
   return (
     <div
