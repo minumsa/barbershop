@@ -53,6 +53,9 @@ export default function Page() {
     setCurrentPage(0);
 
     async function loadData() {
+      setTotalBarbershopCount(0);
+      setBarbershops([]);
+
       const result = await fetchData({
         itemsPerPage: itemsPerPage,
         currentPage: 0,
