@@ -24,7 +24,7 @@ npm run dev
 - TypeScript
 - React
 - Next.js
-- (네이버 지도 SDK)[https://www.ncloud.com/product/applicationService/maps]
+- [네이버 지도 SDK](https://www.ncloud.com/product/applicationService/maps)
 
 ## 👨‍💻 개발자
 
