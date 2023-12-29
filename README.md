@@ -1,34 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 💈 Barbershop Finder
 
-## Getting Started
+[바버샵 파인더](https://barbershop.divdivdiv.com)는 지도에서 근처 바버샵을 찾아주는 사이트입니다.
 
-First, run the development server:
+## 🧚‍♂️ 기능
 
-```bash
+- 바버샵 검색 기능
+- 바버샵 리스트 및 세부 정보 제공
+- 두 가지 옵션(가격, 바버 인원)으로 데이터 필터링 가능
+- 네이버 지도 SDK를 통해 지도를 통해 바버샵 위치 표시
+- 지도 컴포넌트에서 바버샵 핀 클릭 시 해당 바버샵을 모달 창을 통해 미리 보기
+
+## ⚙️ 설치
+
+개발 시 사용한 `npm` 버전은 9.2.0이며, `Node.js` 버전은 v19.4.0입니다. 프로젝트 실행 명령어는 다음과 같습니다.
+
+```shell
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ⚒️ 의존성
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- HTML/CSS
+- TypeScript
+- React
+- Next.js
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 👨‍💻 개발자
 
-## Learn More
+- [carver](https://github.com/minumsa)
 
-To learn more about Next.js, take a look at the following resources:
+## 🤝 기여자
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [lingo-apple](https://github.com/lingo-apple)
