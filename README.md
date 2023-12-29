@@ -2,7 +2,7 @@
 
 <a href="https://barbershop.divdivdiv.com" target="_blank">바버샵 파인더</a>는 지도에서 바버샵을 찾아주는 사이트입니다.
 
-## 🧚‍♂️ Information
+## 🧚‍♂️ Overview
 
 - 바버샵 위치를 지도 위에 표시합니다.
 - 주소 키워드로 바버샵을 검색할 수 있습니다.
