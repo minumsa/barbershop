@@ -1,13 +1,24 @@
-import { BarberShop, barberType, priceType } from "./data";
+import { BarberShop } from "../model/BarberShop";
+import { barberType, priceType } from "./data";
 
-interface fetchDataProps {
+interface FetchDataProps {
   itemsPerPage: number;
   currentPage: number;
   barber: barberType;
   price: priceType;
 }
 
-export async function fetchData({ itemsPerPage, currentPage, barber, price }: fetchDataProps) {
+interface FetchDataResult {
+  barbershopData: BarberShop[];
+  barbershopDataCount: number;
+}
+
+export async function fetchData({
+  itemsPerPage,
+  currentPage,
+  barber,
+  price,
+}: FetchDataProps): Promise<FetchDataResult> {
   try {
     const queryString = `?itemsPerPage=${itemsPerPage}&currentPage=${currentPage}&barber=${barber}&price=${price}`;
     const url = `/api/barbershop${queryString}`;
@@ -23,11 +34,10 @@ export async function fetchData({ itemsPerPage, currentPage, barber, price }: fe
       throw new Error("Failed to get barbershop data");
     }
 
-    const { data, totalDataCount } = await response.json();
-
-    return { data, totalDataCount };
+    const { barbershopData, barbershopDataCount } = await response.json();
+    return { barbershopData, barbershopDataCount };
   } catch (error) {
-    console.error(error);
+    throw new Error("Failed to get barbershop data");
   }
 }
 

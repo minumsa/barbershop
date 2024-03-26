@@ -1,8 +1,8 @@
 import { SetStateAction, useEffect, useState } from "react";
 import styles from "../page.module.css";
 import { fetchForEdit, editData, uploadData, uploadImage } from "../lib/api";
-import { BarberShop } from "../lib/data";
 import { usePathname, useRouter } from "next/navigation";
+import { BarberShop, initialBarberShop } from "../model/BarberShop";
 
 type Location = {
   description: string;
@@ -11,33 +11,33 @@ type Location = {
 };
 
 interface UploadProps {
-  id: string;
+  barbershopId: string;
 }
 
-export const Upload = ({ id }: UploadProps) => {
+export const Upload = ({ barbershopId }: UploadProps) => {
   const [file, setFile] = useState<any>();
-  const [name, setName] = useState<string | undefined>("");
-  const [barberListToStr, setBarberListToStr] = useState<string>();
+  const [name, setName] = useState<string>("");
+  const [barberListToStr, setBarberListToStr] = useState<string>("");
   const [location, setLocation] = useState<Location>({ description: "", lat: 0, lng: 0 });
-  const [operatingTime, setOperatingTime] = useState<string | undefined>("");
-  const [nonOperatingDates, setNonOperatingDates] = useState<string | undefined>("");
-  const [contact, setContact] = useState<string | undefined>("");
-  const [description, setDescription] = useState<string | undefined>("");
+  const [operatingTime, setOperatingTime] = useState<string>("");
+  const [nonOperatingDates, setNonOperatingDates] = useState<string>("");
+  const [contact, setContact] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
-  const [imgUrl, setImgUrl] = useState<string | undefined>("");
-  const [barbershopUrl, setBarbershopUrl] = useState<string | undefined>("");
-  const [reservationUrl, setReservationUrl] = useState<string | undefined>("");
-  const [locationUrl, setLocationUrl] = useState<string | undefined>("");
-  const [notice, setNotice] = useState<string | undefined>("");
+  const [imgUrl, setImgUrl] = useState<string>("");
+  const [barbershopUrl, setBarbershopUrl] = useState<string>("");
+  const [reservationUrl, setReservationUrl] = useState<string>("");
+  const [locationUrl, setLocationUrl] = useState<string>("");
+  const [notice, setNotice] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [barbershops, setBarbershops] = useState<BarberShop>();
+  const [barbershop, setBarbershop] = useState<BarberShop>(initialBarberShop);
   const pathName = decodeURIComponent(usePathname());
   const isUploadPage = pathName.includes("upload");
   const router = useRouter();
 
   const newBarbershopData: BarberShop = {
     name: name,
-    barberList: barberListToStr?.split(", "),
+    barberList: barberListToStr.split(", "),
     location: location,
     operatingTime: operatingTime,
     closedDays: nonOperatingDates,
@@ -53,37 +53,51 @@ export const Upload = ({ id }: UploadProps) => {
 
   useEffect(() => {
     async function loadData() {
-      setBarbershops(await fetchForEdit(id));
+      setBarbershop(await fetchForEdit(barbershopId));
     }
 
     if (!isUploadPage) loadData();
   }, []);
 
   useEffect(() => {
-    setName(barbershops?.name);
-    setBarberListToStr(barbershops?.barberList?.join(", "));
+    const {
+      name,
+      barberList,
+      location,
+      operatingTime,
+      closedDays,
+      description,
+      price,
+      imgUrl,
+      locationUrl,
+      barbershopUrl,
+      reservationUrl,
+      contact,
+    } = barbershop;
+    setName(name);
+    setBarberListToStr(barberList.join(", "));
     setLocation({
-      description: barbershops?.location.description ?? "",
-      lat: barbershops?.location.lat ?? 0,
-      lng: barbershops?.location.lng ?? 0,
+      description: location.description,
+      lat: location.lat,
+      lng: location.lng,
     });
-    setOperatingTime(barbershops?.operatingTime);
-    setNonOperatingDates(barbershops?.closedDays);
-    setDescription(barbershops?.description);
-    setPrice(barbershops?.price ?? 0);
-    setImgUrl(barbershops?.imgUrl);
-    setLocationUrl(barbershops?.locationUrl);
-    setBarbershopUrl(barbershops?.barbershopUrl);
-    setReservationUrl(barbershops?.reservationUrl);
-    setContact(barbershops?.contact);
-  }, [barbershops]);
+    setOperatingTime(operatingTime);
+    setNonOperatingDates(closedDays);
+    setDescription(description);
+    setPrice(price);
+    setImgUrl(imgUrl);
+    setLocationUrl(locationUrl);
+    setBarbershopUrl(barbershopUrl);
+    setReservationUrl(reservationUrl);
+    setContact(contact);
+  }, [barbershop]);
 
   // 먼저 데이터를 업로드(uploadData)하고 나서 이미지를 업로드(uploadImage)함
   // 이미지의 경우 cdn을 통해 따로 path를 만드는 방식을 택했기 때문
   const handleUpload = async () => {
     try {
-      const dataResponse = await uploadData(newBarbershopData, password);
-      const id = dataResponse.id;
+      const result = await uploadData(newBarbershopData, password);
+      const { id } = result;
       await uploadImage(file, id, password);
     } catch (error) {
       console.error("Error: ", error);
@@ -93,8 +107,8 @@ export const Upload = ({ id }: UploadProps) => {
   // 이미지 API(uploadImage)는 수정 방식(PUT)이므로 업로드, 수정 시 모두 이를 사용
   const handleEdit = async () => {
     try {
-      await editData(newBarbershopData, id, password);
-      if (file) await uploadImage(file, id, password);
+      await editData(newBarbershopData, barbershopId, password);
+      if (file) await uploadImage(file, barbershopId, password);
     } catch (error) {
       console.error("Error: ", error);
     }
@@ -143,8 +157,8 @@ export const Upload = ({ id }: UploadProps) => {
           <div className={styles["upload-title"]}>바버샵 이름</div>
           <input
             className={styles["upload-input"]}
-            value={name ?? ""}
-            onChange={(e: NormalEvent) => {
+            value={name}
+            onChange={e => {
               setName(e.target.value);
             }}
           />
@@ -153,8 +167,8 @@ export const Upload = ({ id }: UploadProps) => {
           <div className={styles["upload-title"]}>바버 이름</div>
           <input
             className={styles["upload-input"]}
-            value={barberListToStr ?? ""}
-            onChange={(e: NormalEvent) => {
+            value={barberListToStr}
+            onChange={e => {
               setBarberListToStr(e.target.value);
             }}
           />
@@ -163,8 +177,8 @@ export const Upload = ({ id }: UploadProps) => {
           <div className={styles["upload-title"]}>주소</div>
           <input
             className={styles["upload-input"]}
-            value={location?.description ?? ""}
-            onChange={(e: ObjectEvent) => {
+            value={location.description}
+            onChange={e => {
               setLocation(prevLocation => ({
                 ...prevLocation,
                 description: e.target.value,
@@ -176,8 +190,8 @@ export const Upload = ({ id }: UploadProps) => {
           <div className={styles["upload-title"]}>위도(lat)</div>
           <input
             className={styles["upload-input"]}
-            value={location?.lat}
-            onChange={(e: ObjectEvent) => {
+            value={location.lat}
+            onChange={e => {
               setLocation(prevLocation => ({
                 ...prevLocation,
                 lat: Number(e.target.value),
@@ -189,7 +203,7 @@ export const Upload = ({ id }: UploadProps) => {
           <div className={styles["upload-title"]}>경도(lng)</div>
           <input
             className={styles["upload-input"]}
-            value={location?.lng}
+            value={location.lng}
             onChange={e => {
               setLocation(prevLocation => ({
                 ...prevLocation,
@@ -202,7 +216,7 @@ export const Upload = ({ id }: UploadProps) => {
           <div className={styles["upload-title"]}>영업 시간</div>
           <input
             className={styles["upload-input"]}
-            value={operatingTime ?? ""}
+            value={operatingTime}
             onChange={e => {
               setOperatingTime(e.target.value);
             }}
@@ -212,7 +226,7 @@ export const Upload = ({ id }: UploadProps) => {
           <div className={styles["upload-title"]}>휴무일</div>
           <input
             className={styles["upload-input"]}
-            value={nonOperatingDates ?? ""}
+            value={nonOperatingDates}
             onChange={e => {
               setNonOperatingDates(e.target.value);
             }}
@@ -222,7 +236,7 @@ export const Upload = ({ id }: UploadProps) => {
           <div className={styles["upload-title"]}>연락처</div>
           <input
             className={styles["upload-input"]}
-            value={contact ?? ""}
+            value={contact}
             onChange={e => {
               setContact(e.target.value);
             }}
@@ -232,7 +246,7 @@ export const Upload = ({ id }: UploadProps) => {
           <div className={styles["upload-title"]}>소개</div>
           <input
             className={styles["upload-input"]}
-            value={description ?? ""}
+            value={description}
             onChange={e => {
               setDescription(e.target.value);
             }}
@@ -262,7 +276,7 @@ export const Upload = ({ id }: UploadProps) => {
           <div className={styles["upload-title"]}>위치 링크</div>
           <input
             className={styles["upload-input"]}
-            value={locationUrl ?? ""}
+            value={locationUrl}
             onChange={e => {
               setLocationUrl(e.target.value);
             }}
@@ -272,7 +286,7 @@ export const Upload = ({ id }: UploadProps) => {
           <div className={styles["upload-title"]}>홈페이지 링크</div>
           <input
             className={styles["upload-input"]}
-            value={barbershopUrl ?? ""}
+            value={barbershopUrl}
             onChange={e => {
               setBarbershopUrl(e.target.value);
             }}
@@ -282,7 +296,7 @@ export const Upload = ({ id }: UploadProps) => {
           <div className={styles["upload-title"]}>예약 페이지 링크</div>
           <input
             className={styles["upload-input"]}
-            value={reservationUrl ?? ""}
+            value={reservationUrl}
             onChange={e => {
               setReservationUrl(e.target.value);
             }}

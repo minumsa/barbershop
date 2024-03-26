@@ -3,7 +3,7 @@ export const filterData = {
 };
 
 export interface BarberShop {
-  name?: string;
+  name: string;
   barberList?: string[];
   location: {
     description: string;

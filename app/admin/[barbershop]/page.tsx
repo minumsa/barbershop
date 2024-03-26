@@ -8,7 +8,7 @@ export default function Page({ params }: any) {
 
   return (
     <div className={styles["container"]}>
-      <Upload id={id} />
+      <Upload barbershopId={id} />
     </div>
   );
 }

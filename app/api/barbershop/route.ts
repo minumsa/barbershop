@@ -36,14 +36,14 @@ export async function GET(request: Request) {
       totalDataCountQuery = dataQuery;
     }
 
-    const data = await BarberShopModel.find({ ...query, ...dataQuery })
+    const barbershopData = await BarberShopModel.find({ ...query, ...dataQuery })
       .sort({ name: 1 })
       .skip(startIndex)
       .limit(itemsPerPage);
 
-    const totalDataCount = await BarberShopModel.find(totalDataCountQuery).count();
+    const barbershopDataCount = await BarberShopModel.find(totalDataCountQuery).count();
 
-    const result = NextResponse.json({ data, totalDataCount });
+    const result = NextResponse.json({ barbershopData, barbershopDataCount });
     return result;
   } catch (error) {
     return handleError(error);

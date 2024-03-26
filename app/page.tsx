@@ -17,30 +17,28 @@ import { barberType, priceType } from "./lib/data";
 export default function Page() {
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
   const [keyword, setKeyword] = useState<string>("");
-  const [selectedBarberCount, setBarber] = useState<barberType>(3);
-  const [selectedPrice, setPrice] = useState<priceType>(50000);
+  const [selectedBarberCount, setSelectedBarberCount] = useState<barberType>(3);
+  const [selectedPrice, setSelectedPrice] = useState<priceType>(50000);
   const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [showFilterWindow, setShowFilterWindow] = useState(false);
   const [totalBarbershopCount, setTotalBarbershopCount] = useState<number>(0);
   const itemsPerPage = 10;
 
-  // 무한 스크롤 발생 시 실행
   useEffect(() => {
     async function loadData() {
-      const result = await fetchData({
+      const { barbershopData, barbershopDataCount } = await fetchData({
         itemsPerPage: itemsPerPage,
         currentPage: currentPage,
         barber: selectedBarberCount,
         price: selectedPrice,
       });
 
-      setTotalBarbershopCount(result?.totalDataCount);
-
-      if (currentPage > 0 && barbershops.length > 1) {
-        setBarbershops(prevBarbershops => [...prevBarbershops, ...result?.data]);
+      const firstFetch = currentPage < 2;
+      if (firstFetch) {
+        setTotalBarbershopCount(barbershopDataCount);
       } else {
-        setBarbershops(result?.data);
+        setBarbershops(prevData => [...prevData, ...barbershopData]);
       }
     }
 
@@ -48,26 +46,23 @@ export default function Page() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
-  // 필터링 옵션 변경 시 실행
   useEffect(() => {
-    setCurrentPage(0);
-
     async function loadData() {
       setTotalBarbershopCount(0);
       setBarbershops([]);
 
-      const result = await fetchData({
+      const { barbershopData, barbershopDataCount } = await fetchData({
         itemsPerPage: itemsPerPage,
         currentPage: 0,
         barber: selectedBarberCount,
         price: selectedPrice,
       });
 
-      // barber나 price가 바뀌면 아예 모든 데이터 지우고 다시 가져오기
-      setTotalBarbershopCount(result?.totalDataCount);
-      setBarbershops(result?.data);
+      setBarbershops(barbershopData);
+      setTotalBarbershopCount(barbershopDataCount);
     }
 
+    setCurrentPage(0);
     loadData();
   }, [selectedBarberCount, selectedPrice]);
 
@@ -124,9 +119,9 @@ export default function Page() {
     <Provider store={store}>
       <FilterWindow
         price={selectedPrice}
-        setPrice={setPrice}
+        setPrice={setSelectedPrice}
         barber={selectedBarberCount}
-        setBarber={setBarber}
+        setBarber={setSelectedBarberCount}
         showFilterWindow={showFilterWindow}
         setShowFilterWindow={setShowFilterWindow}
       />

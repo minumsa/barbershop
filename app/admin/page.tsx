@@ -14,60 +14,58 @@ import { barberType, priceType } from "../lib/data";
 export default function Page() {
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();
   const [keyword, setKeyword] = useState<string>("");
-  const [barber, setBarber] = useState<barberType>(3);
-  const [price, setPrice] = useState<priceType>(50000);
+  const [selectedBarberCount, setSelectedBarberCount] = useState<barberType>(3);
+  const [selectedPrice, setSelectedPrice] = useState<priceType>(50000);
   const [barbershops, setBarbershops] = useState<BarberShop[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
   const [showFilterWindow, setShowFilterWindow] = useState(false);
-  const [totalDataCount, setTotalDataCount] = useState<number>(0);
+  const [totalBarbershopCount, setTotalBarbershopCount] = useState<number>(0);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     async function loadData() {
-      const result = await fetchData({
+      const { barbershopData, barbershopDataCount } = await fetchData({
         itemsPerPage: itemsPerPage,
         currentPage: currentPage,
-        barber: barber,
-        price: price,
+        barber: selectedBarberCount,
+        price: selectedPrice,
       });
 
-      setTotalDataCount(result?.totalDataCount);
-
-      if (currentPage > 0 && barbershops.length > 1) {
-        setBarbershops(prevBarbershops => [...prevBarbershops, ...result?.data]);
-      } else {
-        setBarbershops(result?.data);
-      }
+      setTotalBarbershopCount(barbershopDataCount);
+      setBarbershops(prevData => [...prevData, ...barbershopData]);
     }
 
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   useEffect(() => {
-    setCurrentPage(0);
-
     async function loadData() {
-      const result = await fetchData({
+      setTotalBarbershopCount(0);
+      setBarbershops([]);
+
+      const { barbershopData, barbershopDataCount } = await fetchData({
         itemsPerPage: itemsPerPage,
         currentPage: 0,
-        barber: barber,
-        price: price,
+        barber: selectedBarberCount,
+        price: selectedPrice,
       });
 
-      // barber나 price가 바뀌면 아예 모든 데이터 지우고 다시 가져오기
-      setBarbershops(result?.data);
+      setBarbershops(barbershopData);
+      setTotalBarbershopCount(barbershopDataCount);
     }
 
+    setCurrentPage(0);
     loadData();
-  }, [barber, price]);
+  }, [selectedBarberCount, selectedPrice]);
 
   // TODO: currentState, action 타입 지정하기
   const reducer = (currentState: any, action: any) => {
     if (currentState === undefined) {
       return {
         barbershops: barbershops,
-        price: price,
-        barber: barber,
+        price: selectedPrice,
+        barber: selectedBarberCount,
         showFilterWindow: showFilterWindow,
         selectedBarbershop: selectedBarbershop,
         keyword: keyword,
@@ -113,10 +111,10 @@ export default function Page() {
   return (
     <Provider store={store}>
       <FilterWindow
-        price={price}
-        setPrice={setPrice}
-        barber={barber}
-        setBarber={setBarber}
+        price={selectedPrice}
+        setPrice={setSelectedPrice}
+        barber={selectedBarberCount}
+        setBarber={setSelectedBarberCount}
         showFilterWindow={showFilterWindow}
         setShowFilterWindow={setShowFilterWindow}
       />
@@ -131,9 +129,9 @@ export default function Page() {
         <Content
           setCurrentPage={setCurrentPage}
           keyword={keyword}
-          totalDataCount={totalDataCount}
-          price={price}
-          barber={barber}
+          totalDataCount={totalBarbershopCount}
+          price={selectedPrice}
+          barber={selectedBarberCount}
         />
       </div>
     </Provider>
