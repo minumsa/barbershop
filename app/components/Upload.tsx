@@ -2,7 +2,8 @@ import { SetStateAction, useEffect, useState } from "react";
 import styles from "../page.module.css";
 import { fetchForEdit, editData, uploadData, uploadImage } from "../lib/api";
 import { usePathname, useRouter } from "next/navigation";
-import { BarberShop, initialBarberShop } from "../model/BarberShop";
+import { BarberShop } from "../model/BarberShop";
+import { initialBarberShop } from "../lib/constants";
 
 type Location = {
   description: string;

@@ -9,7 +9,7 @@ import { fetchData } from "./lib/api";
 import { legacy_createStore as createStore } from "redux";
 import { Provider } from "react-redux";
 import { NavBar } from "./components/NavBar";
-import { barberType, priceType } from "./lib/data";
+import { barberType, priceType } from "./lib/types";
 
 // state 다 없애기 ---> redux store만 사용
 // TODO: 바버샵 클릭하면 바버샵 id로 path 이동

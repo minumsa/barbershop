@@ -9,7 +9,7 @@ import { fetchData } from "../lib/api";
 import { Provider } from "react-redux";
 import { NavBar } from "../components/NavBar";
 import { legacy_createStore as createStore } from "redux";
-import { barberType, priceType } from "../lib/data";
+import { barberType, priceType } from "../lib/types";
 
 export default function Page() {
   const [selectedBarbershop, setSelectedBarbershop] = useState<BarberShop | null>();

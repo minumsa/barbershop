@@ -1,5 +1,5 @@
 import styles from "../page.module.css";
-import { barberType, priceType } from "../lib/data";
+import { barberType, priceType } from "../lib/types";
 
 interface FilterWindowProps {
   price: priceType;

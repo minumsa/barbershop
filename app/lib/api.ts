@@ -1,5 +1,5 @@
 import { BarberShop } from "../model/BarberShop";
-import { barberType, priceType } from "./data";
+import { barberType, priceType } from "./types";
 
 interface FetchDataProps {
   itemsPerPage: number;
