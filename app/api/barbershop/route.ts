@@ -6,10 +6,10 @@ import { handleError } from "../errors";
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const itemsPerPage = Number(url.searchParams.get("itemsPerPage")) || 10;
-  const currentPage = Number(url.searchParams.get("currentPage")) || 0;
+  const currentScroll = Number(url.searchParams.get("currentScroll")) || 0;
   const barber = Number(url.searchParams.get("barber")) || 3;
   const price = Number(url.searchParams.get("price")) || 50000;
-  const startIndex = itemsPerPage * currentPage;
+  const startIndex = itemsPerPage * currentScroll;
 
   try {
     await connectMongoDB();

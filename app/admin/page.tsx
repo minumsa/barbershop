@@ -26,7 +26,7 @@ export default function Page() {
     async function loadData() {
       const { barbershopData, barbershopDataCount } = await fetchData({
         itemsPerPage: itemsPerPage,
-        currentPage: currentPage,
+        currentScroll: currentPage,
         barber: selectedBarberCount,
         price: selectedPrice,
       });
@@ -46,7 +46,7 @@ export default function Page() {
 
       const { barbershopData, barbershopDataCount } = await fetchData({
         itemsPerPage: itemsPerPage,
-        currentPage: 0,
+        currentScroll: 0,
         barber: selectedBarberCount,
         price: selectedPrice,
       });
