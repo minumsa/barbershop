@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { renderToString } from "react-dom/server";
 import styles from "./Map.module.css";
-import { BarberShop } from "../model/BarberShop";
+import { BarberShop } from "../../model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 interface MapProps {

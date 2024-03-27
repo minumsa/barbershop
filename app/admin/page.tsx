@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import styles from "../page.module.css";
-import { FilterWindow } from "../components/FilterWindow";
-import { Content } from "../components/Content";
+import { FilterWindow } from "../components/@common/FilterWindow";
+import { Content } from "../components/@common/Content";
 import { BarberShop } from "../model/BarberShop";
 import { fetchData } from "../lib/api";
 import { Provider } from "react-redux";
-import { NavBar } from "../components/NavBar";
+import { NavBar } from "../components/nav/NavBar";
 import { legacy_createStore as createStore } from "redux";
 import { barberType, priceType } from "../lib/types";
 

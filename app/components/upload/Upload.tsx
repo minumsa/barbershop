@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import styles from "./Upload.module.css";
-import { fetchForEdit, editData, uploadData, uploadImage } from "../lib/api";
+import { fetchForEdit, editData, uploadData, uploadImage } from "../../lib/api";
 import { usePathname, useRouter } from "next/navigation";
-import { BarberShop } from "../model/BarberShop";
-import { initialBarberShop } from "../lib/constants";
+import { BarberShop } from "../../model/BarberShop";
+import { initialBarberShop } from "../../lib/constants";
 
 type Location = {
   description: string;

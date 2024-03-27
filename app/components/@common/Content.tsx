@@ -1,8 +1,8 @@
-import { Map } from "./Map";
-import { MainTab } from "./MainTab";
-import { SubTab } from "./SubTab";
+import { Map } from "../map/Map";
+import { MainTab } from "../tab/MainTab";
+import { SubTab } from "../tab/SubTab";
 import styles from "./Content.module.css";
-import { BarberShop } from "../model/BarberShop";
+import { BarberShop } from "../../model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Grid } from "./Grid";
 import { useEffect } from "react";

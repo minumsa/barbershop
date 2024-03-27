@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FilterWindow } from "./components/FilterWindow";
-import { Content } from "./components/Content";
+import { FilterWindow } from "./components/@common/FilterWindow";
+import { Content } from "./components/@common/Content";
 import styles from "./page.module.css";
 import { BarberShop } from "./model/BarberShop";
 import { fetchData } from "./lib/api";
 import { legacy_createStore as createStore } from "redux";
 import { Provider } from "react-redux";
-import { NavBar } from "./components/NavBar";
+import { NavBar } from "./components/nav/NavBar";
 import { barberType, priceType } from "./lib/types";
 
 export default function Page() {

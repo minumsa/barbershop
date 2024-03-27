@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import styles from "./MainTab.module.css";
-import { BarberShop } from "../model/BarberShop";
+import { BarberShop } from "../../model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { LoadingItems } from "./LoadingItems";
+import { LoadingItems } from "../loading/LoadingItems";
 import { useInView } from "react-intersection-observer";
 
 interface MainTabProps {

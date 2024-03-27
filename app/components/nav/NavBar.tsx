@@ -2,9 +2,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./NavBar.module.css";
 import { faMagnifyingGlass, faPlus, faSliders } from "@fortawesome/free-solid-svg-icons";
 import { usePathname, useRouter } from "next/navigation";
-import { searchData } from "../lib/api";
+import { searchData } from "../../lib/api";
 import { useState } from "react";
-import { BarberShop } from "../model/BarberShop";
+import { BarberShop } from "../../model/BarberShop";
 
 interface NavBar {
   setShowFilterWindow: React.Dispatch<React.SetStateAction<boolean>>;
