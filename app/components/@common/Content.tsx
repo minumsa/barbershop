@@ -6,6 +6,7 @@ import { BarberShop } from "../../model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Grid } from "./Grid";
 import { useEffect } from "react";
+import { BARBER, COST } from "@/app/lib/constants";
 
 interface ContentProps {
   price: number;
@@ -101,11 +102,11 @@ export const Content = ({ setCurrentPage, keyword, totalDataCount, price, barber
       <div className={styles["map-container"]}>
         <div className={styles["filter-wrapper"]}>
           <div className={styles["filter"]}>
-            <span className={styles["filter-title"]}>{`시술비 :`}</span>
+            <span className={styles["filter-title"]}>{`${COST} :`}</span>
             <span className={styles["filter-item"]}>{priceStatus}</span>
           </div>
           <div className={styles["filter"]}>
-            <span className={styles["filter-title"]}>{`바버 인원 :`}</span>
+            <span className={styles["filter-title"]}>{`${BARBER} :`}</span>
             <span className={styles["filter-item"]}>{barberStatus}</span>
           </div>
         </div>

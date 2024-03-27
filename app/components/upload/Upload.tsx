@@ -3,7 +3,7 @@ import styles from "./Upload.module.css";
 import { fetchForEdit, editData, uploadData, uploadImage } from "../../lib/api";
 import { usePathname, useRouter } from "next/navigation";
 import { BarberShop } from "../../model/BarberShop";
-import { initialBarberShop } from "../../lib/constants";
+import { ABOUT, ADDRESS, BARBER, COST, initialBarberShop } from "../../lib/constants";
 
 type Location = {
   description: string;
@@ -141,7 +141,7 @@ export const Upload = ({ barbershopId }: UploadProps) => {
           />
         </div>
         <div className={styles["upload-item"]}>
-          <div className={styles["upload-title"]}>바버 이름</div>
+          <div className={styles["upload-title"]}>{BARBER}</div>
           <input
             className={styles["upload-input"]}
             value={barberListToStr}
@@ -151,7 +151,7 @@ export const Upload = ({ barbershopId }: UploadProps) => {
           />
         </div>
         <div className={styles["upload-item"]}>
-          <div className={styles["upload-title"]}>주소</div>
+          <div className={styles["upload-title"]}>{ADDRESS}</div>
           <input
             className={styles["upload-input"]}
             value={location.description}
@@ -220,7 +220,7 @@ export const Upload = ({ barbershopId }: UploadProps) => {
           />
         </div>
         <div className={styles["upload-item"]}>
-          <div className={styles["upload-title"]}>소개</div>
+          <div className={styles["upload-title"]}>{ABOUT}</div>
           <input
             className={styles["upload-input"]}
             value={description}
@@ -230,7 +230,7 @@ export const Upload = ({ barbershopId }: UploadProps) => {
           />
         </div>
         <div className={styles["upload-item"]}>
-          <div className={styles["upload-title"]}>시술비</div>
+          <div className={styles["upload-title"]}>{COST}</div>
           <input
             className={styles["upload-input"]}
             value={price}

@@ -17,7 +17,7 @@ interface MainTab {
   barber: number;
 }
 
-export const MainTab = ({ setCurrentPage, keyword, totalDataCount, price, barber }: MainTab) => {
+export const MainTab = ({ setCurrentPage, keyword, totalDataCount }: MainTab) => {
   const [orderType, setOrderType] = useState<string>("name");
   const { barbershops } = useSelector(
     (state: MainTabProps) => ({
@@ -25,6 +25,8 @@ export const MainTab = ({ setCurrentPage, keyword, totalDataCount, price, barber
     }),
     shallowEqual
   );
+
+  const hasNoResult = keyword && barbershops.length === 0;
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -92,7 +94,7 @@ export const MainTab = ({ setCurrentPage, keyword, totalDataCount, price, barber
               </div>
             );
           })
-        ) : keyword && barbershops.length === 0 ? (
+        ) : hasNoResult ? (
           <div className={`${styles["list-container"]} ${styles["list-no-data"]}`}>
             <div className={styles["mobile-keyword-result"]}>
               {/* TODO: 나중에 블로그에 정리: 문자열에 영어 포함되는지 체크 */}

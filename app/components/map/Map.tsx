@@ -3,6 +3,7 @@ import { renderToString } from "react-dom/server";
 import styles from "./Map.module.css";
 import { BarberShop } from "../../model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { ADDRESS, BARBER, COST, OFF_DAYS, OPERATING_HOURS } from "@/app/lib/constants";
 
 interface MapProps {
   barbershops: BarberShop[];
@@ -83,19 +84,19 @@ export const Map = () => {
           <div className={styles["info-window-title"]} style={{ marginBottom: "5px" }}>
             <div className={styles["string-center-border"]}>{name}</div>
           </div>
-          <BarbershopItem title={"주소"} data={location} />
-          <BarbershopItem title={"운영시간"} data={operatingTime} />
-          <BarbershopItem title={"휴무일"} data={closedDays.length < 5 ? "없음" : closedDays} />
+          <BarbershopItem title={ADDRESS} data={location} />
+          <BarbershopItem title={OPERATING_HOURS} data={operatingTime} />
+          <BarbershopItem title={OFF_DAYS} data={closedDays.length < 5 ? "없음" : closedDays} />
           <BarbershopItem title={"연락처"} data={contact} />
           <BarbershopItem
-            title={"바버"}
+            title={BARBER}
             data={barberList.map((barber, index) => {
               return (
                 <span key={index}>{index < barberList.length - 1 ? `${barber}, ` : barber}</span>
               );
             })}
           />
-          <BarbershopItem title={"시술비"} data={`${price?.toLocaleString()}원`} />
+          <BarbershopItem title={COST} data={`${price?.toLocaleString()}원`} />
           <div className={styles["info-window-text"]} style={{ padding: 0 }}>
             <div className={styles["more-button-container"]}>
               <div className={styles["button"]}>

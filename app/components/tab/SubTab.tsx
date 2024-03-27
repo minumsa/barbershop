@@ -5,6 +5,17 @@ import { usePathname, useRouter } from "next/navigation";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faKey } from "@fortawesome/free-solid-svg-icons";
+import {
+  ABOUT,
+  ADDRESS,
+  BARBER,
+  COST,
+  OFF_DAYS,
+  OPERATING_HOURS,
+  PASSWORD,
+  RESERVATION,
+  WEBSITE,
+} from "@/app/lib/constants";
 
 interface SubTabProps {
   selectedBarbershop: any | null;
@@ -71,13 +82,13 @@ export const SubTab = () => {
         </div>
         <div className={styles["subtab-information-container"]}>
           <SubTabItemBlock
-            title={"소개"}
+            title={ABOUT}
             data={selectedBarbershop.description.split("  ").map((text: string, index: number) => {
               return <p key={index}>{text}</p>;
             })}
           />
           <SubTabItemBlock
-            title={"바버"}
+            title={BARBER}
             data={`${selectedBarbershop.barberList
               .map((barber: string, index: number) => {
                 return index < selectedBarbershop.barberList.length - 1 ? `${barber}, ` : barber;
@@ -85,7 +96,7 @@ export const SubTab = () => {
               .join("")}`}
           />
           <div className={styles["subtab-flexbox"]}>
-            <div className={styles["subtab-title"]}>주소</div>
+            <div className={styles["subtab-title"]}>{ADDRESS}</div>
             <div className={`${styles["subtab-information"]} ${styles["barbershop-url"]}`}>
               <a
                 href={selectedBarbershop.locationUrl}
@@ -96,13 +107,10 @@ export const SubTab = () => {
               </a>
             </div>
           </div>
+          <SubTabItemBlock title={COST} data={`${selectedBarbershop.price.toLocaleString()}원`} />
+          <SubTabItemBlock title={OPERATING_HOURS} data={selectedBarbershop.operatingTime} />
           <SubTabItemBlock
-            title={"시술비"}
-            data={`${selectedBarbershop.price.toLocaleString()}원`}
-          />
-          <SubTabItemBlock title={"운영시간"} data={selectedBarbershop.operatingTime} />
-          <SubTabItemBlock
-            title={"휴무일"}
+            title={OFF_DAYS}
             data={
               selectedBarbershop.closedDays === "" || !selectedBarbershop.closedDays
                 ? "없음"
@@ -111,7 +119,7 @@ export const SubTab = () => {
           />
           <SubTabItemBlock title={"연락처"} data={selectedBarbershop.contact} />
           <div className={styles["subtab-flexbox"]}>
-            <div className={styles["subtab-title"]}>웹사이트</div>
+            <div className={styles["subtab-title"]}>{WEBSITE}</div>
             <div className={`${styles["subtab-information"]} ${styles["barbershop-url"]}`}>
               <a
                 href={selectedBarbershop.barbershopUrl}
@@ -151,7 +159,7 @@ export const SubTab = () => {
                     <div style={{ marginRight: "5px" }}>
                       <FontAwesomeIcon icon={faKey} />
                     </div>
-                    <div>관리자 비밀번호</div>
+                    <div>{PASSWORD}</div>
                   </div>
                   <input
                     className={styles["subtab-password-input"]}
@@ -166,7 +174,7 @@ export const SubTab = () => {
                   window.open(selectedBarbershop.reservationUrl);
                 }}
               >
-                <div>예약</div>
+                <div>{RESERVATION}</div>
               </div>
             )}
           </div>

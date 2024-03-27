@@ -1,5 +1,6 @@
 import styles from "./FilterWindow.module.css";
 import { barberType, priceType } from "../../lib/types";
+import { BARBER, COST } from "@/app/lib/constants";
 
 interface FilterWindowProps {
   price: priceType;
@@ -46,7 +47,7 @@ export const FilterWindow = ({
         </div>
         <div className={styles["filter-item"]}>
           <div className={styles["filter-item-title-wrapper"]}>
-            <div className={styles["filter-item-title"]}>시술비</div>
+            <div className={styles["filter-item-title"]}>{COST}</div>
             <div>{priceStatus}</div>
           </div>
           <div className={styles["range-wrapper"]}>
@@ -78,7 +79,7 @@ export const FilterWindow = ({
         </div>
         <div className={styles["filter-item"]}>
           <div className={styles["filter-item-title-wrapper"]}>
-            <div className={styles["filter-item-title"]}>바버 인원</div>
+            <div className={styles["filter-item-title"]}>{BARBER}</div>
             <div>{barberStatus}</div>
           </div>
           <div className={styles["range-wrapper"]}>
