@@ -23,11 +23,13 @@ export const FilterWindow = ({
     setBarber(3);
   };
 
-  //FIXME: 결과 데이터 가지고 오는 동안 로딩 화면 띄우기
-  //FIXME: barber, price 바뀌면 fetchData 실행되게
+  const formattedPrice = price.toLocaleString();
+  const priceStatus = price === 50000 ? "전체 선택" : `${formattedPrice}원 이하`;
+  const barberStatus = barber === 1 ? "1인" : barber === 2 ? "2인 이상" : "전체 선택";
+
   return (
     <div
-      className={styles["filter-content"]}
+      className={styles["container"]}
       style={showFilterWindow ? { position: "fixed" } : { display: "none" }}
     >
       <div
@@ -36,21 +38,21 @@ export const FilterWindow = ({
           setShowFilterWindow(false);
         }}
       >
-        <span className={styles["x-span"]}>×</span>
+        <span className={styles["filter-button-text"]}>×</span>
       </div>
       <div className={styles["filter-container"]}>
-        <div className={styles["filter-close"]}>
-          <div className={styles["string-center-border"]}>지도 옵션</div>
+        <div className={styles["filter-title-wrapper"]}>
+          <div className={styles["filter-title"]}>지도 옵션</div>
         </div>
         <div className={styles["filter-item"]}>
-          <div style={{ display: "flex", marginTop: "10px" }}>
-            <div style={{ width: "80px", height: "22px" }}>시술비</div>
-            <div>{price === 50000 ? "전체 선택" : `${price.toLocaleString()}원 이하`}</div>
+          <div className={styles["filter-item-title-wrapper"]}>
+            <div className={styles["filter-item-title"]}>시술비</div>
+            <div>{priceStatus}</div>
           </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ paddingTop: "10px" }}>
+          <div className={styles["range-wrapper"]}>
+            <div className={styles["range"]}>
               <input
-                className="filter-input"
+                className="range-input"
                 type="range"
                 id="price"
                 name="price"
@@ -75,14 +77,14 @@ export const FilterWindow = ({
           </div>
         </div>
         <div className={styles["filter-item"]}>
-          <div style={{ display: "flex" }}>
-            <div style={{ width: "80px" }}>바버 인원</div>
-            <div>{barber === 1 ? "1인" : barber === 2 ? "2인 이상" : "전체 선택"}</div>
+          <div className={styles["filter-item-title-wrapper"]}>
+            <div className={styles["filter-item-title"]}>바버 인원</div>
+            <div>{barberStatus}</div>
           </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ paddingTop: "10px" }}>
+          <div className={styles["range-wrapper"]}>
+            <div className={styles["range"]}>
               <input
-                className="filter-input"
+                className="range-input"
                 type="range"
                 id="barber"
                 name="barber"
@@ -105,8 +107,8 @@ export const FilterWindow = ({
             </div>
           </div>
         </div>
-        <div className={styles["more-button-container"]} onClick={filterReset}>
-          <div className={styles["button"]}>
+        <div className={styles["reset-button-wrapper"]} onClick={filterReset}>
+          <div className={styles["reset-button"]}>
             <div>초기화</div>
           </div>
         </div>

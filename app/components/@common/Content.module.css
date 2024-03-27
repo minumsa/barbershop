@@ -1,4 +1,4 @@
-.content-container {
+.container {
   display: flex;
   width: 100%;
   height: calc(100vh - 50px);
@@ -11,15 +11,15 @@
   background-repeat: repeat;
 }
 
-.mobile-tab-flexbox {
+.mobile-tab-container {
   display: none;
 }
 
-.mobile-map-container {
+.mobile-map {
   display: none;
 }
 
-.tab-container {
+.tab {
   width: 500px;
   height: 100%;
   border-right: 1px solid #000;
@@ -30,26 +30,26 @@
   overflow-y: auto;
 }
 
-.tab-container::-webkit-scrollbar {
+.tab::-webkit-scrollbar {
   background: #fff;
   width: 10px;
 }
 
-.tab-container::-webkit-scrollbar-thumb {
+.tab::-webkit-scrollbar-thumb {
   border-radius: 8px;
   background-clip: content-box;
   background-color: #fff;
 }
 
-.tab-container::-webkit-scrollbar-track-piece {
+.tab::-webkit-scrollbar-track-piece {
   background: #fff;
 }
 
-.tab-container:hover::-webkit-scrollbar-thumb {
+.tab:hover::-webkit-scrollbar-thumb {
   background-color: lightgray;
 }
 
-.tab-bookmark {
+.bookmark {
   display: flex;
   position: absolute;
   top: 82px;
@@ -68,15 +68,15 @@
   z-index: 1099;
 }
 
-.tab-flexbox {
+.tab-container {
   display: flex;
 }
 
-.tab-bookmark:hover {
+.bookmark:hover {
   left: 510px;
 }
 
-.filter-box-container {
+.filter-wrapper {
   font-size: 0.8rem;
   font-weight: 400;
   display: flex;
@@ -93,16 +93,16 @@
   z-index: 1000;
 }
 
-.filter-box {
+.filter {
   display: flex;
   margin-right: 10px;
 }
 
-.filter-box-title {
+.filter-title {
   margin-right: 0.3rem;
 }
 
-.filter-box-content {
+.filter-item {
   --clr-bg: transparent;
   --clr-underline: #e6e6e6;
   --clr-pos-from: 55%;
@@ -116,8 +116,12 @@
   );
 }
 
+.close-button {
+  margin: 0 15px 0 0;
+}
+
 @media (max-width: 550px) {
-  .content-container {
+  .container {
     overflow: hidden;
   }
 
@@ -125,13 +129,13 @@
     display: none;
   }
 
-  .mobile-tab-flexbox {
+  .mobile-tab-container {
     display: flex;
     width: 100%;
     flex-direction: column;
   }
 
-  .mobile-map-container {
+  .mobile-map {
     display: flex;
     width: 100%;
     min-height: 350px;
@@ -140,7 +144,7 @@
     background-repeat: repeat;
   }
 
-  .tab-container {
+  .tab {
     width: 100%;
     height: 100%;
     border-top-right-radius: 8px;
@@ -150,12 +154,12 @@
     padding: 0;
   }
 
-  .filter-box-content {
+  .filter-item {
     --clr-pos-from: 38%;
     --clr-pos-to: 72%;
   }
 
-  .tab-flexbox {
+  .tab-container {
     display: none;
   }
 }
