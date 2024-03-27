@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "../page.module.css";
+import styles from "./MainTab.module.css";
 import { BarberShop } from "../model/BarberShop";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { LoadingItems } from "./LoadingItems";
@@ -51,7 +51,7 @@ export const MainTab = ({ setCurrentPage, keyword, totalDataCount, price, barber
 
   return (
     <div className={styles["tab"]}>
-      <div className={`${styles["tab-title"]} ${styles["pc"]}`}>바버샵 리스트</div>
+      <div className={styles["tab-title"]}>바버샵 리스트</div>
       <div className={styles["tab-filter"]}>
         <div className={styles["tab-result-data"]}>
           {/* 검색 시 표시할 문구 */}

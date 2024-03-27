@@ -1,0 +1,174 @@
+.tab {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 50px;
+}
+
+.tab-title {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  padding-bottom: 5px;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.tab-filter {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  border-bottom: 1px solid #000;
+  background-color: #fff;
+  z-index: 1000;
+}
+
+.tab-result-data {
+  display: flex;
+  padding: 10px 0;
+}
+
+.filter-box-title {
+  margin-right: 0.3rem;
+}
+
+.filter-box-content {
+  --clr-bg: transparent;
+  --clr-underline: #e6e6e6;
+  --clr-pos-from: 55%;
+  --clr-pos-to: 85%;
+  transition: all 0.1s ease-in;
+  background: linear-gradient(
+    180deg,
+    var(--clr-bg) 0 var(--clr-pos-from),
+    var(--clr-underline) var(--clr-pos-from) var(--clr-pos-to),
+    var(--clr-bg) var(--clr-pos-to) 100%
+  );
+}
+
+.tab-bottom {
+  width: 100%;
+  height: 100%;
+  padding-top: 15px;
+}
+
+.list-container {
+  display: flex;
+  padding: 10px 0;
+  width: 100%;
+  height: fit-content;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.barbershop-image-container {
+  display: flex;
+  position: relative;
+  min-width: 100px;
+  height: 100px;
+  margin-right: 12px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+  border: none;
+  background-color: #dbdbdb;
+  border-radius: 50%;
+}
+
+.list-information {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.list-name {
+  font-size: 1rem;
+  font-weight: 400;
+  padding-right: 10px;
+  padding-bottom: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.list-name-text {
+  width: fit-content;
+}
+
+.list-location {
+  padding-bottom: 5px;
+  color: #666;
+}
+
+.list-no-data {
+  display: flex;
+  justify-content: center;
+  font-weight: 400;
+  height: 100%;
+  margin-top: 100px;
+}
+
+.mobile-keyword-result {
+  display: none;
+}
+
+@media (max-width: 550px) {
+  .tab {
+    width: 100%;
+  }
+
+  .tab-title {
+    height: fit-content;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+  }
+
+  .tab-filter {
+    position: fixed;
+    width: 100%;
+  }
+
+  .tab-result-data {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .filter-box-content {
+    --clr-pos-from: 38%;
+    --clr-pos-to: 72%;
+  }
+
+  .tab-bottom {
+    margin-top: 20px;
+    padding-top: 0;
+  }
+
+  .list-container {
+    width: calc(100% - 20px);
+    padding: 10px;
+  }
+
+  .list-container:last-child {
+    padding-bottom: 0;
+  }
+
+  .barbershop-image-container {
+    min-width: 90px;
+    height: 90px;
+  }
+
+  .list-no-data {
+    margin-top: 50px;
+  }
+
+  .mobile-keyword-result {
+    display: flex;
+    margin-right: 0.25rem;
+  }
+}

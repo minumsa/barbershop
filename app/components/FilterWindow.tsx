@@ -1,4 +1,4 @@
-import styles from "../page.module.css";
+import styles from "./FilterWindow.module.css";
 import { barberType, priceType } from "../lib/types";
 
 interface FilterWindowProps {

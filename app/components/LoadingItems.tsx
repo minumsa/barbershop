@@ -1,4 +1,4 @@
-import styles from "../page.module.css";
+import styles from "./LoadingItems.module.css";
 
 // FIXME: 더 나은 방식으로 로딩 아이템 처리하기
 export const LoadingItems = () => {

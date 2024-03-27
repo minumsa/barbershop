@@ -1,0 +1,207 @@
+.subtab-flexbox {
+  display: flex;
+  line-height: 190%;
+  font-size: 1.02rem;
+  border-bottom: 1px solid #e9e8eb;
+}
+
+.subtab-flexbox:last-of-type {
+  border-bottom: 2px solid #000;
+}
+
+.subtab-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  min-width: 90px;
+  background-color: #999;
+  font-weight: 450;
+  height: 36px;
+}
+
+.subtab-information {
+  width: 100%;
+  text-align: justify;
+  word-break: break-all;
+  padding: 0 10px;
+  margin-top: 0.5px;
+}
+
+.tab {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 50px;
+}
+
+.subtab-title-container {
+  display: flex;
+}
+
+.tab-title {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  padding-bottom: 5px;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.tab-title-name {
+  height: 24px;
+  --clr-bg: transparent;
+  --clr-underline: #e6e6e6;
+  --clr-pos-from: 55%;
+  --clr-pos-to: 85%;
+  transition: all 0.1s ease-in;
+  background: linear-gradient(
+    180deg,
+    var(--clr-bg) 0 var(--clr-pos-from),
+    var(--clr-underline) var(--clr-pos-from) var(--clr-pos-to),
+    var(--clr-bg) var(--clr-pos-to) 100%
+  );
+}
+
+.close-mobile {
+  display: none;
+}
+
+.subtab-image-container {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.subtab-information-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.barbershop-url {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.subtab-button-container {
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+  margin-top: 20px;
+}
+
+.flex-row-center {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  border: 1px solid #000;
+  cursor: pointer;
+  padding: 1px 3px;
+}
+
+.subtab-button {
+  padding: 8px 30px;
+  margin: 0 5px;
+  border-color: #666;
+  color: #666;
+  border-radius: 100px;
+}
+
+.subtab-button:hover {
+  border-color: #000;
+  color: #000;
+}
+
+.password-container {
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  margin-top: 20px;
+}
+
+.password {
+  display: flex;
+  margin: 10px;
+}
+
+.subtab-password-input {
+  width: 120px;
+  height: 30px;
+  border: 1px solid #000;
+  font-size: 1rem;
+  font-family: "Lato", "Noto Sans KR", sans-serif;
+}
+
+@media (max-width: 550px) {
+  .subtab-flexbox {
+    padding: 0;
+    font-size: 0.9rem;
+  }
+
+  .subtab-title {
+    min-width: 70px;
+    height: 27px;
+  }
+
+  .tab {
+    width: 100%;
+  }
+
+  .subtab-title-container {
+    height: 50px;
+    align-items: center;
+  }
+
+  .tab-title {
+    height: fit-content;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+  }
+
+  .tab-title-name {
+    --clr-pos-from: 38%;
+    --clr-pos-to: 70%;
+    padding-top: 3px;
+  }
+
+  .close-mobile {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 400;
+    cursor: pointer;
+  }
+
+  .image-container {
+    padding: 0 10px;
+  }
+
+  .subtab-information-container {
+    padding: 0 10px;
+  }
+
+  .button {
+    padding: 0 2px;
+  }
+
+  .subtab-button {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+    padding: 7px 25px;
+  }
+}

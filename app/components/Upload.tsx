@@ -1,5 +1,5 @@
-import { SetStateAction, useEffect, useState } from "react";
-import styles from "../page.module.css";
+import { useEffect, useState } from "react";
+import styles from "./Upload.module.css";
 import { fetchForEdit, editData, uploadData, uploadImage } from "../lib/api";
 import { usePathname, useRouter } from "next/navigation";
 import { BarberShop } from "../model/BarberShop";
@@ -119,30 +119,6 @@ export const Upload = ({ barbershopId }: UploadProps) => {
     if (e.key === "Enter") {
       isUploadPage ? handleUpload() : handleEdit();
     }
-  };
-
-  interface UploadItemProps {
-    title: string;
-    value: any;
-    onChange: any;
-  }
-
-  type NormalEvent = {
-    target: { value: SetStateAction<string | undefined> };
-  };
-
-  type ObjectEvent = {
-    target: { value: any };
-  };
-
-  // FIXME: input 포함된 코드를 컴포넌트화시키니 한 글자 한 글자 입력할 때마다 멈추는 이슈 발생
-  const UploadItem = ({ title, value, onChange }: UploadItemProps) => {
-    return (
-      <div className={styles["upload-item"]}>
-        <div className={styles["upload-title"]}>{title}</div>
-        <input className={styles["upload-input"]} value={value} onChange={onChange} />
-      </div>
-    );
   };
 
   return (

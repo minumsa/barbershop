@@ -1,4 +1,4 @@
-import styles from "../page.module.css";
+import styles from "./SubTab.module.css";
 import React, { useState } from "react";
 import { deleteData } from "../lib/api";
 import { usePathname, useRouter } from "next/navigation";

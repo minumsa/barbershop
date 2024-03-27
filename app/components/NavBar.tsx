@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "../page.module.css";
+import styles from "./NavBar.module.css";
 import { faMagnifyingGlass, faPlus, faSliders } from "@fortawesome/free-solid-svg-icons";
 import { usePathname, useRouter } from "next/navigation";
 import { searchData } from "../lib/api";
